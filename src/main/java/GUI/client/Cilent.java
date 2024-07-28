@@ -31,7 +31,7 @@ public class Cilent extends javax.swing.JFrame {
     private int ratePerHour; // Giá mỗi giờ
     private int ratePerSecond; // Giá mỗi giây
     private int usedTime; // Thời gian đã sử dụng (tính bằng giây)
-    private int remainingTime; // Thời gian còn lại (tính bằng giây)
+    private int remainingTime; 
     private Timer timer;
 
     public Cilent() {
