@@ -48,7 +48,7 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
     public ThemTaiKhoanHoiVienJDialog(java.awt.Frame parent, boolean modal, Integer accountID)throws Exception{
         super(parent, modal);
         initComponents();
-        setLocation(420, 250);
+        this.setLocationRelativeTo(null);
         init();
          this.accountId = accountID;
         checkNull(accountID);
@@ -56,10 +56,10 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
     
     public void init(){
         // Đặt kích thước cho JDialog
-        setSize(new Dimension(1150, 549));
+        setSize(new Dimension(1280, 720));
         
         // Đặt kích thước ưu tiên cho JPanel pnlChinh
-        pnlChinh.setPreferredSize(new Dimension(1150, 549));
+        pnlChinh.setPreferredSize(new Dimension(1280, 720));
     }
     Account getForm() {
         Account account = new Account();
@@ -483,22 +483,22 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
         );
 
         pnlChinh.add(pnlTaiKhoan);
-        pnlTaiKhoan.setBounds(90, 60, 930, 410);
+        pnlTaiKhoan.setBounds(190, 140, 930, 410);
 
         lblBackGround.setFont(new java.awt.Font("Palatino Linotype", 1, 18)); // NOI18N
-        lblBackGround.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BGThemHoiVien.jpg"))); // NOI18N
+        lblBackGround.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BGMemberManager.jpg"))); // NOI18N
         pnlChinh.add(lblBackGround);
-        lblBackGround.setBounds(0, 0, 1130, 530);
+        lblBackGround.setBounds(0, 0, 1280, 720);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlChinh, javax.swing.GroupLayout.DEFAULT_SIZE, 1134, Short.MAX_VALUE)
+            .addComponent(pnlChinh, javax.swing.GroupLayout.DEFAULT_SIZE, 1280, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlChinh, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
+            .addComponent(pnlChinh, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
         );
 
         pack();
