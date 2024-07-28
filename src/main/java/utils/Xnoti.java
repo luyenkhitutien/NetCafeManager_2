@@ -55,4 +55,8 @@ public class Xnoti {
             System.err.println("SystemTray is not supported.");
         }
     }
+       public void ThanhBinbucu(){
+           System.out.println("Bin bú lồn");
+           System.out.println("Test push 1 đoạn code");
+       }
 }

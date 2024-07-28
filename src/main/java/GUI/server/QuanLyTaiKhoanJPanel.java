@@ -32,14 +32,16 @@ public class QuanLyTaiKhoanJPanel extends javax.swing.JPanel {
     List<Account> listAcount = new ArrayList<>();
     List<Member> listMember = new ArrayList<>();
     Account account = new Account();
-    Member member = new Member();
     AccountDAO accountDAO = new AccountDAO();
+    Member member = new Member();
     MemberDAO memberDAO = new MemberDAO();
     EmployeeDAO emDao = new EmployeeDAO();
     int STT = 1;
     int current = 0;
-private ServerMain serverMain;
-    public QuanLyTaiKhoanJPanel(){
+
+    private ServerMain serverMain;
+
+    public QuanLyTaiKhoanJPanel() {
 
         initComponents();
         initTable();
@@ -50,12 +52,6 @@ private ServerMain serverMain;
         fillToTable();
     }
 
-    public void initTable() {
-        XInitTable.initTable(tblQuanLyTaiKhoan);
-        
-        int[] widths ={50, 100, 250, 250, 175, 175};
-        XInitTable.setColumnWidths(tblQuanLyTaiKhoan, widths);
-    }
     void refresh() {
         try {
             this.loadDataToArray();
@@ -65,9 +61,21 @@ private ServerMain serverMain;
         }
 
     }
+
+    public QuanLyTaiKhoanJPanel(ServerMain serverMain) {
+        this.serverMain = serverMain;
+    }
+
+    public void initTable() {
+        XInitTable.initTable(tblQuanLyTaiKhoan);
+
+        int[] widths = {50, 100, 250, 250, 175, 175};
+        XInitTable.setColumnWidths(tblQuanLyTaiKhoan, widths);
+    }
+
     public void loadDataToArray() {
-            STT = 1;
-            listAcount.clear();
+        STT = 1;
+        listAcount.clear();
         try {
             listAcount = accountDAO.selectAll();
         } catch (Exception ex) {
@@ -108,7 +116,7 @@ private ServerMain serverMain;
         }
     }
 
-   void getRowDelete(int index) {
+    void getRowDelete(int index) {
         try {
             int rowId = (int) tblQuanLyTaiKhoan.getValueAt(index, 1);
 //            String role = (String) tblQuanLyTaiKhoan.getValueAt(index, 4);
@@ -168,8 +176,7 @@ private ServerMain serverMain;
                     mnitChiTiet.setVisible(true);
                     mnitXoa.setVisible(true);
                     pup.show(e.getComponent(), e.getX(), e.getY());
-                }
-                if (role.trim().equalsIgnoreCase("admin")) {
+                } else if (role.trim().equalsIgnoreCase("admin")) {
                     mnitChiTiet.setVisible(false);
                     mnitNapTien.setVisible(false);
                     mnitXoa.setVisible(false);
@@ -270,6 +277,11 @@ private ServerMain serverMain;
         pup.add(mnitChiTiet);
 
         mnitXoa.setText("Xóa");
+        mnitXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnitXoaActionPerformed(evt);
+            }
+        });
         pup.add(mnitXoa);
 
         mnitNapTien.setText("Nạp tiền");
@@ -364,6 +376,16 @@ private ServerMain serverMain;
         jLabel6.setText("Tìm theo tên hoặc ID:");
 
         txtTimKiem.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        txtTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTimKiemActionPerformed(evt);
+            }
+        });
+        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -458,40 +480,15 @@ private ServerMain serverMain;
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        String rl = (String) tblQuanLyTaiKhoan.getValueAt(current, 4);
-//        System.out.println(rl);
-//        try {
-//            if (rl.trim().equalsIgnoreCase("hội viên")) {
-//
-//                JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-//                ThemTaiKhoanHoiVienJDialog taoHoiVien = null;
-//                try {
-//                    taoHoiVien = new ThemTaiKhoanHoiVienJDialog(frame, true);
-//                } catch (Exception ex) {
-//                    Logger.getLogger(QuanLyTaiKhoanJPanel.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                taoHoiVien.setVisible(true);
-//            } else {
-//
-//                JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-//                ThemTaiKhoanNhanVienJDialog taoNhanVien = new ThemTaiKhoanNhanVienJDialog(frame, true);
-//                taoNhanVien.setVisible(true);
-//            }
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
-
     }//GEN-LAST:event_mnitChiTietActionPerformed
-    
+
     private void mnitChiTietMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnitChiTietMouseClicked
 
     }//GEN-LAST:event_mnitChiTietMouseClicked
 
     private void btnThemNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemNhanVienActionPerformed
         // TODO add your handling code here:
-         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
         ThemTaiKhoanNhanVienJDialog taoNhanVien = null;
 
         try {
@@ -529,6 +526,50 @@ private ServerMain serverMain;
             napTien.setVisible(true);
         }
     }//GEN-LAST:event_mnitNapTienActionPerformed
+
+    private void mnitXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnitXoaActionPerformed
+        // TODO add your handling code here:
+        try {
+            current = tblQuanLyTaiKhoan.getSelectedRow();
+            System.out.println(current);
+            getRowDelete(current);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_mnitXoaActionPerformed
+
+    private void txtTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTimKiemActionPerformed
+
+    private void txtTimKiemKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyPressed
+        // TODO add your handling code here:
+        try {
+            if (txtTimKiem.getText().trim().equalsIgnoreCase("")) {
+                loadDataToArray();
+                fillToTable();
+            } else {
+                if (searchId(txtTimKiem.getText())) {
+                    STT = 1;
+                    listAcount.clear();
+                    account = accountDAO.selectByID(Integer.parseInt(txtTimKiem.getText()));
+                    if (account != null) {
+                        listAcount.add(account);
+                        System.out.println("Search for accountID : " + account.getId());
+                        fillToTable();
+                    }
+                } else {
+                    STT = 1;
+                    listAcount.clear();
+                    listAcount = accountDAO.selectByName(txtTimKiem.getText());
+//                    listAcount.add(account);
+                    fillToTable();
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("Khong tim duoc account: " + account.getId() + "Name: " + account.getUsername());
+        }
+    }//GEN-LAST:event_txtTimKiemKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

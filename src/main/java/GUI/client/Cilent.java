@@ -23,9 +23,10 @@ import utils.Xnoti;
  * @author ASUS
  */
 public class Cilent extends javax.swing.JFrame {
+
     private BigDecimal balance;
     private BigDecimal price;
-    
+
     private int totalTime; // Tổng thời gian (tính bằng giây)
     private int ratePerHour; // Giá mỗi giờ
     private int ratePerSecond; // Giá mỗi giây
@@ -77,15 +78,15 @@ public class Cilent extends javax.swing.JFrame {
         TinNhanJDialog tinnhan = new TinNhanJDialog(frame, true);
         tinnhan.setVisible(true);
     }
-    
-    
-    public class TimeUsage{
-       int hoursUsed =0;
-       int minutesUsed = 0;
-       int secondsUsed = 0;
-       BigDecimal amountUsed = BigDecimal.ZERO;
-   }
-    
+
+    public class TimeUsage {
+
+        int hoursUsed = 0;
+        int minutesUsed = 0;
+        int secondsUsed = 0;
+        BigDecimal amountUsed = BigDecimal.ZERO;
+    }
+
     private void setBalanceClient(BigDecimal balance, BigDecimal price) {
         txtSoDu.setText(balance.toString());
         System.out.println("Đang sử dụng máy có giá: " + price);
@@ -164,8 +165,8 @@ public class Cilent extends javax.swing.JFrame {
         txtTongThoiGian.setText(formattedTime);
     }
 
-    public void getBalaceClient(){
-        if(this.isVisible()){
+    public void getBalaceClient() {
+        if (this.isVisible()) {
             balance = MainClient.listBalanceClient.get(0);
             price = MainClient.listBalanceClient.get(1);
             this.setBalanceClient(balance, price);

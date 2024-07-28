@@ -20,16 +20,15 @@ import utils.Xnoti;
  * @author ASUS
  */
 public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
-public static Integer accountId;
+
+    public static Integer accountId;
     EmployeeDAO emDao = new EmployeeDAO();
     Employee em = new Employee();
     AccountDAO accDao = new AccountDAO();
     Account acc = new Account();
     private UpdateListener listener;
-    /**
-     * Creates new form ThemTaiKhoanNhanVienJDialog
-     */
-     void setEmployeeListener(UpdateListener listener) {
+
+    void setEmployeeListener(UpdateListener listener) {
         this.listener = listener;
     }
 
@@ -38,6 +37,7 @@ public static Integer accountId;
             listener.onUpdate();
         }
     }
+
     public ThemTaiKhoanNhanVienJDialog(java.awt.Frame parent, boolean modal, Integer accountID) throws Exception {
         super(parent, modal);
         initComponents();
@@ -46,7 +46,8 @@ public static Integer accountId;
         checkNull(accountID);
 
     }
-     Account getForm() {
+
+    Account getForm() {
         Account account = new Account();
         if (!txtIDTaiKhoan.getText().trim().isEmpty()) {
             account.setId(Integer.parseInt(txtIDTaiKhoan.getText()));
@@ -106,6 +107,7 @@ public static Integer accountId;
         txtDiaChi.setText(em.getAddress());
         txtTongLuong.setText(em.getBalance().toString());
     }
+
     void checkNull(Integer accountId) throws Exception {
         if (accountId == null) {
 
@@ -180,6 +182,7 @@ public static Integer accountId;
         } catch (Exception e) {
         }
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -439,7 +442,7 @@ public static Integer accountId;
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTongLuongActionPerformed
 
-    private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {                                          
+    private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         txtDiaChi.setText(null);
         txtIDNhanVIen.setText(null);
@@ -453,28 +456,31 @@ public static Integer accountId;
         txtTenTaiKhoan.setText(null);
         txtThongTinKhac.setText(null);
         txtTongLuong.setText(null);
-    }     
-     private void txtTaoActionPerformed(java.awt.event.ActionEvent evt) {                                       
+    }
+
+    private void txtTaoActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         insert();
-    }                                      
+    }
 
-    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {                                       
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-         try {
+        try {
             update();
         } catch (Exception e) {
             e.printStackTrace();
         }
-    } 
-     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {                                       
+    }
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         try {
             delete();
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }    
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -504,11 +510,11 @@ public static Integer accountId;
         //</editor-fold>
 
         /* Create and display the dialog */
-         java.awt.EventQueue.invokeLater(new Runnable() {
+        java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ThemTaiKhoanNhanVienJDialog dialog=null;
+                ThemTaiKhoanNhanVienJDialog dialog = null;
                 try {
-                    dialog = new ThemTaiKhoanNhanVienJDialog(new javax.swing.JFrame(), true,accountId);
+                    dialog = new ThemTaiKhoanNhanVienJDialog(new javax.swing.JFrame(), true, accountId);
                 } catch (Exception ex) {
                     Logger.getLogger(ThemTaiKhoanNhanVienJDialog.class.getName()).log(Level.SEVERE, null, ex);
                 }

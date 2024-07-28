@@ -12,6 +12,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -27,88 +31,126 @@ import utils.Ximage;
  * @author ASUS
  */
 public class TaoSanPhamJDialog extends javax.swing.JDialog {
-    JFileChooser filechooser = new JFileChooser("D:\\NEWPRO_N5\\NetCF-16th7-FE(MEMBERS)\\NetCF-15th7-FE\\src\\main\\resources\\image");
-    /**
-     * Creates new form TaoSanPhamJDialog
-     */
+
+    JFileChooser filechooser = new JFileChooser("D:\\");
+    DefaultComboBoxModel model = new DefaultComboBoxModel();
+    ProductDAO pro = new ProductDAO();
     private UpdateListener listener;
 
     public void setProductListener(UpdateListener listener) {
         this.listener = listener;
     }
+
+    public void fillOnUpdate() {
+        if (listener != null) {
+            listener.onUpdate();
+        }
+    }
+
     public TaoSanPhamJDialog(java.awt.Frame parent, boolean modal) {
-         super(parent, modal);
+        super(parent, modal);
         initComponents();
         setLocation(550, 130);
         init();
     }
-    public void init(){
+
+    public void init() {
         // Đặt kích thước cho JDialog
         setSize(new Dimension(1000, 900));
-        
+
         // Đặt kích thước ưu tiên cho JPanel pnlChinh
         pnlChinh.setPreferredSize(new Dimension(1000, 900));
     }
-   Product getFormInsert(){
-       Product product = new Product();
+
+    void fillToCbo() {
+        try {
+            DefaultComboBoxModel cboModel = (DefaultComboBoxModel) cboType.getModel();
+            cboModel.removeAllElements();
+            Set<String> type = new HashSet<>();
+            List<Product> listProduct = pro.selectAll();
+            for (Product p : listProduct) {
+                type.add(p.getType());
+            }
+            for (String proType : type) {
+                cboModel.addElement(proType);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    Product getFormInsert() {
+        Product product = new Product();
 //       product.setId(Integer.parseInt(txtIDSanPham.getText()));
-       product.setName(txtTenSanPham.getText());
-       product.setPrice(BigDecimal.valueOf(Double.parseDouble(txtGia.getText())));
-       product.setDescription(lblPicture.getToolTipText());
-       return product;
-   }
-   Product getForm(){
-       Product product = new Product();
-       product.setId(Integer.parseInt(txtIDSanPham.getText()));
-       product.setName(txtTenSanPham.getText());
-       product.setPrice(BigDecimal.valueOf(Double.parseDouble(txtGia.getText())));
-       product.setDescription(lblPicture.getToolTipText());
-       return product;
-   }
-  public void setImage(){
-      if(filechooser.showOpenDialog(this)== JFileChooser.APPROVE_OPTION){
-          File file = filechooser.getSelectedFile();
-          Ximage.save(file);
-          ImageIcon icon  = Ximage.read(file.getName());
-          lblPicture.setIcon(icon);
-          lblPicture.setToolTipText(file.getName());
+        product.setName(txtTenSanPham.getText());
+        product.setPrice(BigDecimal.valueOf(Double.parseDouble(txtGia.getText())));
+        product.setDescription(lblPicture.getToolTipText());
+        product.setType(String.valueOf(cboType.getSelectedItem()));
+        return product;
+    }
+
+    Product getForm() {
+        Product product = new Product();
+        product.setId(Integer.parseInt(txtIDSanPham.getText()));
+        product.setName(txtTenSanPham.getText());
+        product.setPrice(BigDecimal.valueOf(Double.parseDouble(txtGia.getText())));
+        product.setDescription(lblPicture.getToolTipText());
+        product.setType(String.valueOf(cboType.getSelectedItem()));
+        return product;
+    }
+
+    public void setImage() {
+        if (filechooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File file = filechooser.getSelectedFile();
+            Ximage.save(file);
+            ImageIcon icon = Ximage.read(file.getName());
+            lblPicture.setIcon(icon);
+            lblPicture.setToolTipText(file.getName());
 //          lblPicture.setText(null);
-      }
-  }
-  void insert(){
-      Product product = getFormInsert();
-      ProductDAO proDao = new ProductDAO();
+        }
+    }
+
+    void insert() {
+        Product product = getFormInsert();
+        ProductDAO proDao = new ProductDAO();
 //      QuanLySanPhamJPanel qlsp = new QuanLySanPhamJPanel();
-      try {
-          proDao.insert(product);
-          System.out.println("Them thanh cong");
-          JOptionPane.showMessageDialog(this, "Them Thanh Cong");
-      } catch (Exception e) {
-          System.out.println("Them that bai");
-      }
-  }
-  void update(){
-      Product product = getForm();
-      ProductDAO proDao = new ProductDAO();
-      try {
-          proDao.update(product);
-          System.out.println("Cap nhat thanh cong");
-      } catch (Exception e) {
-          System.out.println("cap nhat that bai");
-          e.printStackTrace();
-      }
-  }
-  void delete(){
-       Product product = getForm();
-      ProductDAO proDao = new ProductDAO();
-      try {
-          proDao.delete(product.getId());
-          System.out.println("Xoa thanh cong san pham");
-      } catch (Exception e) {
-          System.out.println("Xoa khong thanh cong");
-          e.printStackTrace();
-      }
-  }
+        try {
+            proDao.insert(product);
+            System.out.println("Them thanh cong");
+            fillOnUpdate();
+            System.out.println(listener);
+            JOptionPane.showMessageDialog(this, "Them Thanh Cong");
+        } catch (Exception e) {
+            System.out.println("Them that bai");
+        }
+    }
+
+    void update() {
+        Product product = getForm();
+        ProductDAO proDao = new ProductDAO();
+        try {
+            proDao.update(product);
+            fillOnUpdate();
+            System.out.println("Cap nhat thanh cong");
+        } catch (Exception e) {
+            System.out.println("cap nhat that bai");
+            e.printStackTrace();
+        }
+    }
+
+    void delete() {
+        Product product = getForm();
+        ProductDAO proDao = new ProductDAO();
+        try {
+            proDao.delete(product.getId());
+            fillOnUpdate();
+            System.out.println("Xoa thanh cong san pham");
+        } catch (Exception e) {
+            System.out.println("Xoa khong thanh cong");
+            e.printStackTrace();
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -201,8 +243,6 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
 
         txtIDSanPham.setEditable(false);
         txtIDSanPham.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-
-        cboType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -322,7 +362,7 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
 
     private void lblPictureMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPictureMousePressed
         // TODO add your handling code here:
-        if(evt.getClickCount() == 2){
+        if (evt.getClickCount() == 2) {
             setImage();
         }
     }//GEN-LAST:event_lblPictureMousePressed
@@ -334,7 +374,7 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
     }//GEN-LAST:event_btnLuuActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -481,7 +521,5 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
     public void setCboType(JComboBox<String> cboType) {
         this.cboType = cboType;
     }
-    
-    
-}
 
+}

@@ -141,10 +141,10 @@ public class QuanLyMayJPanel extends javax.swing.JPanel {
         txtIDmay.setText("");
         txtTenMay.setText("");
     }
-    
-    public void ChoseComputer(){
-        
-         // khi chọn máy VIP->10000,Thường->5000
+
+    public void ChoseComputer() {
+
+        // khi chọn máy VIP->10000,Thường->5000
         Computer computer = new Computer();
         //lấy giá trị trong cboLoaiMay gán cho type. 
         String type = (String) cboLoaiMay.getSelectedItem();
@@ -158,8 +158,6 @@ public class QuanLyMayJPanel extends javax.swing.JPanel {
         //chuyển đổi giá đối tượng computer thành chuỗi và cập nhật vào txtGia
         txtGia.setText(computer.getPricePerHour().toString());
     }
-    
-  
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -423,9 +421,9 @@ public class QuanLyMayJPanel extends javax.swing.JPanel {
 
     private void tblQuanLyMayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblQuanLyMayMouseClicked
         // TODO add your handling code here: 
-        if(!SwingUtilities.isLeftMouseButton(evt)){
-              
-          }else{
+        if (!SwingUtilities.isLeftMouseButton(evt)) {
+
+        } else {
             try {
                 this.row = tblQuanLyMay.getSelectedRow();
                 tblQuanLyMay.setRowSelectionInterval(row, row);

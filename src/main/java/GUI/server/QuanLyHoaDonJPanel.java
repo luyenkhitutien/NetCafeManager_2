@@ -8,17 +8,25 @@ import dao.AccountDAO;
 import dao.ComputerDAO;
 import dao.EmployeeDAO;
 import dao.InvoiceDAO;
+import dao.InvoiceDetailDAO;
+import dao.SessionDAO;
+import dao.StatisticsDAO;
 import entity.Account;
 import entity.Computer;
 import entity.Employee;
 import entity.Invoice;
+import entity.InvoiceDetail;
+import entity.Session;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -27,8 +35,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import utils.Auth;
 import utils.XInitTable;
 
 /**
@@ -37,6 +47,7 @@ import utils.XInitTable;
  */
 public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
 
+    StatisticsDAO Statistics = new StatisticsDAO();
     ChiTietHoaDonJDialog hoaDonChiTietJDialog;
     private int current = -1;
     private Invoice invoice;
@@ -47,6 +58,7 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
     List<Invoice> list = new ArrayList<>();
     DefaultTableModel model = new DefaultTableModel();
     int index;
+
     /**
      * Creates new form QuanLyHoaDonJPanel
      */
@@ -55,17 +67,16 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
         initComponents();
         initTable();
         fillToTableNotFinish();
-        fillDataToCbo();
         addPopupToTable();
     }
 
     private void initTable() {
         XInitTable.initTable(tblQuanLyHoaDon, 6);
-        
-        int[] widths= {50, 80, 80, 80, 210, 140};
+
+        int[] widths = {50, 80, 80, 80, 210, 140};
         XInitTable.setColumnWidths(tblQuanLyHoaDon, widths);
     }
-    
+
     private void addPopupToTable() {
         tblQuanLyHoaDon.addMouseListener(new MouseAdapter() {
             @Override
@@ -88,7 +99,13 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
                 if (!tblQuanLyHoaDon.isRowSelected(row)) {
                     tblQuanLyHoaDon.changeSelection(row, column, false, false);
                 }
-                pup.show(e.getComponent(), e.getX(), e.getY());
+                if (Auth.isAdminLogin == false) {
+                    mnitXoa.setVisible(false);
+                    pup.show(e.getComponent(), e.getX(), e.getY());
+                } else {
+                    mnitXoa.setVisible(true);
+                    pup.show(e.getComponent(), e.getX(), e.getY());
+                }
             }
         });
     }
@@ -159,7 +176,6 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
     }
 
     private void updateStatus() {
-       
 
     }
 
@@ -190,37 +206,57 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
         lblTongTien.setText(String.valueOf(totalAmouts));
 
     }
-    
-    private void fillDataToCbo() {
+
+    void fillCboComputer() {
         try {
             DefaultComboBoxModel cboComputer = (DefaultComboBoxModel) cboChonMay.getModel();
             cboComputer.removeAllElements();
-            DefaultComboBoxModel cboUserName = (DefaultComboBoxModel) cboTenTaiKhoan.getModel();
-            cboUserName.removeAllElements();
-            DefaultComboBoxModel cboIdEmployee = (DefaultComboBoxModel) cboNhanVien.getModel();
-            cboIdEmployee.removeAllElements();
             Set<String> computerName = new HashSet<>();
-            Set<String> userName = new HashSet<>();
-            Set<Integer> idEmployee = new HashSet<>();
             List<Computer> listCom = comDao.selectAll();
-            List<Account> listAcc = accDao.selectAll();
-            List<Employee> listEm = emDao.selectAll();
             for (Computer p : listCom) {
                 computerName.add(p.getName());
             }
-            for (Account a : listAcc) {
-                userName.add(a.getUsername());
-            }
-            for (Employee e : listEm) {
-                idEmployee.add(e.getId());
-            }
-            // fillToCbo
             for (String computerNames : computerName) {
                 cboComputer.addElement(computerNames);
+            }
+            System.out.println("Fill thành công combox Computer");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void fillCboUserName() {
+        try {
+            DefaultComboBoxModel cboUserName = (DefaultComboBoxModel) cboTenTaiKhoan.getModel();
+            cboUserName.removeAllElements();
+            Set<String> userName = new HashSet<>();
+            List<Account> listAcc = accDao.selectAll();
+            for (Account a : listAcc) {
+                userName.add(a.getUsername());
             }
             for (String userNames : userName) {
                 cboUserName.addElement(userNames);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void fillCboIdEmployee() {
+        try {
+
+            DefaultComboBoxModel cboIdEmployee = (DefaultComboBoxModel) cboNhanVien.getModel();
+            cboIdEmployee.removeAllElements();
+
+            Set<Integer> idEmployee = new HashSet<>();
+
+            List<Employee> listEm = emDao.selectAll();
+
+            for (Employee e : listEm) {
+                idEmployee.add(e.getId());
+            }
+            // fillToCbo
+
             for (Integer idEmployees : idEmployee) {
                 cboIdEmployee.addElement(idEmployees);
             }
@@ -229,15 +265,15 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
         }
 
     }
-    
-    private void openInvoiceDetails(){
+
+    private void openInvoiceDetails() {
         int idHoaDon = (int) tblQuanLyHoaDon.getValueAt(index, 1);
         System.out.println("Lay thanh cong idHd: " + idHoaDon);
         index = tblQuanLyHoaDon.getSelectedRow();
         try {
             loadDataToArray();
             invoice = invoiceDAO.selectByID(idHoaDon);
-            System.out.println("QLHD =>"+invoice);
+            System.out.println("QLHD =>" + invoice);
             try {
                 JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
                 ChiTietHoaDonJDialog hdct = new ChiTietHoaDonJDialog(frame, true, idHoaDon);
@@ -248,6 +284,41 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("QLHD => loi open hdct");
+        }
+    }
+
+    void getStatisticsSearchInvoice(Date dayBegin, Date dayEnd, String computerName, String userName, Integer idEmployee) {
+        List<Object[]> data = Statistics.getStatisticsInvoice(dayBegin, dayEnd, computerName, userName, idEmployee);
+        model.setRowCount(0);
+        int STT = 1;
+        for (Object[] row : data) {
+            Object[] newRow = new Object[row.length + 1];
+            newRow[0] = STT++;
+            System.arraycopy(row, 0, newRow, 1, row.length); // Correct usage of arraycopy
+            model.addRow(newRow);
+        }
+    }
+
+    void search() {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date startAt = new Date(sdf.parse(txtTuNgay.getText()).getTime());
+            System.out.println("dateBegin => :" + startAt);
+            Date endAt = new Date(sdf.parse(txtDenNgay.getText()).getTime() + 24 * 60 * 60 * 1000 - 1); // set end of the day
+            System.out.println("dateEnd => :" + endAt);
+            String computerName = (String) cboChonMay.getSelectedItem();
+            System.out.println("Lay duoc computer name => :" + computerName);
+            String userName = (String) cboTenTaiKhoan.getSelectedItem();
+            System.out.println("Lay duoc userName => :" + userName);
+            Integer idEmployee = null;
+            if (cboNhanVien.getSelectedItem() != null) {
+                idEmployee = Integer.parseInt(cboNhanVien.getSelectedItem().toString());
+                System.out.println("Lay duoc idEmployee => :" + idEmployee);
+            }
+
+            getStatisticsSearchInvoice(startAt, endAt, computerName, userName, idEmployee);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
     }
 
@@ -280,6 +351,9 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
         cboChonMay = new javax.swing.JComboBox<>();
         cboTenTaiKhoan = new javax.swing.JComboBox<>();
         cboNhanVien = new javax.swing.JComboBox<>();
+        chkComputer = new javax.swing.JCheckBox();
+        chkUsername = new javax.swing.JCheckBox();
+        chkIdEmployee = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblQuanLyHoaDon = new javax.swing.JTable();
@@ -356,6 +430,11 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
 
         btnTimKiem.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
         btnTimKiem.setText("Tìm kiếm");
+        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Source Code Pro", 2, 18)); // NOI18N
         jLabel5.setText("Chọn máy:");
@@ -375,20 +454,31 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
         cboNhanVien.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         cboNhanVien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        chkComputer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkComputerActionPerformed(evt);
+            }
+        });
+
+        chkUsername.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkUsernameActionPerformed(evt);
+            }
+        });
+
+        chkIdEmployee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkIdEmployeeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlTimKiemLayout = new javax.swing.GroupLayout(pnlTimKiem);
         pnlTimKiem.setLayout(pnlTimKiemLayout);
         pnlTimKiemLayout.setHorizontalGroup(
             pnlTimKiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTimKiemLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlTimKiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlTimKiemLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(107, 107, 107)
-                        .addGroup(pnlTimKiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cboNhanVien, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cboTenTaiKhoan, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cboChonMay, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(pnlTimKiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlTimKiemLayout.createSequentialGroup()
                         .addGroup(pnlTimKiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(btnLamMoi)
@@ -404,20 +494,31 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTimKiemLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(28, 28, 28)))))
-                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(28, 28, 28))))
+                    .addGroup(pnlTimKiemLayout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(43, 43, 43)
+                        .addComponent(cboChonMay, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(chkComputer))))
             .addGroup(pnlTimKiemLayout.createSequentialGroup()
+                .addGap(173, 173, 173)
+                .addComponent(jLabel2))
+            .addGroup(pnlTimKiemLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlTimKiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7))
+                .addGap(18, 18, 18)
                 .addGroup(pnlTimKiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlTimKiemLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel6))
+                        .addComponent(cboNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(chkIdEmployee))
                     .addGroup(pnlTimKiemLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel7))
-                    .addGroup(pnlTimKiemLayout.createSequentialGroup()
-                        .addGap(173, 173, 173)
-                        .addComponent(jLabel2)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(cboTenTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(chkUsername))))
         );
         pnlTimKiemLayout.setVerticalGroup(
             pnlTimKiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -429,26 +530,33 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlTimKiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTuNgay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDenNgay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
-                .addGroup(pnlTimKiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(cboChonMay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addGroup(pnlTimKiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(cboTenTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addGroup(pnlTimKiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(cboNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnlTimKiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pnlTimKiemLayout.createSequentialGroup()
+                        .addGroup(pnlTimKiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(pnlTimKiemLayout.createSequentialGroup()
+                                .addGroup(pnlTimKiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtTuNgay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtDenNgay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(23, 23, 23)
+                                .addGroup(pnlTimKiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel5)
+                                    .addComponent(cboChonMay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(chkComputer, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(20, 20, 20)
+                                .addGroup(pnlTimKiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel6)
+                                    .addComponent(cboTenTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(chkUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(26, 26, 26)
+                        .addGroup(pnlTimKiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(cboNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(chkIdEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(48, 48, 48)
                 .addGroup(pnlTimKiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(627, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -592,7 +700,7 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
         if (SwingUtilities.isLeftMouseButton(evt)) {
             index = tblQuanLyHoaDon.getSelectedRow();
             int idHd = (int) tblQuanLyHoaDon.getValueAt(index, 1);
-            System.out.println(index + " IdHd: " + idHd);
+            System.out.println("Row: " + index + " IdHd: " + idHd);
         } else {
             index = tblQuanLyHoaDon.getSelectedRow();
             int idHd = (int) tblQuanLyHoaDon.getValueAt(index, 1);
@@ -602,6 +710,38 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
 
     private void mnitXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnitXoaActionPerformed
         // TODO add your handling code here:
+        index = tblQuanLyHoaDon.getSelectedRow();
+        int idHd = (int) tblQuanLyHoaDon.getValueAt(index, 1);
+        int comfirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa?", "Thay đổi dữ liệu", JOptionPane.YES_NO_OPTION);
+        try {
+            InvoiceDetailDAO iDetailDao = new InvoiceDetailDAO();
+            InvoiceDetail iDetail = new InvoiceDetail();
+            SessionDAO sesDao = new SessionDAO();
+            Session sess = new Session();
+            if (comfirm == JOptionPane.YES_OPTION) {
+                if (sess == null && iDetail == null) {
+                    invoiceDAO.delete(idHd);
+                    System.out.println("Xóa hóa đơn có id: " + idHd);
+                } else if (sess == null && iDetail != null) {
+                    iDetailDao.delete(iDetail.getId());
+                    invoiceDAO.delete(idHd);
+                    System.out.println("Xoa thanh cong HDCT => Id: " + iDetail.getId());
+                } else if (sess != null && iDetail == null) {
+                    sesDao.delete(sess.getId());
+                    invoiceDAO.delete(idHd);
+                    System.out.println("Xoa thanh cong Session => Id: " + sess.getId());
+                } else {
+                    iDetailDao.delete(iDetail.getId());
+                    sesDao.delete(sess.getId());
+                    invoiceDAO.delete(idHd);
+                }
+                loadDataToArray();
+                fillToTable();
+            }
+        } catch (Exception e) {
+            System.out.println("xoa khong thanhg cong");
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_mnitXoaActionPerformed
 
     private void mnitHoaDonChiTietMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnitHoaDonChiTietMouseClicked
@@ -620,6 +760,45 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
         fillToTableNotFinish();
     }//GEN-LAST:event_btnHoaDonChuaXuliActionPerformed
 
+    private void chkComputerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkComputerActionPerformed
+        // TODO add your handling code here:
+        if (chkComputer.isSelected()) {
+            // Nếu checkbox được chọn, thực hiện việc điền dữ liệu vào ComboBox
+            fillCboComputer();
+        } else {
+            // Nếu checkbox không được chọn, xoá tất cả các mục trong ComboBox
+            cboChonMay.removeAllItems();
+        }
+    }//GEN-LAST:event_chkComputerActionPerformed
+
+    private void chkUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkUsernameActionPerformed
+        // TODO add your handling code here:
+        if (chkUsername.isSelected()) {
+            fillCboUserName();
+        } else {
+            cboTenTaiKhoan.removeAllItems();
+        }
+    }//GEN-LAST:event_chkUsernameActionPerformed
+
+    private void chkIdEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkIdEmployeeActionPerformed
+        // TODO add your handling code here:
+        if (chkIdEmployee.isSelected()) {
+            fillCboIdEmployee();
+        } else {
+            cboNhanVien.removeAllItems();
+        }
+    }//GEN-LAST:event_chkIdEmployeeActionPerformed
+
+    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
+        // TODO add your handling code here:
+        try {
+            search();
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+    }//GEN-LAST:event_btnTimKiemActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHienTatCa;
@@ -629,6 +808,9 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> cboChonMay;
     private javax.swing.JComboBox<String> cboNhanVien;
     private javax.swing.JComboBox<String> cboTenTaiKhoan;
+    private javax.swing.JCheckBox chkComputer;
+    private javax.swing.JCheckBox chkIdEmployee;
+    private javax.swing.JCheckBox chkUsername;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
