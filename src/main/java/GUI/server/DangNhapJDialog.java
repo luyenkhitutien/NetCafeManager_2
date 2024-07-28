@@ -132,7 +132,7 @@ public class DangNhapJDialog extends javax.swing.JDialog {
 
         pnlAnh.setLayout(null);
 
-        jLabel1.setFont(new java.awt.Font("Source Code Pro", 1, 36)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Monospaced", 1, 32)); // NOI18N
         jLabel1.setText("ĐĂNG NHẬP");
 
         jLabel2.setFont(new java.awt.Font("Source Code Pro", 3, 20)); // NOI18N
@@ -141,9 +141,9 @@ public class DangNhapJDialog extends javax.swing.JDialog {
         jLabel3.setFont(new java.awt.Font("Source Code Pro", 3, 20)); // NOI18N
         jLabel3.setText("Mật khẩu:");
 
-        txtDangNhap.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtDangNhap.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
 
-        txtMatKhau.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtMatKhau.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
         txtMatKhau.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtMatKhauActionPerformed(evt);
@@ -180,37 +180,36 @@ public class DangNhapJDialog extends javax.swing.JDialog {
                 .addGap(27, 27, 27)
                 .addGroup(pnlFormDangNhapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlFormDangNhapLayout.createSequentialGroup()
+                        .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 242, Short.MAX_VALUE)
+                        .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlFormDangNhapLayout.createSequentialGroup()
                         .addGroup(pnlFormDangNhapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3))
                         .addGap(32, 32, 32)
                         .addGroup(pnlFormDangNhapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlFormDangNhapLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(txtMatKhau)
-                            .addComponent(txtDangNhap)))
-                    .addGroup(pnlFormDangNhapLayout.createSequentialGroup()
-                        .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtDangNhap))))
                 .addGap(25, 25, 25))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFormDangNhapLayout.createSequentialGroup()
-                .addContainerGap(173, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(170, 170, 170))
         );
         pnlFormDangNhapLayout.setVerticalGroup(
             pnlFormDangNhapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlFormDangNhapLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlFormDangNhapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtDangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(48, 48, 48)
+                    .addComponent(txtDangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addGroup(pnlFormDangNhapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addGap(26, 26, 26)
+                .addGap(34, 34, 34)
                 .addGroup(pnlFormDangNhapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
