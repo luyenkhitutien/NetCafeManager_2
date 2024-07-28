@@ -130,10 +130,6 @@ public class DangNhapJDialog extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 179, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(161, 161, 161))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -152,6 +148,10 @@ public class DangNhapJDialog extends javax.swing.JDialog {
                             .addComponent(txtDangNhap, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
                             .addComponent(txtMatKhau))))
                 .addGap(17, 17, 17))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(167, 167, 167)
+                .addComponent(jLabel1)
+                .addContainerGap(167, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,7 +172,7 @@ public class DangNhapJDialog extends javax.swing.JDialog {
         );
 
         pnlAnh.add(jPanel1);
-        jPanel1.setBounds(640, 460, 520, 270);
+        jPanel1.setBounds(640, 460, 510, 270);
 
         lblAnh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BGLoginClient.gif"))); // NOI18N
         lblAnh.setMaximumSize(new java.awt.Dimension(1920, 1080));
