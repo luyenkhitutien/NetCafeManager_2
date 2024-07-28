@@ -399,46 +399,21 @@ private ServerMain serverMain;
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblQuanLyTaiKhoanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblQuanLyTaiKhoanMouseClicked
-        current = tblQuanLyTaiKhoan.getSelectedRow();
-        System.out.println(current);
+        if (SwingUtilities.isLeftMouseButton(evt)) {
+            current = tblQuanLyTaiKhoan.getSelectedRow();
+            System.out.println(current);
+        } else {
+            current = tblQuanLyTaiKhoan.getSelectedRow();
+            System.out.println(current);
+        }
+//        current = tblQuanLyTaiKhoan.getSelectedRow();
+//        System.out.println(current);
 
     }//GEN-LAST:event_tblQuanLyTaiKhoanMouseClicked
 
     private void mnitChiTietActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnitChiTietActionPerformed
         // TODO add your handling code here:
         String rl = (String) tblQuanLyTaiKhoan.getValueAt(current, 4);
-        System.out.println(rl);
-        try {
-            if (rl.trim().equalsIgnoreCase("hội viên")) {
-
-                JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-                ThemTaiKhoanHoiVienJDialog taoHoiVien = null;
-                try {
-                    taoHoiVien = new ThemTaiKhoanHoiVienJDialog(frame, true);
-                } catch (Exception ex) {
-                    Logger.getLogger(QuanLyTaiKhoanJPanel.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                taoHoiVien.setVisible(true);
-            } else {
-
-                JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-                ThemTaiKhoanNhanVienJDialog taoNhanVien = new ThemTaiKhoanNhanVienJDialog(frame, true);
-                taoNhanVien.setVisible(true);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-    }//GEN-LAST:event_mnitChiTietActionPerformed
-    
-    private void mnitChiTietMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnitChiTietMouseClicked
-
-    }//GEN-LAST:event_mnitChiTietMouseClicked
-    private void mnitChiTietActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        // TODO add your handling code here:
-         String rl = (String) tblQuanLyTaiKhoan.getValueAt(current, 4);
         System.out.println(rl); // => sys role
         current = tblQuanLyTaiKhoan.getSelectedRow();
         try {
@@ -483,17 +458,37 @@ private ServerMain serverMain;
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-    private void tblQuanLyTaiKhoanMouseClicked(java.awt.event.MouseEvent evt) {                                               
-        if (SwingUtilities.isLeftMouseButton(evt)) {
-            current = tblQuanLyTaiKhoan.getSelectedRow();
-            System.out.println(current);
-        } else {
-            current = tblQuanLyTaiKhoan.getSelectedRow();
-            System.out.println(current);
-        }
+//        String rl = (String) tblQuanLyTaiKhoan.getValueAt(current, 4);
+//        System.out.println(rl);
+//        try {
+//            if (rl.trim().equalsIgnoreCase("hội viên")) {
+//
+//                JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+//                ThemTaiKhoanHoiVienJDialog taoHoiVien = null;
+//                try {
+//                    taoHoiVien = new ThemTaiKhoanHoiVienJDialog(frame, true);
+//                } catch (Exception ex) {
+//                    Logger.getLogger(QuanLyTaiKhoanJPanel.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//                taoHoiVien.setVisible(true);
+//            } else {
+//
+//                JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+//                ThemTaiKhoanNhanVienJDialog taoNhanVien = new ThemTaiKhoanNhanVienJDialog(frame, true);
+//                taoNhanVien.setVisible(true);
+//            }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
-    } 
+
+    }//GEN-LAST:event_mnitChiTietActionPerformed
+    
+    private void mnitChiTietMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnitChiTietMouseClicked
+
+    }//GEN-LAST:event_mnitChiTietMouseClicked
+
     private void btnThemNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemNhanVienActionPerformed
         // TODO add your handling code here:
          JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
