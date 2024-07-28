@@ -57,5 +57,6 @@ public class Xnoti {
     }
        public void ThanhBinbucu(){
            System.out.println("Bin bú lồn");
+           System.out.println("Test push 1 đoạn code");
        }
 }
