@@ -28,30 +28,31 @@ import utils.Xnoti;
  * @author ASUS
  */
 public class ChiTietHoaDonJDialog extends javax.swing.JDialog {
+
     private final int invoiceID;
-    
+
     private int current = 0;
     private InvoiceDetail invoiceDetail;
     private Session session;
     private Product product;
     private Invoice invoice;
-    
+
     InvoiceDetailDAO invoiceDetailDAO = new InvoiceDetailDAO();
     InvoiceDAO invoiceDAO = new InvoiceDAO();
     SessionDAO sessionDAO = new SessionDAO();
     ProductDAO productDAO = new ProductDAO();
-    
+
     List<InvoiceDetail> listInvoiceDetails = new ArrayList<>();
     List<Session> listSessions = new ArrayList<>();
-    
+
     DefaultTableModel modelInvoiceDetail = new DefaultTableModel();
     DefaultTableModel modelSession = new DefaultTableModel();
-    
+
     /**
      * Creates new form HoaDonChiTietJDialog
      */
     public ChiTietHoaDonJDialog(java.awt.Frame parent, boolean modal, int InvoiceID) {
-        
+
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
@@ -59,20 +60,19 @@ public class ChiTietHoaDonJDialog extends javax.swing.JDialog {
         this.invoiceID = InvoiceID;
         fillToTable();
         autoFinish();
-       
+
     }
 
     public void initTable() {
         XInitTable.initTable(tblInvoiceDetali, 5);
         XInitTable.initTable(tblSession, 6);
-        
+
         int[] widths = {50, 125, 125, 300, 300};
         XInitTable.setColumnWidths(tblSession, widths);
     }
 
-
     private void addPopupToTable() {
-        
+
         tblInvoiceDetali.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -98,19 +98,19 @@ public class ChiTietHoaDonJDialog extends javax.swing.JDialog {
             }
         });
     }
-    
-    private void loadDataToArray(){
+
+    private void loadDataToArray() {
         try {
             listInvoiceDetails = invoiceDetailDAO.selectByInvoiceID(this.invoiceID);
             listSessions = sessionDAO.selectByInvoiceID(this.invoiceID);
-            
+
             //Continue...
         } catch (Exception ex) {
             Logger.getLogger(ChiTietHoaDonJDialog.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    private void fillToTable(){
+
+    private void fillToTable() {
 
         this.loadDataToArray();
         //InvoiceDetailsTable
@@ -134,7 +134,7 @@ public class ChiTietHoaDonJDialog extends javax.swing.JDialog {
             };
             modelInvoiceDetail.addRow(row);
         }
-        
+
         //SessionsTable
         modelSession = (DefaultTableModel) tblSession.getModel();
         modelSession.setRowCount(0);
@@ -147,8 +147,7 @@ public class ChiTietHoaDonJDialog extends javax.swing.JDialog {
                 s.getComputerID(),
                 s.getStartTime(),
                 s.getEndTime(),
-                s.getTotalAmount(),
-            };
+                s.getTotalAmount(),};
             modelSession.addRow(row);
         }
     }
@@ -161,9 +160,9 @@ public class ChiTietHoaDonJDialog extends javax.swing.JDialog {
                 return false;
             }
         }
-        if(listSessions == null){
+        if (listSessions == null) {
             return false;
-        }else if(listSessions.isEmpty()){
+        } else if (listSessions.isEmpty()) {
             return false;
         }
         return true;
@@ -186,16 +185,16 @@ public class ChiTietHoaDonJDialog extends javax.swing.JDialog {
             }
         }
     }
-    
-    public void updataStatusInvoice(){
-        if(isFinish()){
+
+    public void updataStatusInvoice() {
+        if (isFinish()) {
             try {
-                invoice =  invoiceDAO.selectByID(invoiceID);
-                if(invoice.getStatus().equalsIgnoreCase("Hoàn thành")){
+                invoice = invoiceDAO.selectByID(invoiceID);
+                if (invoice.getStatus().equalsIgnoreCase("Hoàn thành")) {
                     return;
                 }
                 Integer memberID = invoice.getMemberID();
-                if(memberID != null && memberID != 0){
+                if (memberID != null && memberID != 0) {
                     invoice.setStatus("Hoàn thành");
                     invoiceDAO.update(invoice);
                     MainTest.mainForm.managerInvoice.loadDataToArray();
@@ -209,19 +208,19 @@ public class ChiTietHoaDonJDialog extends javax.swing.JDialog {
                         MainTest.mainForm.managerInvoice.fillToTable();
                     }
                 }
-                          
+
             } catch (Exception ex) {
                 Logger.getLogger(ChiTietHoaDonJDialog.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
 
-    private void updateStatus(){
-        
+    private void updateStatus() {
+
         invoiceDetail = new InvoiceDetail();
         current = tblInvoiceDetali.getSelectedRow();
-        int invoiceDetailID = Integer.parseInt( tblInvoiceDetali.getValueAt(current, 1 ).toString() );
-        
+        int invoiceDetailID = Integer.parseInt(tblInvoiceDetali.getValueAt(current, 1).toString());
+
         try {
             invoiceDetail = invoiceDetailDAO.selectByID(invoiceDetailID);
             invoiceDetail.setCompleted(true);
@@ -229,12 +228,11 @@ public class ChiTietHoaDonJDialog extends javax.swing.JDialog {
             loadDataToArray();
             fillToTable();
             updataStatusInvoice();
-         
+
         } catch (Exception ex) {
             Logger.getLogger(ChiTietHoaDonJDialog.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -427,7 +425,7 @@ public class ChiTietHoaDonJDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void mnitThayDoiTrangThaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnitThayDoiTrangThaiActionPerformed
-         updateStatus();
+        updateStatus();
     }//GEN-LAST:event_mnitThayDoiTrangThaiActionPerformed
 
     /**

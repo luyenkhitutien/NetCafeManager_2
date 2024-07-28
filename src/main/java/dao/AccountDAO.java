@@ -67,5 +67,9 @@ public class AccountDAO implements IBaseDAO<Account, Integer> {
         List<Account> list = selectBySQL(sql, username, password);
         return list.isEmpty() ? null : list.get(0);
     }
+    public List<Account> selectByName(String name) throws Exception {
+        String sql = "SELECT * FROM account WHERE username like ?";
+        return selectBySQL(sql, "%"+name+"%");
+    }
 }
 

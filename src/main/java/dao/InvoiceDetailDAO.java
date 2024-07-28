@@ -67,5 +67,10 @@ public class InvoiceDetailDAO implements IBaseDAO<InvoiceDetail, Integer> {
         String sql = "SELECT * FROM invoiceDetail WHERE invoiceID = ?";
         return selectBySQL(sql, id);
     }
+    public InvoiceDetail selectByHdCTId(Integer invoiceId)throws Exception{
+        String sql = " Select * from invoiceDetail where invoiceId = ?";
+        List<InvoiceDetail> list = selectBySQL(sql, invoiceId);
+        return list.isEmpty() ? null : list.get(0);
+    }
 }
 

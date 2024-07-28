@@ -55,6 +55,68 @@ public class StatisticsDAO {
             throw new RuntimeException(e);
         }
     }
+    public List<Object[]> getStatisticsInvoice(
+            java.util.Date dayBegin,
+            java.util.Date dayEnd,
+            String computerName,
+            String userName,
+            Integer idEmployee) {
+
+        List<Object[]> list = new ArrayList<>();
+        String sql = "{CALL sp_StatisticsInvoice(?, ?, ?, ?, ?)}";
+
+        try (Connection conn = JdbcHelper.getConnection(); CallableStatement stmt = conn.prepareCall(sql)) {
+
+            if (dayBegin != null) {
+                stmt.setDate(1, new java.sql.Date(dayBegin.getTime()));
+            } else {
+                stmt.setNull(1, java.sql.Types.DATE);
+            }
+
+            if (dayEnd != null) {
+                stmt.setDate(2, new java.sql.Date(dayEnd.getTime()));
+            } else {
+                stmt.setNull(2, java.sql.Types.DATE);
+            }
+
+            if (computerName != null) {
+                stmt.setString(3, computerName);
+            } else {
+                stmt.setNull(3, java.sql.Types.NVARCHAR);
+            }
+
+            if (userName != null) {
+                stmt.setString(4, userName);
+            } else {
+                stmt.setNull(4, java.sql.Types.NVARCHAR);
+            }
+
+            if (idEmployee != null) {
+                stmt.setInt(5, idEmployee);
+            } else {
+                stmt.setNull(5, java.sql.Types.INTEGER);
+            }
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Object[] row = {
+                        rs.getInt("IdHD"),
+                        rs.getInt("IdEmployee"),
+                        rs.getInt("IdMember"),
+                        rs.getTimestamp("createdAt"),
+                        rs.getString("status"),
+                        rs.getDouble("totalAmount")
+                    };
+                    list.add(row);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
     public List<Object[]> getStatisticsList(){
         String sql = "select e.ID,e.name,a.username,s.startTime,s.endTime,e.balance from employee e \n" +
 "				join account a on e.accountID = a.ID \n" +

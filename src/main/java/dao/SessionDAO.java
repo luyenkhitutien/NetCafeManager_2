@@ -67,5 +67,10 @@ public class SessionDAO implements IBaseDAO<Session, Integer> {
         String sql = "SELECT * FROM sessions WHERE invoiceID = ?";
         return selectBySQL(sql, invoiceID);
     }
+    public Session selectByHdId(int invoiceId)throws Exception{
+        String sql = "SELECT * FROM sessions where invoiceID = ?";
+        List<Session> list = selectBySQL(sql, invoiceId);
+        return list.isEmpty() ? null : list.get(0);
+    }
 }
 

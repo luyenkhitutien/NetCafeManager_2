@@ -26,6 +26,7 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
     public static Integer accountId;
     List<Member> listMember = new ArrayList<>();
     MemberDAO memberDAO = new MemberDAO();
+    Member mem = new Member();
     List<Account> listAccount = new ArrayList<>();
     Account account = new Account();
     AccountDAO accountDAO =  new AccountDAO();
@@ -70,6 +71,7 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
         account.setCreatedAt(new Date());
         return account;
     }
+    
     Member getFormMem_Insert() {
         Member mem = new Member();
         if (!txtIDTaiKhoan.getText().trim().isEmpty()) {

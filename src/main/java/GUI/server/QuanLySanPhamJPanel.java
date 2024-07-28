@@ -111,10 +111,10 @@ public class QuanLySanPhamJPanel extends javax.swing.JPanel  {
                 tsp.getLblPicture().setIcon(null);
                 tsp.getLblPicture().setText("Don't have image yet!");
             }
-            if(p.getType().equalsIgnoreCase("Đồ Ăn")){
+            if(p.getType().trim().equalsIgnoreCase("Đồ Ăn")){
                 tsp.getCboType().setSelectedIndex(1);
             }
-            if(p.getType().equalsIgnoreCase("Nước Uống")){
+            else if(p.getType().trim().equalsIgnoreCase("Nước Uống")){
                 tsp.getCboType().setSelectedIndex(0);
             }else{
                 tsp.getCboType().setSelectedIndex(2);

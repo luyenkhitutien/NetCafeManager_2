@@ -13,9 +13,7 @@ import entity.Account;
  */
 public class Auth {
     public static AccountDAO  accDao = new AccountDAO();
-    
-    
-    
+    public static boolean isAdminLogin = false;
     public static boolean isAdmin (Account account)throws Exception{
         return !isEmployee(account) && !isMembers(account);
     }
@@ -31,4 +29,5 @@ public class Auth {
         }
         return account.getRole().equalsIgnoreCase("Hội viên");
     }
+    
 }
