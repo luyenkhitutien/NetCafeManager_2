@@ -77,7 +77,14 @@ public class Cilent extends javax.swing.JFrame {
         TinNhanJDialog tinnhan = new TinNhanJDialog(frame, true);
         tinnhan.setVisible(true);
     }
-
+    
+   public class TimeUsage{
+       int hoursUsed =0;
+       int minutesUsed = 0;
+       int secondsUsed = 0;
+       BigDecimal amountUsed = BigDecimal.ZERO;
+   }
+    
     private void setBalanceClient(BigDecimal balance, BigDecimal price) {
         txtSoDu.setText(balance.toString());
         System.out.println("Đang sử dụng máy có giá: " + price);

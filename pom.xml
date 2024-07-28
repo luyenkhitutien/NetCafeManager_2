@@ -45,5 +45,5 @@
             </plugin>
         </plugins>
     </build>
-    
+    <name>NetCafeManager_git</name>
 </project>
