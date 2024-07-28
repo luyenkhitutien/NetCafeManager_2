@@ -78,7 +78,8 @@ public class Cilent extends javax.swing.JFrame {
         tinnhan.setVisible(true);
     }
     
-   public class TimeUsage{
+    
+    public class TimeUsage{
        int hoursUsed =0;
        int minutesUsed = 0;
        int secondsUsed = 0;
