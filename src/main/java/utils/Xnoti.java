@@ -32,7 +32,7 @@ public class Xnoti {
     public static void msd(Component parent,String msd,String title){
         JOptionPane.showMessageDialog(parent, msd, msd, 0);
     }
-    public static void msdTest(Component parent,String msd,String title){
+    public static void msdTest123(Component parent,String msd,String title){
         JOptionPane.showMessageDialog(parent, msd, msd, 0);
     }
        public static void showTrayMessage(String caption, String text, TrayIcon.MessageType messageType) {
