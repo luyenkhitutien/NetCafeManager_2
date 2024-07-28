@@ -97,27 +97,27 @@ public class DangNhapJDialog extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Monospaced", 1, 34)); // NOI18N
         jLabel1.setText("ĐĂNG NHẬP");
 
-        jLabel2.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Source Code Pro", 1, 20)); // NOI18N
         jLabel2.setText("Tài khoản:");
 
-        jLabel3.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Source Code Pro", 1, 20)); // NOI18N
         jLabel3.setText("Mật khẩu:");
 
-        txtDangNhap.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtDangNhap.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
         txtDangNhap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDangNhapActionPerformed(evt);
             }
         });
 
-        txtMatKhau.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtMatKhau.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
         txtMatKhau.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtMatKhauKeyPressed(evt);
             }
         });
 
-        btnLogin.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
+        btnLogin.setFont(new java.awt.Font("Source Code Pro", 1, 20)); // NOI18N
         btnLogin.setText("Login");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
