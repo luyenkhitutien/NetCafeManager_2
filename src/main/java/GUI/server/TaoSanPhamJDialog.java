@@ -4,6 +4,7 @@
  */
 package GUI.server;
 
+import Interface.UpdateListener;
 import dao.ProductDAO;
 import entity.Product;
 import java.awt.Dimension;
@@ -29,6 +30,11 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
     /**
      * Creates new form TaoSanPhamJDialog
      */
+    private UpdateListener listener;
+
+    public void setProductListener(UpdateListener listener) {
+        this.listener = listener;
+    }
     public TaoSanPhamJDialog(java.awt.Frame parent, boolean modal) {
          super(parent, modal);
         initComponents();

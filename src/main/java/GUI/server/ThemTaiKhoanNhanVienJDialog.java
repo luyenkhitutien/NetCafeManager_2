@@ -216,6 +216,8 @@ public static Integer accountId;
         jLabel13 = new javax.swing.JLabel();
         txtTaoLuc = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        txtTongLuong = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -228,17 +230,17 @@ public static Integer accountId;
         jLabel2.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
         jLabel2.setText("ID tài khoản:");
         jPanel2.add(jLabel2);
-        jLabel2.setBounds(30, 74, 101, 21);
+        jLabel2.setBounds(30, 74, 102, 21);
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
         jLabel3.setText("Tên tài khoản:");
         jPanel2.add(jLabel3);
-        jLabel3.setBounds(30, 138, 109, 21);
+        jLabel3.setBounds(30, 138, 110, 21);
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
         jLabel4.setText("Mật khẩu:");
         jPanel2.add(jLabel4);
-        jLabel4.setBounds(30, 211, 76, 21);
+        jLabel4.setBounds(30, 211, 78, 21);
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
         jLabel5.setText("Vai trò:");
@@ -247,15 +249,15 @@ public static Integer accountId;
 
         txtIDTaiKhoan.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
         jPanel2.add(txtIDTaiKhoan);
-        txtIDTaiKhoan.setBounds(189, 70, 260, 33);
+        txtIDTaiKhoan.setBounds(189, 70, 260, 29);
 
         txtTenTaiKhoan.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
         jPanel2.add(txtTenTaiKhoan);
-        txtTenTaiKhoan.setBounds(189, 134, 260, 33);
+        txtTenTaiKhoan.setBounds(189, 134, 260, 29);
 
         txtMatKhau.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
         jPanel2.add(txtMatKhau);
-        txtMatKhau.setBounds(189, 207, 260, 33);
+        txtMatKhau.setBounds(189, 207, 260, 29);
 
         cboVaiTro.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         cboVaiTro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nhân Viên", "Admin" }));
@@ -265,17 +267,17 @@ public static Integer accountId;
             }
         });
         jPanel2.add(cboVaiTro);
-        cboVaiTro.setBounds(189, 287, 260, 34);
+        cboVaiTro.setBounds(189, 287, 260, 30);
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
         jLabel6.setText("ID nhân viên:");
         jPanel2.add(jLabel6);
-        jLabel6.setBounds(527, 74, 103, 21);
+        jLabel6.setBounds(527, 74, 105, 21);
 
         jLabel7.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
         jLabel7.setText("Tên nhân viên:");
         jPanel2.add(jLabel7);
-        jLabel7.setBounds(527, 138, 111, 21);
+        jLabel7.setBounds(527, 138, 113, 21);
 
         jLabel8.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
         jLabel8.setText("Lương  (vnd/giờ)");
@@ -302,7 +304,7 @@ public static Integer accountId;
         jLabel11.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
         jLabel11.setText("Thông tin khác:");
         jPanel2.add(jLabel11);
-        jLabel11.setBounds(30, 354, 118, 21);
+        jLabel11.setBounds(30, 354, 120, 21);
 
         txtThongTinKhac.setColumns(20);
         txtThongTinKhac.setRows(5);
@@ -318,19 +320,19 @@ public static Integer accountId;
             }
         });
         jPanel2.add(txtIDNhanVIen);
-        txtIDNhanVIen.setBounds(667, 70, 307, 33);
+        txtIDNhanVIen.setBounds(667, 70, 307, 29);
 
         txtTenNhanVien.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
         jPanel2.add(txtTenNhanVien);
-        txtTenNhanVien.setBounds(667, 134, 307, 33);
+        txtTenNhanVien.setBounds(667, 134, 307, 29);
 
         txtLuong.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
         jPanel2.add(txtLuong);
-        txtLuong.setBounds(671, 207, 303, 33);
+        txtLuong.setBounds(671, 207, 303, 29);
 
         txtSoDienThoai.setFont(new java.awt.Font("Dialog", 0, 17)); // NOI18N
         jPanel2.add(txtSoDienThoai);
-        txtSoDienThoai.setBounds(667, 290, 307, 33);
+        txtSoDienThoai.setBounds(667, 290, 307, 29);
 
         txtTao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Luu1.png"))); // NOI18N
 
@@ -376,21 +378,33 @@ public static Integer accountId;
         );
 
         jPanel2.add(jPanel3);
-        jPanel3.setBounds(1, 493, 985, 64);
+        jPanel3.setBounds(1, 493, 985, 62);
 
         jLabel13.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
         jLabel13.setText("Tạo lúc:");
         jPanel2.add(jLabel13);
-        jLabel13.setBounds(30, 452, 62, 21);
+        jLabel13.setBounds(30, 452, 64, 21);
 
         txtTaoLuc.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jPanel2.add(txtTaoLuc);
-        txtTaoLuc.setBounds(189, 447, 785, 34);
+        txtTaoLuc.setBounds(189, 447, 785, 30);
 
         jLabel12.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel12.setText("TÀI KHOẢN NHÂN VIÊN");
         jPanel2.add(jLabel12);
-        jLabel12.setBounds(400, 10, 211, 21);
+        jLabel12.setBounds(400, 10, 216, 21);
+
+        jLabel14.setText("Tổng Lương");
+        jPanel2.add(jLabel14);
+        jLabel14.setBounds(530, 250, 120, 30);
+
+        txtTongLuong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTongLuongActionPerformed(evt);
+            }
+        });
+        jPanel2.add(txtTongLuong);
+        txtTongLuong.setBounds(670, 250, 300, 30);
 
         jPanel1.add(jPanel2);
         jPanel2.setBounds(70, 17, 1000, 600);
@@ -420,6 +434,10 @@ public static Integer accountId;
     private void cboVaiTroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboVaiTroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cboVaiTroActionPerformed
+
+    private void txtTongLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTongLuongActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTongLuongActionPerformed
 
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {                                          
         // TODO add your handling code here:
@@ -515,6 +533,7 @@ public static Integer accountId;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -539,5 +558,6 @@ public static Integer accountId;
     private javax.swing.JTextField txtTenNhanVien;
     private javax.swing.JTextField txtTenTaiKhoan;
     private javax.swing.JTextArea txtThongTinKhac;
+    private javax.swing.JTextField txtTongLuong;
     // End of variables declaration//GEN-END:variables
 }

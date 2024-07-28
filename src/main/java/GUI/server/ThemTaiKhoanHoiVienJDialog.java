@@ -104,7 +104,8 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
         txtTenTaiKhoan.setText(account.getUsername());
         txtMatKhau.setText(account.getPassword());
         txtTaoLuc.setText(String.valueOf(account.getCreatedAt()));
-
+        
+        Member mem = new Member();
         mem = memberDAO.selectByAccountID(account.getId());
         System.out.println(mem);
         txtIDHoiVien.setText(String.valueOf(mem.getId()));
