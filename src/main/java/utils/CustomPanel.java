@@ -16,7 +16,7 @@ import java.awt.image.Kernel;
  */
 
 public class CustomPanel extends JPanel {
-    private int radius = 30;
+    private int radius = 25;
     private float transparency = 0.7f;
     private boolean blur = true;
     private BufferedImage backgroundImage;
