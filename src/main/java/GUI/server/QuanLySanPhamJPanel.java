@@ -131,7 +131,34 @@ public class QuanLySanPhamJPanel extends javax.swing.JPanel  {
         }
         
     }
-
+   void search(){
+        // TODO add your handling code here:
+         Product pro = new Product();
+        try {
+            if(txtTimKiem.getText().trim().equalsIgnoreCase("")){
+                loadDataToTable();
+                fillToTable();
+            }else{
+                if(searchId(txtTimKiem.getText())){
+                    STT = 1;
+                    list.clear();
+                     pro = proDao.selectByID(Integer.parseInt(txtTimKiem.getText()));
+                    if(pro != null){
+                        list.add(pro);
+                        System.out.println("Search for productId: "+pro.getId());
+                        fillToTable();
+                    }
+                }else{
+                    STT = 1;
+                    list.clear();
+                    list = proDao.searchByName(txtTimKiem.getText());
+                    fillToTable();
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Khong tim duoc san pham ID: "+pro.getId()+" Ten: "+pro.getName());
+        }
+   }
  public void openDialog() {
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
         TaoSanPhamJDialog dialog = new TaoSanPhamJDialog(frame, true);
@@ -320,6 +347,11 @@ public class QuanLySanPhamJPanel extends javax.swing.JPanel  {
         txtTimKiem.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/KinhLup.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -399,33 +431,13 @@ public class QuanLySanPhamJPanel extends javax.swing.JPanel  {
     }//GEN-LAST:event_itXemActionPerformed
 
     private void txtTimKiemKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyPressed
-        // TODO add your handling code here:
-         Product pro = new Product();
-        try {
-            if(txtTimKiem.getText().trim().equalsIgnoreCase("")){
-                loadDataToTable();
-                fillToTable();
-            }else{
-                if(searchId(txtTimKiem.getText())){
-                    STT = 1;
-                    list.clear();
-                     pro = proDao.selectByID(Integer.parseInt(txtTimKiem.getText()));
-                    if(pro != null){
-                        list.add(pro);
-                        System.out.println("Search for productId: "+pro.getId());
-                        fillToTable();
-                    }
-                }else{
-                    STT = 1;
-                    list.clear();
-                    list = proDao.searchByName(txtTimKiem.getText());
-                    fillToTable();
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Khong tim duoc san pham ID: "+pro.getId()+" Ten: "+pro.getName());
-        }
+       search();
     }//GEN-LAST:event_txtTimKiemKeyPressed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+            // TODO add your handling code here:
+            search();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
