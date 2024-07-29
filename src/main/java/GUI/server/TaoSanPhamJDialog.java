@@ -265,9 +265,9 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
         jLabel7.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
         jLabel7.setText("Mô tả:");
 
-        txtTenSanPham.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtTenSanPham.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
 
-        txtGia.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtGia.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
 
         btnLuu.setFont(new java.awt.Font("Monospaced", 1, 20)); // NOI18N
         btnLuu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save.png"))); // NOI18N
@@ -309,6 +309,7 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
             }
         });
 
+        lblPicture.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
         lblPicture.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         lblPicture.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -320,7 +321,7 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
         jLabel5.setText("ID sản phẩm:");
 
         txtIDSanPham.setEditable(false);
-        txtIDSanPham.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        txtIDSanPham.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
 
         cboType.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
 
@@ -388,13 +389,13 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblPicture, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
-                .addGap(56, 56, 56)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addGap(58, 58, 58)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnXoa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnLamMoi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnLuu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pnlChinh.add(jPanel2);
