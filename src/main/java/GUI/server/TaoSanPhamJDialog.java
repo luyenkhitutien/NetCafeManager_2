@@ -8,13 +8,13 @@ import Interface.UpdateListener;
 import dao.ProductDAO;
 import entity.Product;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -25,6 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import utils.Ximage;
+import utils.Xnoti;
 
 /**
  *
@@ -82,7 +83,6 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
 
     Product getFormInsert() {
         Product product = new Product();
-//       product.setId(Integer.parseInt(txtIDSanPham.getText()));
         product.setName(txtTenSanPham.getText());
         product.setPrice(BigDecimal.valueOf(Double.parseDouble(txtGia.getText())));
         product.setDescription(lblPicture.getToolTipText());
@@ -107,49 +107,115 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
             ImageIcon icon = Ximage.read(file.getName());
             lblPicture.setIcon(icon);
             lblPicture.setToolTipText(file.getName());
-//          lblPicture.setText(null);
         }
     }
 
-    void insert() {
-        Product product = getFormInsert();
-        ProductDAO proDao = new ProductDAO();
-//      QuanLySanPhamJPanel qlsp = new QuanLySanPhamJPanel();
-        try {
-            proDao.insert(product);
-            System.out.println("Them thanh cong");
-            fillOnUpdate();
-            System.out.println(listener);
-            JOptionPane.showMessageDialog(this, "Them Thanh Cong");
-        } catch (Exception e) {
-            System.out.println("Them that bai");
+    private void insert() {
+        if (valiDateForm_insert()) {
+            Product product = getFormInsert();
+            ProductDAO proDao = new ProductDAO();
+            try {
+                proDao.insert(product);
+                System.out.println("Them thanh cong");
+                fillOnUpdate();
+                System.out.println(listener);
+                JOptionPane.showMessageDialog(this, "Them Thanh Cong");
+            } catch (Exception e) {
+                System.out.println("Them that bai");
+            }
+        }
+
+    }
+
+    private void update() {
+
+        if (valiDateForm_update()) {
+            Product product = getForm();
+            ProductDAO proDao = new ProductDAO();
+            try {
+                proDao.update(product);
+                fillOnUpdate();
+                System.out.println("Cap nhat thanh cong");
+            } catch (Exception e) {
+                System.out.println("cap nhat that bai");
+                e.printStackTrace();
+            }
         }
     }
 
-    void update() {
-        Product product = getForm();
-        ProductDAO proDao = new ProductDAO();
-        try {
-            proDao.update(product);
-            fillOnUpdate();
-            System.out.println("Cap nhat thanh cong");
-        } catch (Exception e) {
-            System.out.println("cap nhat that bai");
-            e.printStackTrace();
+    private void reset() {
+
+        txtIDSanPham.setText(null);
+        txtGia.setText(null);
+        txtTenSanPham.setText(null);
+        lblPicture.setText(null);
+        lblPicture.setIcon(null);
+    }
+    
+    private void delete() {
+        if (!txtIDSanPham.getText().trim().isEmpty()) {
+            
+            ProductDAO proDao = new ProductDAO();
+            int IDSanPham = Integer.parseInt(txtIDSanPham.getText());
+            try {
+                proDao.delete(IDSanPham);
+                System.out.println("Sản phẩm có ID là: "+IDSanPham);
+                fillOnUpdate();
+            } catch (Exception ex) {
+                Logger.getLogger(TaoSanPhamJDialog.class.getName()).log(Level.SEVERE, null, ex);
+            }       
+            Xnoti.msg(this, "Xóa thành công sản phẩm có ID: "+IDSanPham, "Thông báo");
+            
+        } else {
+            Xnoti.msg(this, "erro: ID Sản phẩm rỗng!", "Thông báo");
         }
+        
     }
 
-    void delete() {
-        Product product = getForm();
-        ProductDAO proDao = new ProductDAO();
-        try {
-            proDao.delete(product.getId());
-            fillOnUpdate();
-            System.out.println("Xoa thanh cong san pham");
-        } catch (Exception e) {
-            System.out.println("Xoa khong thanh cong");
-            e.printStackTrace();
+    private boolean valiDateForm_update() {
+
+        if (txtIDSanPham.getText().isEmpty()) {
+            Xnoti.msg(this, "erro: ID Sản phẩm rỗng!", "Thông báo");
+            return false;
         }
+        if (txtTenSanPham.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: Tên sản phẩm rỗng!", "Thông báo");
+            txtTenSanPham.requestFocus();
+            return false;
+        }
+        if (txtGia.getText().trim().isEmpty()) {
+            Xnoti.msd(this, "erro: Giá sản phẩm rỗng! ", "Thông báo");
+            txtGia.requestFocus();
+            return false;
+        }
+        if (lblPicture.getIcon() == null) {
+            Xnoti.msg(this, "Erro: Ảnh sản phẩm rỗng!", "Thông báo");
+            lblPicture.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean valiDateForm_insert() {
+
+        if (txtTenSanPham.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: Tên sản phẩm rỗng!", "Thông báo");
+            txtTenSanPham.requestFocus();
+            return false;
+        }
+        if (txtGia.getText().trim().isEmpty()) {
+            Xnoti.msd(this, "erro: Giá sản phẩm rỗng! ", "Thông báo");
+            txtGia.requestFocus();
+            return false;
+        }
+        if (lblPicture.getIcon() == null) {
+            Xnoti.msg(this, "Erro: Ảnh sản phẩm rỗng!", "Thông báo");
+            lblPicture.requestFocus();
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -170,8 +236,8 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
         txtTenSanPham = new javax.swing.JTextField();
         txtGia = new javax.swing.JTextField();
         btnLuu = new javax.swing.JButton();
-        btnHuy = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnXoa = new javax.swing.JButton();
+        btnLamMoi = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         lblPicture = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -198,11 +264,6 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
         txtTenSanPham.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
         txtGia.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        txtGia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtGiaActionPerformed(evt);
-            }
-        });
 
         btnLuu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Luu1.png"))); // NOI18N
         btnLuu.addActionListener(new java.awt.event.ActionListener() {
@@ -211,17 +272,17 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
             }
         });
 
-        btnHuy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Xoa1.png"))); // NOI18N
-        btnHuy.addActionListener(new java.awt.event.ActionListener() {
+        btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Xoa1.png"))); // NOI18N
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHuyActionPerformed(evt);
+                btnXoaActionPerformed(evt);
             }
         });
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/LamMoi1.png"))); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnLamMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/LamMoi1.png"))); // NOI18N
+        btnLamMoi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnLamMoiActionPerformed(evt);
             }
         });
 
@@ -259,9 +320,9 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -322,8 +383,8 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(70, 70, 70))
         );
 
@@ -348,53 +409,30 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtGiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGiaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtGiaActionPerformed
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
 
-    private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
-        // TODO add your handling code here:
-        try {
-            delete();
-        } catch (Exception e) {
-        }
-//        dispose();
-    }//GEN-LAST:event_btnHuyActionPerformed
+        delete();
+    }//GEN-LAST:event_btnXoaActionPerformed
 
     private void lblPictureMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPictureMousePressed
-        // TODO add your handling code here:
-        if (evt.getClickCount() == 2) {
-            setImage();
-        }
+        // TODO add your handling code here:    
+        setImage();
     }//GEN-LAST:event_lblPictureMousePressed
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
-        // TODO add your handling code here:
-        try {
-            insert();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        // TODO add your handling code here
+        insert();
     }//GEN-LAST:event_btnLuuActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        try {
-            update();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // TODO add your handling code here: 
+        update();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
         // TODO add your handling code here:
-        txtIDSanPham.setText(null);
-        txtGia.setText(null);
-        txtTenSanPham.setText(null);
-        lblPicture.setText(null);
-        lblPicture.setIcon(null);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        reset();
+    }//GEN-LAST:event_btnLamMoiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -440,10 +478,10 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnHuy;
+    private javax.swing.JButton btnLamMoi;
     private javax.swing.JButton btnLuu;
+    private javax.swing.JButton btnXoa;
     private javax.swing.JComboBox<String> cboType;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -460,11 +498,11 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     public JButton getBtnHuy() {
-        return btnHuy;
+        return btnXoa;
     }
 
     public void setBtnHuy(JButton btnHuy) {
-        this.btnHuy = btnHuy;
+        this.btnXoa = btnHuy;
     }
 
     public JButton getBtnLuu() {
