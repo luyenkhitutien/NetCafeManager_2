@@ -64,11 +64,6 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
 
     private boolean valiDateGetForm() {
 
-        if (txtIDTaiKhoan.getText().trim().isEmpty()) {
-            Xnoti.msg(this, "erro: ID tài khoản rỗng!", "Thông báo");
-            txtIDTaiKhoan.requestFocus();
-            return false;
-        }
         if (txtTenTaiKhoan.getText().trim().isEmpty()) {
             Xnoti.msg(this, "erro: Tên tài khoản rỗng!", "Thông báo");
             txtTenTaiKhoan.requestFocus();
@@ -85,7 +80,6 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
 
     private Account getForm() {
         Account account = new Account();
-        account.setId(Integer.parseInt(txtIDTaiKhoan.getText()));
         account.setUsername(txtTenTaiKhoan.getText());
         account.setPassword(txtMatKhau.getText());
         account.setRole(String.valueOf(cboVaiTro.getSelectedItem()));
@@ -113,7 +107,6 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
     private Member getFormMem_Insert() {
 
         Member mem = new Member();
-        mem.setId(Integer.parseInt(txtIDTaiKhoan.getText()));
         mem.setAccountID(Integer.parseInt(txtIDHoiVien.getText()));
         mem.setName(txtTenHoiVien.getText());
         mem.setBalance(BigDecimal.valueOf(Double.parseDouble(txtSoDu.getText())));
@@ -255,7 +248,7 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
             Xnoti.msg(this, "Xóa Thành Công", "NetCaFe");
             fillOnUpdate();
         } catch (Exception e) {
-            System.out.println("Xoa HoiVien khong thanh cong");
+            Xnoti.msg(this, "Xóa không thành công, bạn cần phải xóa Id hội viên có trong hóa đơn trước.", "NetCaFe");
             e.printStackTrace();
         }
 
