@@ -398,6 +398,7 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
         jLabel9.setFont(new java.awt.Font("Source Code Pro", 1, 16)); // NOI18N
         jLabel9.setText("Tạo lúc:");
 
+        txtTaoLuc.setEditable(false);
         txtTaoLuc.setFont(new java.awt.Font("Source Code Pro", 0, 18)); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Source Code Pro", 1, 16)); // NOI18N

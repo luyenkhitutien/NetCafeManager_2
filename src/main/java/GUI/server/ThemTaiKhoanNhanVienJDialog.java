@@ -251,6 +251,7 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
         jPanel2.add(jLabel5);
         jLabel5.setBounds(20, 300, 100, 23);
 
+        txtIDTaiKhoan.setEditable(false);
         txtIDTaiKhoan.setFont(new java.awt.Font("Source Code Pro", 0, 18)); // NOI18N
         txtIDTaiKhoan.setPreferredSize(new java.awt.Dimension(250, 40));
         jPanel2.add(txtIDTaiKhoan);
@@ -419,6 +420,7 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
         jPanel2.add(jLabel13);
         jLabel13.setBounds(20, 370, 100, 23);
 
+        txtTaoLuc.setEditable(false);
         txtTaoLuc.setFont(new java.awt.Font("Source Code Pro", 0, 18)); // NOI18N
         txtTaoLuc.setPreferredSize(new java.awt.Dimension(250, 40));
         jPanel2.add(txtTaoLuc);
@@ -434,6 +436,7 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
         jPanel2.add(jLabel14);
         jLabel14.setBounds(520, 290, 160, 30);
 
+        txtTongLuong.setEditable(false);
         txtTongLuong.setFont(new java.awt.Font("Source Code Pro", 0, 18)); // NOI18N
         txtTongLuong.setPreferredSize(new java.awt.Dimension(250, 40));
         txtTongLuong.addActionListener(new java.awt.event.ActionListener() {
