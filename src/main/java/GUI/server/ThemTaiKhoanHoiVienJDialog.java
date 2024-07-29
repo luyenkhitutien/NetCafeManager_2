@@ -277,9 +277,7 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
                         .addComponent(txtIDTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel3)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -289,9 +287,7 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(15, 15, 15)
                                 .addComponent(txtTenTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cboVaiTro, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(cboVaiTro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -483,10 +479,10 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
         );
 
         pnlChinh.add(pnlTaiKhoan);
-        pnlTaiKhoan.setBounds(190, 140, 930, 410);
+        pnlTaiKhoan.setBounds(180, 170, 930, 410);
 
         lblBackGround.setFont(new java.awt.Font("Palatino Linotype", 1, 18)); // NOI18N
-        lblBackGround.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BGMemberManager.jpg"))); // NOI18N
+        lblBackGround.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BgThemHV.gif"))); // NOI18N
         pnlChinh.add(lblBackGround);
         lblBackGround.setBounds(0, 0, 1280, 720);
 
