@@ -256,7 +256,7 @@ public class IOServer {
                     }
                 } catch (SocketException e) {
                     System.out.println("Socket closed, stopping  for ComputerID: " + computerID);
-                    MainTest.mainForm.home.updateLabelColor(computer.getId(), Color.WHITE);
+                    MainTest.mainForm.home.updateLabelColor(computer.getId(), null);
                     break;
                 } catch (Exception ex) {
                     Logger.getLogger(IOServer.class.getName()).log(Level.SEVERE, null, ex);
@@ -450,7 +450,7 @@ public class IOServer {
             MainTest.mainForm.home.updateLabelColor(computer.getId(), UIManager.getColor("Component.background"));
             try {
                 computerDAO.update(computer);
-                MainTest.mainForm.home.updateLabelColor(computer.getId(), Color.WHITE);
+                MainTest.mainForm.home.updateLabelColor(computer.getId(), null);
             } catch (Exception ex) {
                 Logger.getLogger(IOServer.class.getName()).log(Level.SEVERE, null, ex);
             }
