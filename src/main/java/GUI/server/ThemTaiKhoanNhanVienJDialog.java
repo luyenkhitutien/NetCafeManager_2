@@ -29,11 +29,11 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
     Account acc = new Account();
     private UpdateListener listener;
 
-    void setEmployeeListener(UpdateListener listener) {
+    public void setEmployeeListener(UpdateListener listener) {
         this.listener = listener;
     }
 
-    void fillOnUpdate() {
+    private void fillOnUpdate() {
         if (listener != null) {
             listener.onUpdate();
         }
@@ -48,42 +48,60 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
 
     }
 
-    Account getForm() {
+    private Account getForm() {
+
         Account account = new Account();
-        if (!txtIDTaiKhoan.getText().trim().isEmpty()) {
-            account.setId(Integer.parseInt(txtIDTaiKhoan.getText()));
-        }
+
+//        account.setId(Integer.parseInt(txtIDTaiKhoan.getText()));
         account.setUsername(txtTenTaiKhoan.getText());
         account.setPassword(txtMatKhau.getText());
         account.setRole(String.valueOf(cboVaiTro.getSelectedItem()));
         account.setCreatedAt(new Date());
+
         return account;
     }
 
-    Employee getFormEm() {
+    private boolean valiDateForm_getForm() {
+
+        if (txtTenTaiKhoan.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: Tên Tài khoản rỗng!", "Thông báo");
+            txtTenTaiKhoan.requestFocus();
+            return false;
+        }
+        if (txtMatKhau.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: Mật khẩu rỗng!", "Thông báo");
+            txtMatKhau.requestFocus();
+            return false;
+        }
+        if (txtTenNhanVien.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: Tên nhân viên rỗng!", "Thông báo");
+            txtTenNhanVien.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+
+    private Employee getFormEm() {
+
         Employee em = new Employee();
-        if (!txtIDTaiKhoan.getText().trim().isEmpty()) {
-            em.setId(Integer.parseInt(txtIDTaiKhoan.getText()));
-        }
-        if (!txtIDNhanVIen.getText().trim().isEmpty()) {
-            em.setAccountID(Integer.parseInt(txtIDNhanVIen.getText()));
-        }
+//        em.setId(Integer.parseInt(txtIDTaiKhoan.getText()));
+        em.setAccountID(Integer.parseInt(txtIDNhanVIen.getText()));
         em.setName(txtTenNhanVien.getText());
         em.setSalaryPerHour(BigDecimal.valueOf(Double.parseDouble(txtLuong.getText())));
         em.setAddress(txtDiaChi.getText());
         em.setPhoneNumber(txtSoDienThoai.getText());
         em.setOtherInformation(txtThongTinKhac.getText());
+
         return em;
     }
 
-    Employee getFormEm_Update() {
+    private Employee getFormEm_Update() {
+
         Employee em = new Employee();
-        if (!txtIDTaiKhoan.getText().trim().isEmpty()) {
-            em.setAccountID(Integer.parseInt(txtIDTaiKhoan.getText()));
-        }
-        if (!txtIDNhanVIen.getText().trim().isEmpty()) {
-            em.setId(Integer.parseInt(txtIDNhanVIen.getText()));
-        }
+
+        em.setAccountID(Integer.parseInt(txtIDTaiKhoan.getText()));
+        em.setId(Integer.parseInt(txtIDNhanVIen.getText()));
         em.setName(txtTenNhanVien.getText());
         em.setSalaryPerHour(BigDecimal.valueOf(Double.parseDouble(txtLuong.getText())));
         em.setAddress(txtDiaChi.getText());
@@ -92,8 +110,78 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
         em.setBalance(BigDecimal.valueOf(Double.parseDouble(txtTongLuong.getText())));
         return em;
     }
+    
+    private boolean valiDateForm_update() {
+        if (txtIDTaiKhoan.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: ID Tài khoản rỗng!", "Thông báo");
+            return false;
+        }
+        if (txtIDNhanVIen.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: ID tài khoản nhân viên rỗng!", "Thông báo");
+            return false;
+        }
+        if (txtTenNhanVien.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: Tên nhân viên rỗng!", "Thông báo");
+            txtTenNhanVien.requestFocus();
+            return false;
+        }
+        if (txtLuong.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: Lương/giờ của nhân viên rỗng!", "Thông báo");
+            txtLuong.requestFocus();
+            return false;
+        }
+        if (txtDiaChi.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: Địa chỉ của nhân viên rỗng!", "Thông báo");
+            txtDiaChi.requestFocus();
+            return false;
+        }
+        if (txtSoDienThoai.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: Địa chỉ của nhân viên rỗng!", "Thông báo");
+            txtSoDienThoai.requestFocus();
+            return false;
+        }
+        
 
-    void setForm(Integer id) throws Exception {
+        return true;
+    }
+
+    private boolean valiDateForm_insert() {
+        
+        if (txtTenNhanVien.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: Tên nhân viên rỗng!", "Thông báo");
+            txtTenNhanVien.requestFocus();
+            return false;
+        }
+        if (txtLuong.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: Lương/giờ của nhân viên rỗng!", "Thông báo");
+            txtLuong.requestFocus();
+            return false;
+        }
+        if (txtDiaChi.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: Địa chỉ của nhân viên rỗng!", "Thông báo");
+            txtDiaChi.requestFocus();
+            return false;
+        }
+        if (txtSoDienThoai.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: Số điện thoại của nhân viên rỗng!", "Thông báo");
+            txtSoDienThoai.requestFocus();
+            return false;
+        }
+        if (txtTenTaiKhoan.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: Tên Tài khoản rỗng!", "Thông báo");
+            txtTenTaiKhoan.requestFocus();
+            return false;
+        }
+        if (txtMatKhau.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: Mật khẩu rỗng!", "Thông báo");
+            txtMatKhau.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+
+    private void setForm(Integer id) throws Exception {
         acc = accDao.selectByID(id);
         txtIDTaiKhoan.setText(String.valueOf(id));
         txtTenTaiKhoan.setText(acc.getUsername());
@@ -125,14 +213,13 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
         }
     }
 
-    void insert() {
-        try {
+    private void insert() {
+        if(valiDateForm_insert()){
+            try {
             Account account = getForm();
             AccountDAO accDao = new AccountDAO();
             accDao.insert(account);
-            System.out.println("inst_acc: " + account);
             txtIDNhanVIen.setText(String.valueOf(account.getId()));
-            System.out.println("QLNV ==> Them tai khoan thanh cong");
             try {
                 Employee em = getFormEm();
                 em.setBalance(BigDecimal.ZERO);
@@ -143,45 +230,68 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
                 fillOnUpdate();
             } catch (Exception e) {
                 e.printStackTrace();
-                System.out.println("QLNV ==> Them Tai Khoan Nhan Vien That Bai");
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("QLNV ==> Them Tai Khoan That Bai");
         }
+        }      
     }
 
-    void update() {
-        try {
-            Employee em = getFormEm_Update();
-            em.setBalance(BigDecimal.ONE);
-            Account acc = getForm();
-            accDao.update(acc);
-            emDao.update(em);
-            System.out.println("QLNV => " + acc + "\n" + em);
-            Xnoti.msg(this, "Cập Nhật Thành Công", "NetCaFe");
-            fillOnUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("QLNV => update nhan vien khong thanh cong");
+    private void update() {
+
+        if (valiDateForm_update() && valiDateForm_getForm()) {
+
+            try {
+                Employee em = getFormEm_Update();
+                em.setBalance(BigDecimal.ONE);
+                Account acc = getForm();
+                accDao.update(acc);
+                emDao.update(em);
+                System.out.println("QLNV => " + acc + "\n" + em);
+                Xnoti.msg(this, "Cập Nhật Thành Công", "Thông báo");
+                fillOnUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+
     }
 
-    void delete() {
-        try {
-            Employee em = getFormEm();
-            Account acc = getForm();
-            int IDnv = Integer.parseInt(txtIDNhanVIen.getText());
-            int IDtk = Integer.parseInt(txtIDTaiKhoan.getText());
-            emDao.delete(IDnv);
-            System.out.println("QLNV ==> delete thanh cong nhanvien :" + em.getId());
-            accDao.delete(IDtk);
-            Xnoti.msg(this, "Xóa Thành Công", "NetCaFe");
-            fillOnUpdate();
-            System.out.println("QLNV ==> delete thanh cong tai khoan :" + acc.getId());
-        } catch (Exception e) {
+    private void delete() {
+
+        if (!txtIDTaiKhoan.getText().trim().isEmpty() && !txtIDNhanVIen.getText().trim().isEmpty()) {
+
+            try {
+                Employee em = getFormEm();
+                Account acc = getForm();
+                int IDnv = Integer.parseInt(txtIDNhanVIen.getText());
+                int IDtk = Integer.parseInt(txtIDTaiKhoan.getText());
+                emDao.delete(IDnv);
+                accDao.delete(IDtk);
+                Xnoti.msg(this, "Xóa Thành Công", "Thông báo");
+                fillOnUpdate();
+            } catch (Exception e) {
+                Xnoti.msg(this, "erro: Xóa không thành công!. Bạn cần phải xóa ID Nhân Viên có trong hóa đơn trước!", "Thông báo");
+            }
+        } else {
+            Xnoti.msg(this, "erro: ID Tài khoản hoặc nhân viên chưa có!.\n Vui lòng chọn vào thông tin trên bảng để xóa", "Thông báo");
         }
+    }
+    
+    private void reset() {
+        txtDiaChi.setText(null);
+        txtIDNhanVIen.setText(null);
+        txtIDTaiKhoan.setText(null);
+        txtLuong.setText(null);
+        txtMatKhau.setText(null);
+        txtSoDienThoai.setText(null);
+        btnThem.setText(null);
+        txtTaoLuc.setText(null);
+        txtTenNhanVien.setText(null);
+        txtTenTaiKhoan.setText(null);
+        txtThongTinKhac.setText(null);
+        txtTongLuong.setText(null);
     }
 
     @SuppressWarnings("unchecked")
@@ -213,7 +323,7 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
         txtLuong = new javax.swing.JTextField();
         txtSoDienThoai = new javax.swing.JTextField();
         jPanel3 = new CustomPanel();
-        txtTao = new javax.swing.JButton();
+        btnThem = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
         btnLamMoi = new javax.swing.JButton();
         btnXoa = new javax.swing.JButton();
@@ -270,11 +380,6 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
         cboVaiTro.setFont(new java.awt.Font("Source Code Pro", 0, 18)); // NOI18N
         cboVaiTro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nhân Viên", "Admin" }));
         cboVaiTro.setPreferredSize(new java.awt.Dimension(250, 40));
-        cboVaiTro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboVaiTroActionPerformed(evt);
-            }
-        });
         jPanel2.add(cboVaiTro);
         cboVaiTro.setBounds(200, 290, 250, 40);
 
@@ -324,13 +429,9 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
         jPanel2.add(jScrollPane2);
         jScrollPane2.setBounds(200, 430, 250, 90);
 
+        txtIDNhanVIen.setEditable(false);
         txtIDNhanVIen.setFont(new java.awt.Font("Source Code Pro", 0, 18)); // NOI18N
         txtIDNhanVIen.setPreferredSize(new java.awt.Dimension(250, 40));
-        txtIDNhanVIen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIDNhanVIenActionPerformed(evt);
-            }
-        });
         jPanel2.add(txtIDNhanVIen);
         txtIDNhanVIen.setBounds(730, 80, 250, 40);
 
@@ -349,12 +450,17 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
         jPanel2.add(txtSoDienThoai);
         txtSoDienThoai.setBounds(730, 360, 250, 40);
 
-        txtTao.setFont(new java.awt.Font("Monospaced", 1, 22)); // NOI18N
-        txtTao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save.png"))); // NOI18N
-        txtTao.setText("Thêm ");
-        txtTao.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        txtTao.setPreferredSize(new java.awt.Dimension(150, 49));
-        txtTao.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        btnThem.setFont(new java.awt.Font("Monospaced", 1, 22)); // NOI18N
+        btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save.png"))); // NOI18N
+        btnThem.setText("Thêm ");
+        btnThem.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        btnThem.setPreferredSize(new java.awt.Dimension(150, 49));
+        btnThem.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
 
         btnSua.setFont(new java.awt.Font("Monospaced", 1, 22)); // NOI18N
         btnSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/update.png"))); // NOI18N
@@ -363,6 +469,11 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
         btnSua.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         btnSua.setPreferredSize(new java.awt.Dimension(150, 49));
         btnSua.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
 
         btnLamMoi.setFont(new java.awt.Font("Monospaced", 1, 22)); // NOI18N
         btnLamMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/refresh.png"))); // NOI18N
@@ -382,6 +493,11 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
         btnXoa.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         btnXoa.setPreferredSize(new java.awt.Dimension(150, 49));
         btnXoa.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -389,7 +505,7 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(75, 75, 75)
-                .addComponent(txtTao, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(88, 88, 88)
                 .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(83, 83, 83)
@@ -407,7 +523,7 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
                     .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(4, 4, 4)
-                        .addComponent(txtTao, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10))
         );
@@ -439,11 +555,6 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
         txtTongLuong.setEditable(false);
         txtTongLuong.setFont(new java.awt.Font("Source Code Pro", 0, 18)); // NOI18N
         txtTongLuong.setPreferredSize(new java.awt.Dimension(250, 40));
-        txtTongLuong.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTongLuongActionPerformed(evt);
-            }
-        });
         jPanel2.add(txtTongLuong);
         txtTongLuong.setBounds(730, 290, 250, 40);
 
@@ -468,55 +579,27 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtIDNhanVIenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDNhanVIenActionPerformed
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtIDNhanVIenActionPerformed
+        insert();
 
-    private void cboVaiTroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboVaiTroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cboVaiTroActionPerformed
+    }//GEN-LAST:event_btnThemActionPerformed
 
-    private void txtTongLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTongLuongActionPerformed
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtTongLuongActionPerformed
+        update();
+    }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        // TODO add your handling code here:
+        delete();
+
+    }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        txtDiaChi.setText(null);
-        txtIDNhanVIen.setText(null);
-        txtIDTaiKhoan.setText(null);
-        txtLuong.setText(null);
-        txtMatKhau.setText(null);
-        txtSoDienThoai.setText(null);
-        txtTao.setText(null);
-        txtTaoLuc.setText(null);
-        txtTenNhanVien.setText(null);
-        txtTenTaiKhoan.setText(null);
-        txtThongTinKhac.setText(null);
-        txtTongLuong.setText(null);
-    }
+        reset();
 
-    private void txtTaoActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        insert();
-    }
-
-    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        try {
-            update();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        try {
-            delete();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -570,6 +653,7 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLamMoi;
     private javax.swing.JButton btnSua;
+    private javax.swing.JButton btnThem;
     private javax.swing.JButton btnXoa;
     private javax.swing.JComboBox<String> cboVaiTro;
     private javax.swing.JLabel jLabel1;
@@ -597,7 +681,6 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
     private javax.swing.JTextField txtLuong;
     private javax.swing.JTextField txtMatKhau;
     private javax.swing.JTextField txtSoDienThoai;
-    private javax.swing.JButton txtTao;
     private javax.swing.JTextField txtTaoLuc;
     private javax.swing.JTextField txtTenNhanVien;
     private javax.swing.JTextField txtTenTaiKhoan;
