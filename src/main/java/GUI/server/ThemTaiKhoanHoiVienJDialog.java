@@ -561,7 +561,7 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
         );
 
         pnlChinh.add(pnlTaiKhoan);
-        pnlTaiKhoan.setBounds(180, 170, 930, 410);
+        pnlTaiKhoan.setBounds(160, 170, 930, 410);
 
         lblBackGround.setFont(new java.awt.Font("Palatino Linotype", 1, 18)); // NOI18N
         lblBackGround.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BgThemHV.gif"))); // NOI18N
