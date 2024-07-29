@@ -345,6 +345,11 @@ public class QuanLySanPhamJPanel extends javax.swing.JPanel  {
         jLabel2.setText("Danh sách sản phẩm: ");
 
         txtTimKiem.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyPressed(evt);
+            }
+        });
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/KinhLup.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
