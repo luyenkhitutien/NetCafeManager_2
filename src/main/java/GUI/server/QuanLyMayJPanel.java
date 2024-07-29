@@ -20,17 +20,17 @@ import utils.Xnoti;
  * @author ASUS
  */
 public class QuanLyMayJPanel extends javax.swing.JPanel {
-
+    
     ComputerDAO comDao = new ComputerDAO();
     int row = -1;
-
+    
     public QuanLyMayJPanel() {
         initComponents();
         initTable();
         filltotable();
-
+        
     }
-
+    
     public void initTable() {
         // Tạo một Font mới với kiểu chữ "Times New Roman" và kích thước 24
         Font headerFont = new Font("Times New Roman", Font.BOLD, 18);
@@ -45,15 +45,14 @@ public class QuanLyMayJPanel extends javax.swing.JPanel {
 
         // Đảm bảo rằng bảng và tiêu đề bảng được cập nhật
         tblQuanLyMay.repaint();
-
+        
     }
-
+    
     public void filltotable() {
         DefaultTableModel model = (DefaultTableModel) tblQuanLyMay.getModel();
         model.setRowCount(0);
-        int STT = 1;
+        int STT = 0;
         try {
-            STT = 1;
             List<Computer> list = comDao.selectAll();
             for (Computer comp : list) {
                 Object[] row = {
@@ -70,7 +69,7 @@ public class QuanLyMayJPanel extends javax.swing.JPanel {
             Xnoti.msg(this, "Lỗi truy vấn dữ liệu", "Thông báo lỗi");
         }
     }
-
+    
     public Computer getForm() {
         Computer computer = new Computer();
         //getId này chỉ cần cho Upadte       
@@ -83,7 +82,7 @@ public class QuanLyMayJPanel extends javax.swing.JPanel {
         computer.setType((String) cboLoaiMay.getSelectedItem());
         return computer;
     }
-
+    
     public void setForm(Computer computer) {
         txtIDmay.setText(String.valueOf(computer.getId()));
         txtTenMay.setText(computer.getName());
@@ -92,47 +91,61 @@ public class QuanLyMayJPanel extends javax.swing.JPanel {
             cboLoaiMay.setSelectedItem(computer.getType());
         }
     }
-
+    
     public void insert() {
-        Computer computer = getForm();
-        try {
-            comDao.insert(computer);
-            this.filltotable();
-            this.clearForm();
-            Xnoti.msg(this, "Thêm máy thành công", "Thông báo insert");
-        } catch (Exception e) {
-            Xnoti.msg(this, "Thêm thất bại", "Thông báo insert");
-            System.out.println(e);
+        
+        if (!txtTenMay.getText().trim().isEmpty()) {
+            Computer computer = getForm();
+            try {
+                comDao.insert(computer);
+                this.filltotable();
+                this.clearForm();
+                Xnoti.msg(this, "Thêm máy thành công", "Thông báo");
+            } catch (Exception e) {
+                Xnoti.msg(this, "erro: Tên của máy đã tồn tại!", "Thông báo");
+                System.out.println(e);
+            }
+        }else{
+            Xnoti.msg(this, "erro: Tên máy rỗng ", "Thông báo");
+            txtTenMay.requestFocus();
         }
+        
     }
 
     public void update() {
-        if (Xnoti.confirm(this, "Bạn muốn cập nhật chiếc máy này")) {
-            try {
-                Computer computer = getForm();
-                comDao.update(computer);
-                this.filltotable();
-                Xnoti.msg(this, "Cập nhật thành công" + computer.getName(), "Thông bao cập nhật");
-            } catch (Exception e) {
-                Xnoti.msg(this, "Cập nhật thất bại", "Thông báo cập nhật");
-                System.out.println(e);
-                e.printStackTrace();
+        if (validateForm()) {
+
+            if (Xnoti.confirm(this, "Bạn muốn cập nhật chiếc máy này")) {
+                try {
+                    Computer computer = getForm();
+                    comDao.update(computer);
+                    this.filltotable();
+                    Xnoti.msg(this, "Cập nhật thành công" + computer.getName(), "Thông bao cập nhật");
+                } catch (Exception e) {
+                    Xnoti.msg(this, "Cập nhật thất bại", "Thông báo cập nhật");
+                    System.out.println(e);
+                    e.printStackTrace();
+                }
             }
         }
+
     }
 
     public void delete() {
-
-        Integer id = Integer.parseInt(txtIDmay.getText());
-        try {
-            comDao.delete(id);
-            this.filltotable();
-            this.clearForm();
-            Xnoti.msg(this, "Xóa Thành Công", "Thông báo");
-        } catch (Exception e) {
-            Xnoti.msg(this, "Xóa thất bại", "Thông báo");
-            System.out.println(e);
-            e.printStackTrace();
+        if (!txtIDmay.getText().trim().isEmpty()) {
+            Integer id = Integer.parseInt(txtIDmay.getText());
+            try {
+                comDao.delete(id);
+                this.filltotable();
+                this.clearForm();
+                Xnoti.msg(this, "Xóa Thành Công", "Thông báo");
+            } catch (Exception e) {
+                Xnoti.msg(this, "Xóa thất bại", "Thông báo");
+                System.out.println(e);
+                e.printStackTrace();
+            }
+        } else {
+            Xnoti.msg(this, "ID Máy rỗng", "Thông báo");
         }
 
     }
@@ -158,6 +171,35 @@ public class QuanLyMayJPanel extends javax.swing.JPanel {
         //chuyển đổi giá đối tượng computer thành chuỗi và cập nhật vào txtGia
         txtGia.setText(computer.getPricePerHour().toString());
     }
+
+    private boolean validateForm() {
+        if (txtIDmay.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: ID Máy rỗng! Bạn phải chọn máy ở trên bảng trước", "Thông báo");
+            return false;
+        }
+        if (txtTenMay.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: tên Máy rỗng! Bạn phải chọn máy ở trên bảng trướ", "Thông báo");
+            txtTenMay.requestFocus();
+            return false;
+        }
+        return true;
+
+    }
+
+    private void TableCliked() {
+        try {
+            this.row = tblQuanLyMay.getSelectedRow();
+            tblQuanLyMay.setRowSelectionInterval(row, row);
+            // Lấy giá trị từ bảng và chuyển đổi nó thành chuỗi
+            String idStr = tblQuanLyMay.getValueAt(this.row, 1).toString();
+            Integer id = Integer.parseInt(idStr);
+            Computer computer = comDao.selectByID(id);
+            this.setForm(computer);
+        } catch (Exception ex) {
+        }
+    }
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -279,6 +321,7 @@ public class QuanLyMayJPanel extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
+        txtIDmay.setEditable(false);
         txtIDmay.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
         txtTenMay.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -421,20 +464,7 @@ public class QuanLyMayJPanel extends javax.swing.JPanel {
 
     private void tblQuanLyMayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblQuanLyMayMouseClicked
         // TODO add your handling code here: 
-        if (!SwingUtilities.isLeftMouseButton(evt)) {
-
-        } else {
-            try {
-                this.row = tblQuanLyMay.getSelectedRow();
-                tblQuanLyMay.setRowSelectionInterval(row, row);
-                // Lấy giá trị từ bảng và chuyển đổi nó thành chuỗi
-                String idStr = tblQuanLyMay.getValueAt(this.row, 1).toString();
-                Integer id = Integer.parseInt(idStr);
-                Computer computer = comDao.selectByID(id);
-                this.setForm(computer);
-            } catch (Exception ex) {
-            }
-        }
+       TableCliked();
     }//GEN-LAST:event_tblQuanLyMayMouseClicked
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed

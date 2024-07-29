@@ -15,7 +15,7 @@ public class Computer {
     private String name;
     private BigDecimal pricePerHour;
     private String type;
-    private String status;
+    private String status = "Đang tắt";
 
     public Computer() {
     }
