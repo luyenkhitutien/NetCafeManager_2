@@ -3,6 +3,7 @@ package main_client;
 import GUI.client.Cilent;
 import GUI.client.DangNhapJDialog;
 import GUI.client.TinNhanJDialog;
+import audio.AudioPlayer;
 import entity.Product;
 import io.IOClient;
 import java.math.BigDecimal;
@@ -21,6 +22,7 @@ public class MainClient {
     public static Cilent clientForm;
     public static DangNhapJDialog dangNhapJDialog;
     public static TinNhanJDialog tinNhanForm;
+    private static AudioPlayer audioPlayer;
 
     public static void main(String[] args) {
 
@@ -32,6 +34,11 @@ public class MainClient {
 //            tinNhanForm.setVisible(true);
             dangNhapJDialog = new DangNhapJDialog(clientForm, false);
             dangNhapJDialog.setVisible(true);
+            
+            // Thêm phát âm thanh khi ứng dụng khởi động
+            audioPlayer = new AudioPlayer();
+            audioPlayer.play("/resources/Audio_Tale-of-Immortal.wav", true); // Phát lặp lại
+            
             // Thêm sự kiện cho nút btnTinNhan
             clientForm.getBtnTinNhan().addActionListener(e -> {
                 if (!tinNhanForm.isVisible()) {
@@ -102,6 +109,7 @@ public class MainClient {
                 @Override
                 protected void done() {
                     // Cập nhật form hoặc thực hiện bất kỳ hành động cuối cùng nào nếu cần thiết
+                    
 
                 }
             };
