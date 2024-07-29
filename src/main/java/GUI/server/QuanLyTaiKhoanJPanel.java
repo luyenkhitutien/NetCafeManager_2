@@ -518,13 +518,18 @@ public class QuanLyTaiKhoanJPanel extends javax.swing.JPanel {
 
     private void mnitNapTienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnitNapTienActionPerformed
         // TODO add your handling code here:
-        int index = tblQuanLyTaiKhoan.getSelectedRow();
-        String role = (String) tblQuanLyTaiKhoan.getValueAt(index, 4);
-        if (role.trim().equalsIgnoreCase("Hội viên")) {
+        try {
+            int index = tblQuanLyTaiKhoan.getSelectedRow();
+            int rowId = (int) tblQuanLyTaiKhoan.getValueAt(index, 1);
+            Member mem = new Member();
+            mem = memberDAO.selectByID(rowId);
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            NapTienJDialog napTien = new NapTienJDialog(frame, true);
+            NapTienJDialog napTien = new NapTienJDialog(frame, true, rowId);
             napTien.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
     }//GEN-LAST:event_mnitNapTienActionPerformed
 
     private void mnitXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnitXoaActionPerformed

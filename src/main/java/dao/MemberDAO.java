@@ -25,7 +25,10 @@ public class MemberDAO implements IBaseDAO<Member, Integer> {
         String sql = "UPDATE members SET accountID=?, name=?, balance=? WHERE ID=?";
         JdbcHelper.executeUpdate(sql, entity.getAccountID(), entity.getName(), entity.getBalance(), entity.getId());
     }
-
+    public void NapTien(Integer id,Double money)throws Exception{
+        String sql = "Update members set balance = ? where accountID =?";
+        JdbcHelper.executeUpdate(sql, money ,id);
+    }
     @Override
     public void delete(Integer id) throws Exception {
         String sql = "DELETE FROM members WHERE ID=?";

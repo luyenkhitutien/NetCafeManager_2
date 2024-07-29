@@ -4,21 +4,31 @@
  */
 package GUI.server;
 
+import dao.MemberDAO;
+import entity.Member;
+
 /**
  *
  * @author ASUS
  */
 public class NapTienJDialog extends javax.swing.JDialog {
 
-    /**
-     * Creates new form NapTienJDialog
-     */
-    public NapTienJDialog(java.awt.Frame parent, boolean modal) {
+    public static  Integer id;
+    public NapTienJDialog(java.awt.Frame parent, boolean modal,Integer idMember) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
+        this.id = idMember;
     }
-
+    void napTien(Integer idMember){
+        try {
+        MemberDAO memDao = new MemberDAO();
+        memDao.NapTien(idMember, Double.parseDouble(txtNapTien.getText()));
+            System.out.println("Nạp thành công cho hội viên id: "+idMember+ " "+txtNapTien.getText()+"VnĐ");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -89,7 +99,9 @@ public class NapTienJDialog extends javax.swing.JDialog {
 
     private void txtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOKActionPerformed
         // TODO add your handling code here:
-        dispose();
+        System.out.println(this.id);
+        napTien(this.id);
+//        dispose();
     }//GEN-LAST:event_txtOKActionPerformed
 
     /**
@@ -123,7 +135,7 @@ public class NapTienJDialog extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                NapTienJDialog dialog = new NapTienJDialog(new javax.swing.JFrame(), true);
+                NapTienJDialog dialog = new NapTienJDialog(new javax.swing.JFrame(), true,id);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
