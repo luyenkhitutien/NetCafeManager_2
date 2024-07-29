@@ -225,7 +225,6 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1280, 720));
 
         jPanel1.setLayout(null);
 
@@ -356,6 +355,7 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
         txtTao.setPreferredSize(new java.awt.Dimension(150, 49));
         txtTao.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
 
+        btnSua.setFont(new java.awt.Font("Monospaced", 1, 22)); // NOI18N
         btnSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/update.png"))); // NOI18N
         btnSua.setText("Sửa");
         btnSua.setToolTipText("");
@@ -363,7 +363,10 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
         btnSua.setPreferredSize(new java.awt.Dimension(150, 49));
         btnSua.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
 
-        btnLamMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/LamMoi1.png"))); // NOI18N
+        btnLamMoi.setFont(new java.awt.Font("Monospaced", 1, 22)); // NOI18N
+        btnLamMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/refresh.png"))); // NOI18N
+        btnLamMoi.setText("Làm mới");
+        btnLamMoi.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         btnLamMoi.setPreferredSize(new java.awt.Dimension(150, 49));
         btnLamMoi.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
         btnLamMoi.addActionListener(new java.awt.event.ActionListener() {
@@ -372,7 +375,10 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
             }
         });
 
-        btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/xoa4.png"))); // NOI18N
+        btnXoa.setFont(new java.awt.Font("Monospaced", 1, 22)); // NOI18N
+        btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
+        btnXoa.setText("Xóa");
+        btnXoa.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         btnXoa.setPreferredSize(new java.awt.Dimension(150, 49));
         btnXoa.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
 
@@ -385,9 +391,9 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
                 .addComponent(txtTao, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(88, 88, 88)
                 .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(91, 91, 91)
-                .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addGap(83, 83, 83)
+                .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
                 .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30))
         );
@@ -406,7 +412,7 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
         );
 
         jPanel2.add(jPanel3);
-        jPanel3.setBounds(5, 534, 990, 70);
+        jPanel3.setBounds(0, 540, 1000, 70);
 
         jLabel13.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
         jLabel13.setText("Tạo lúc:");
@@ -439,9 +445,9 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
         txtTongLuong.setBounds(730, 290, 250, 40);
 
         jPanel1.add(jPanel2);
-        jPanel2.setBounds(140, 60, 1000, 610);
+        jPanel2.setBounds(160, 40, 1000, 610);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/mattrang.jpg"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BGThemNV_admin_N.jpg"))); // NOI18N
         jPanel1.add(jLabel1);
         jLabel1.setBounds(0, 0, 1280, 720);
 
