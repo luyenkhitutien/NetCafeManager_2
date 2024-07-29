@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
@@ -74,9 +75,9 @@ public class Cilent extends javax.swing.JFrame {
     }
 
     public void MessageFormTrue() {
-        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-        TinNhanJDialog tinnhan = new TinNhanJDialog(frame, true);
-        tinnhan.setVisible(true);
+//        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+//        TinNhanJDialog tinnhan = new TinNhanJDialog(frame, true);
+//        tinnhan.setVisible(true);
     }
 
     public class TimeUsage {
@@ -462,5 +463,13 @@ public class Cilent extends javax.swing.JFrame {
     private javax.swing.JTextField txtTienDaSuDung;
     private javax.swing.JTextField txtTongThoiGian;
     // End of variables declaration//GEN-END:variables
+
+    public JButton getBtnTinNhan() {
+        return btnTinNhan;
+    }
+
+    public void setBtnTinNhan(JButton btnTinNhan) {
+        this.btnTinNhan = btnTinNhan;
+    }
 
 }

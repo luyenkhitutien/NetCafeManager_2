@@ -60,6 +60,7 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
 
         // Đặt kích thước ưu tiên cho JPanel pnlChinh
         pnlChinh.setPreferredSize(new Dimension(1000, 900));
+        fillToCbo();
     }
 
     void fillToCbo() {

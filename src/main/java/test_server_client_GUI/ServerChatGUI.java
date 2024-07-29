@@ -1,5 +1,6 @@
 package test_server_client_GUI;
 
+import GUI.client.TinNhanJDialog;
 import io.IOServer;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import main_server.MainTest;
 
 public class ServerChatGUI extends JFrame {
 
@@ -18,7 +20,7 @@ public class ServerChatGUI extends JFrame {
     private JList<String> clientList;
     private DefaultListModel<String> clientListModel;
     private final IOServer server;
-
+TinNhanJDialog tinNhan = new TinNhanJDialog(this, true);
     public ServerChatGUI(IOServer server) {
         this.server = server;
 
@@ -116,7 +118,7 @@ public class ServerChatGUI extends JFrame {
                 return;
             }
 
-            server.sendMessageToClient(clientId, message);
+            server.sendMessageToClient(clientId,message);
             chatArea.append("Server to Client " + clientId + ": " + message + "\n");
             messageField.setText("");
         } catch (NumberFormatException e) {
@@ -150,6 +152,7 @@ public class ServerChatGUI extends JFrame {
                 server.setChatGUI(gui);
                 server.start();
             } catch (IOException e) {
+                e.printStackTrace();
             }
         });
     }

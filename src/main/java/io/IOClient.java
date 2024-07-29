@@ -1,12 +1,15 @@
 package io;
 
+import GUI.client.TinNhanJDialog;
 import entity.Product;
 import java.io.*;
 import java.math.BigDecimal;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.SwingUtilities;
 import main_client.MainClient;
 import static main_client.MainClient.COMPUTER_ID;
 
@@ -20,9 +23,11 @@ public class IOClient {
     private ResponseCallback callback;
     private List<Product> listProducts;
     private List<BigDecimal> listBalanceClient;
+    private TinNhanJDialog tinNhan;
+//    private final IOClient client = null;
 
-    public IOClient() {
-
+    public IOClient(TinNhanJDialog tinNhan) {
+        this.tinNhan = tinNhan;
         try {
             this.socket = new Socket(MainClient.HOST, MainClient.PORT);
             out = new ObjectOutputStream(socket.getOutputStream());
@@ -97,7 +102,7 @@ public class IOClient {
     }
 
     public synchronized void shutdown() {
-        
+
         String request = "SHUTDOWN";
         try {
             out.writeObject(request);
@@ -150,7 +155,7 @@ public class IOClient {
         }
     }
 
-    public synchronized void importBalance(){
+    public synchronized void importBalance() {
         String request = "GET_BALANCE";
         try {
             out.writeObject(request);
@@ -158,7 +163,7 @@ public class IOClient {
         } catch (IOException ex) {
             Logger.getLogger(IOClient.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -172,8 +177,13 @@ public class IOClient {
                     }
 
                     String responseType = (String) in.readObject();
+                    System.out.println("IOClient responseType:" + responseType);
+
                     if (responseType != null) {
-                        switch (responseType) {
+                        String[] parts = responseType.split(";"); 
+                        String command = parts[0];
+                        System.out.println("command client => "+command);
+                        switch (command) {
                             case "RESPONSE_TEXT" -> {
                                 String response = (String) in.readObject();
                                 callback.onResponseReceived("Server response: " + response);
@@ -202,6 +212,14 @@ public class IOClient {
                                 System.out.println("io.IOClient.startListening().getBalance(): " + listBalanceClient);
                                 callback.onResponseReceived("Client getBalance(): " + listBalanceClient);
                             }
+                            case "SERVER_CLIENTS" -> {
+                                if (parts.length > 1) {
+                                    String message = parts[1];
+                                    callback.onResponseReceived(message);
+                                } else {
+                                    callback.onResponseReceived("Server response: Missing message content");
+                                }
+                            }
                             default -> {
                                 callback.onResponseReceived("Server response: " + responseType);
                             }
@@ -220,15 +238,26 @@ public class IOClient {
         listeningThread.start();
     }
 
+    private synchronized void receiveMessage(String message) throws SQLException {
+        String fullMessage = "Message from Server: " + message;
+        System.out.println(fullMessage);
+        if (tinNhan != null) {
+            System.out.println("tinNhanKhongNull: =>"+tinNhan);
+            SwingUtilities.invokeLater(() -> tinNhan.appendMessage(fullMessage));
+        } else {
+            System.out.println("IOClient => Khong nhan duoc tin nhan");
+        }
+    }
+
     //Phương thức để truy cập listProducts
     public List<Product> getListProducts() {
         return listProducts;
     }
-    
-    public List<BigDecimal> getListBalanceClient(){
+
+    public List<BigDecimal> getListBalanceClient() {
         return listBalanceClient;
     }
-    
+
     public interface ResponseCallback {
 
         void onResponseReceived(String response);
