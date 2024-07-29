@@ -9,7 +9,6 @@ import entity.Computer;
 import java.awt.Font;
 import java.math.BigDecimal;
 import java.util.List;
-import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
