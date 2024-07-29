@@ -34,6 +34,7 @@ public class MainTest{
         EMPLOYEE_ID = dangNhapForm.getEmployeeID();
         System.out.println("ID Nhan Vien: "+ EMPLOYEE_ID);
         server = new IOServer(EMPLOYEE_ID);
+        chatGUI = new ServerChatGUI(server);
         
         //Bắt đầu khởi động server
         server.start();

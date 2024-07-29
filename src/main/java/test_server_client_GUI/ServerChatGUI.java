@@ -1,7 +1,8 @@
 package test_server_client_GUI;
 
-import GUI.client.TinNhanJDialog;
 import io.IOServer;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
@@ -10,7 +11,6 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import main_server.MainTest;
 
 public class ServerChatGUI extends JFrame {
 
@@ -20,18 +20,25 @@ public class ServerChatGUI extends JFrame {
     private JList<String> clientList;
     private DefaultListModel<String> clientListModel;
     private final IOServer server;
-TinNhanJDialog tinNhan = new TinNhanJDialog(this, true);
+
     public ServerChatGUI(IOServer server) {
         this.server = server;
 
-        setTitle("Server GUI");
+        setTitle("Chatbox SERVER");
         setSize(600, 400);
-//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        
         JPanel panel = new JPanel();
         getContentPane().add(panel);
         placeComponents(panel);
-
+        
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        setResizable(false);
+        
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = screenSize.width - getWidth();
+        int y = screenSize.height - getHeight();
+        setLocation(x, y);
+        
         setVisible(true);
 
         // Update client list periodically
@@ -48,7 +55,7 @@ TinNhanJDialog tinNhan = new TinNhanJDialog(this, true);
         });
     }
 
-    public void placeComponents(JPanel panel) {
+    private void placeComponents(JPanel panel) {
         panel.setLayout(null);
 
         JLabel chatLabel = new JLabel("Chat:");
@@ -62,7 +69,7 @@ TinNhanJDialog tinNhan = new TinNhanJDialog(this, true);
         chatScrollPane.setBounds(10, 40, 560, 150);
         panel.add(chatScrollPane);
 
-        JLabel clientIdLabel = new JLabel("ComputerID: ");
+        JLabel clientIdLabel = new JLabel("ClientID: ");
         clientIdLabel.setBounds(10, 200, 80, 25);
         panel.add(clientIdLabel);
 
