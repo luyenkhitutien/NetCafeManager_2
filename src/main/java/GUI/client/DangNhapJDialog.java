@@ -175,7 +175,6 @@ public class DangNhapJDialog extends javax.swing.JDialog {
         jPanel1.setBounds(640, 460, 510, 270);
 
         lblAnh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BGLoginClient.gif"))); // NOI18N
-        lblAnh.setMaximumSize(new java.awt.Dimension(1920, 1080));
         pnlAnh.add(lblAnh);
         lblAnh.setBounds(0, 0, 1920, 1080);
 
