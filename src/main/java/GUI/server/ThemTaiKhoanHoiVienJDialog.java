@@ -18,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JTextField;
 import utils.CustomPanel;
 import utils.Xnoti;
@@ -30,8 +31,8 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
     Member mem = new Member();
     List<Account> listAccount = new ArrayList<>();
     Account account = new Account();
-    AccountDAO accountDAO =  new AccountDAO();
-    
+    AccountDAO accountDAO = new AccountDAO();
+
     private UpdateListener listener;
 
     public void setMemberListener(UpdateListener listener) {
@@ -43,63 +44,122 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
             listener.onUpdate();
         }
     }
-    
-    
-    public ThemTaiKhoanHoiVienJDialog(java.awt.Frame parent, boolean modal, Integer accountID)throws Exception{
+
+    public ThemTaiKhoanHoiVienJDialog(java.awt.Frame parent, boolean modal, Integer accountID) throws Exception {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         init();
-         this.accountId = accountID;
+        this.accountId = accountID;
         checkNull(accountID);
     }
-    
-    public void init(){
+
+    public void init() {
         // Đặt kích thước cho JDialog
         setSize(new Dimension(1280, 720));
-        
+
         // Đặt kích thước ưu tiên cho JPanel pnlChinh
         pnlChinh.setPreferredSize(new Dimension(1280, 720));
     }
-    Account getForm() {
-        Account account = new Account();
-        if (!txtIDTaiKhoan.getText().trim().isEmpty()) {
-            account.setId(Integer.parseInt(txtIDTaiKhoan.getText()));
+
+    private boolean valiDateGetForm() {
+
+        if (txtIDTaiKhoan.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: ID tài khoản rỗng!", "Thông báo");
+            txtIDTaiKhoan.requestFocus();
+            return false;
         }
+        if (txtTenTaiKhoan.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: Tên tài khoản rỗng!", "Thông báo");
+            txtTenTaiKhoan.requestFocus();
+            return false;
+        }
+        if (txtMatKhau.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: Mật khẩu rỗng!", "Thông báo");
+            txtMatKhau.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+
+    private Account getForm() {
+        Account account = new Account();
+        account.setId(Integer.parseInt(txtIDTaiKhoan.getText()));
         account.setUsername(txtTenTaiKhoan.getText());
         account.setPassword(txtMatKhau.getText());
         account.setRole(String.valueOf(cboVaiTro.getSelectedItem()));
         account.setCreatedAt(new Date());
+
         return account;
     }
-    
-    Member getFormMem_Insert() {
+
+    private boolean valiDateGetFormMem_Insert() {
+
+        if (txtTenHoiVien.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: Tên hội viên rỗng!", "Thông báo");
+            txtTenHoiVien.requestFocus();
+            return false;
+        }
+        if (txtSoDu.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: Số dư rỗng!", "Thông báo");
+            txtSoDu.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+
+    private Member getFormMem_Insert() {
+
         Member mem = new Member();
-        if (!txtIDTaiKhoan.getText().trim().isEmpty()) {
-            mem.setId(Integer.parseInt(txtIDTaiKhoan.getText()));
-        }
-        if (!txtIDHoiVien.getText().trim().isEmpty()) {
-            mem.setAccountID(Integer.parseInt(txtIDHoiVien.getText()));
-        }
+        mem.setId(Integer.parseInt(txtIDTaiKhoan.getText()));
+        mem.setAccountID(Integer.parseInt(txtIDHoiVien.getText()));
         mem.setName(txtTenHoiVien.getText());
         mem.setBalance(BigDecimal.valueOf(Double.parseDouble(txtSoDu.getText())));
+
         return mem;
     }
 
-    Member getFormMem_Update() {
+    private boolean valiDateGetFormMem_Update() {
+
+        if (txtIDTaiKhoan.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: ID tài khoản rỗng!", "Thông báo");
+            txtIDTaiKhoan.requestFocus();
+            return false;
+        }
+        if (txtIDHoiVien.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: ID hội viên rỗng!", "Thông báo");
+            txtIDHoiVien.requestFocus();
+            return false;
+        }
+        if (txtTenHoiVien.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: Tên hội viên rỗng!", "Thông báo");
+            txtTenHoiVien.requestFocus();
+            return false;
+        }
+        if (txtSoDu.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: Số dư rỗng!", "Thông báo");
+            txtSoDu.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+
+    private Member getFormMem_Update() {
+
         Member mem = new Member();
-        if (!txtIDTaiKhoan.getText().trim().isEmpty()) {
-            mem.setAccountID(Integer.parseInt(txtIDTaiKhoan.getText()));
-        }
-        if (!txtIDHoiVien.getText().trim().isEmpty()) {
-            mem.setId(Integer.parseInt(txtIDHoiVien.getText()));
-        }
+
+        mem.setAccountID(Integer.parseInt(txtIDTaiKhoan.getText()));
+        mem.setId(Integer.parseInt(txtIDHoiVien.getText()));
         mem.setName(txtTenHoiVien.getText());
         mem.setBalance(BigDecimal.valueOf(Double.parseDouble(txtSoDu.getText())));
+
         return mem;
     }
 
-    void setForm(Integer id) throws Exception {
+    private void setForm(Integer id) throws Exception {
         System.out.println("THEMTK:" + id);
         account = accountDAO.selectByID(id);
         System.out.println(account);
@@ -107,7 +167,7 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
         txtTenTaiKhoan.setText(account.getUsername());
         txtMatKhau.setText(account.getPassword());
         txtTaoLuc.setText(String.valueOf(account.getCreatedAt()));
-        
+
         Member mem = new Member();
         mem = memberDAO.selectByAccountID(account.getId());
         System.out.println(mem);
@@ -116,7 +176,7 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
         txtSoDu.setText(String.valueOf(mem.getBalance()));
     }
 
-        void checkNull(Integer accountId) throws Exception {
+    private void checkNull(Integer accountId) throws Exception {
         if (accountId == null) {
 
         } else {
@@ -151,7 +211,7 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
         }
     }
 
-    void update() {
+    private void update() {
         Member mem = getFormMem_Update();
         Account acc = getForm();
         System.out.println("=========================");
@@ -168,9 +228,24 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
         }
     }
 
-    void delete() {
+    private boolean validate_delete() {
+        if (txtIDTaiKhoan.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: ID tài khoản rỗng!", "Thông báo");
+            txtIDTaiKhoan.requestFocus();
+            return false;
+        }
+        if (txtIDHoiVien.getText().trim().isEmpty()) {
+            Xnoti.msg(this, "erro: ID hội viên rỗng!", "Thông báo");
+            txtIDHoiVien.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+
+    private void delete() {
         try {
-//            Member mem = getFormMem();
+
             int IDhv = Integer.parseInt(txtIDHoiVien.getText());
             int IDtk = Integer.parseInt(txtIDTaiKhoan.getText());
             memberDAO.delete(IDhv);
@@ -185,7 +260,16 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
         }
 
     }
-    
+
+    private void reset() {
+        txtIDHoiVien.setText(null);
+        txtIDTaiKhoan.setText(null);
+        txtMatKhau.setText(null);
+        txtSoDu.setText(null);
+        txtTaoLuc.setText(null);
+        txtTenHoiVien.setText(null);
+        txtTenTaiKhoan.setText(null);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -243,11 +327,6 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
         jLabel7.setText("Tên tài khoản:");
 
         txtTenTaiKhoan.setFont(new java.awt.Font("Source Code Pro", 0, 18)); // NOI18N
-        txtTenTaiKhoan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTenTaiKhoanActionPerformed(evt);
-            }
-        });
 
         jLabel4.setFont(new java.awt.Font("Source Code Pro", 1, 16)); // NOI18N
         jLabel4.setText("Mật khẩu:");
@@ -259,11 +338,6 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
 
         cboVaiTro.setFont(new java.awt.Font("Source Code Pro", 0, 18)); // NOI18N
         cboVaiTro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hội viên" }));
-        cboVaiTro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboVaiTroActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -278,11 +352,9 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7))
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
+                        .addGap(0, 12, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(15, 15, 15)
@@ -398,6 +470,11 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
         btnSua.setText("Sửa ");
         btnSua.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnSua.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
 
         btnLamMoi.setFont(new java.awt.Font("Monospaced", 1, 22)); // NOI18N
         btnLamMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/refresh.png"))); // NOI18N
@@ -416,6 +493,11 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
         btnXoa.setText("Xóa ");
         btnXoa.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnXoa.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -500,46 +582,32 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtTenTaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenTaiKhoanActionPerformed
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtTenTaiKhoanActionPerformed
-
-    private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        // TODO add your handling code here:
-        txtIDHoiVien.setText(null);
-        txtIDTaiKhoan.setText(null);
-        txtMatKhau.setText(null);
-        txtSoDu.setText(null);
-        txtTaoLuc.setText(null);
-        txtTenHoiVien.setText(null);
-        txtTenTaiKhoan.setText(null);
-    }  
-    private void cboVaiTroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboVaiTroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cboVaiTroActionPerformed
-
-  private void txtTaoActionPerformed(java.awt.event.ActionEvent evt) {                                       
-try {
-            insert();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }        
-    }  
- private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {                                       
-        // TODO add your handling code here:
-         try {
+        if ( valiDateGetFormMem_Update()) {
             update();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-    } 
- private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {                                       
- try {
+
+    }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        // TODO add your handling code here:
+        if (validate_delete())
             delete();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }        // TODO add your handling code here:
-    }  
+    }//GEN-LAST:event_btnXoaActionPerformed
+
+    private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
+        // TODO add your handling code here:
+        reset();
+
+    }//GEN-LAST:event_btnLamMoiActionPerformed
+
+    private void txtTaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTaoActionPerformed
+        // TODO add your handling code here:
+        if (valiDateGetForm() && valiDateGetFormMem_Insert()) {
+            insert();
+        }
+    }//GEN-LAST:event_txtTaoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -576,7 +644,7 @@ try {
             public void run() {
                 ThemTaiKhoanHoiVienJDialog dialog = null;
                 try {
-                    dialog = new ThemTaiKhoanHoiVienJDialog(new javax.swing.JFrame(), true,accountId);
+                    dialog = new ThemTaiKhoanHoiVienJDialog(new javax.swing.JFrame(), true, accountId);
                 } catch (Exception ex) {
                     Logger.getLogger(ThemTaiKhoanHoiVienJDialog.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -621,46 +689,6 @@ try {
     private javax.swing.JTextField txtTenTaiKhoan;
     // End of variables declaration//GEN-END:variables
 
-//    public JButton getBtnHuy() {
-//        return btnHuy;
-//    }
-//
-//    public void setBtnHuy(JButton btnHuy) {
-//        this.btnHuy = btnHuy;
-//    }
-//
-//    public JButton getBtnLamMoi() {
-//        return btnLamMoi;
-//    }
-//
-//    public void setBtnLamMoi(JButton btnLamMoi) {
-//        this.btnLamMoi = btnLamMoi;
-//    }
-//
-//    public JButton getBtnSua() {
-//        return btnSua;
-//    }
-//
-//    public void setBtnSua(JButton btnSua) {
-//        this.btnSua = btnSua;
-//    }
-//
-//    public JButton getBtnTao() {
-//        return btnTao;
-//    }
-//
-//    public void setBtnTao(JButton btnTao) {
-//        this.btnTao = btnTao;
-//    }
-//
-//    public JButton getBtnThem() {
-//        return btnThem;
-//    }
-//
-//    public void setBtnThem(JButton btnThem) {
-//        this.btnThem = btnThem;
-//    }
-
     public JComboBox<String> getCboVaiTro() {
         return cboVaiTro;
     }
@@ -689,8 +717,6 @@ try {
         return txtSoDu;
     }
 
-   
-
     public JTextField getTxtTenTaiKhoan() {
         return txtTenTaiKhoan;
     }
@@ -698,27 +724,21 @@ try {
     public void setTxtTenTaiKhoan(JTextField txtTenTaiKhoan) {
         this.txtTenTaiKhoan = txtTenTaiKhoan;
     }
-    
-    
-    
-    
+
     //  tên hội viên
-    
-    
-   public JTextField getTxtTenHoiVien() {
+    public JTextField getTxtTenHoiVien() {
         return txtTenHoiVien;
     }
-   public void setgetTxtTenHoiVien(JTextField txtTenHoiVien) {
+
+    public void setgetTxtTenHoiVien(JTextField txtTenHoiVien) {
         this.txtTenHoiVien = txtTenHoiVien;
     }
-    
-    
-    
+
     //ID hội viên
     public JTextField getTxtIDHoiVien() {
         return txtIDHoiVien;
     }
-    
+
     public void setTxtIDHoiVien(JTextField txtIDHoiVien) {
         this.txtIDHoiVien = txtIDHoiVien;
     }
@@ -726,8 +746,5 @@ try {
     private Account getFormAccount() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
-    
 
-    
 }
