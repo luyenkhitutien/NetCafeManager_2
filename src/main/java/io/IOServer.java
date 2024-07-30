@@ -382,6 +382,12 @@ public class IOServer {
             invoiceDetail.setPrice(product.getPrice().multiply(new BigDecimal(quantity)));
             
             invoiceDetailDAO.insert(invoiceDetail);
+            
+            BigDecimal thanhTien = invoiceDetail.getPrice();
+            BigDecimal tongGia = invoice.getTotalAmount().add(thanhTien);
+            invoice.setTotalAmount(tongGia);
+            invoiceDAO.update(invoice);
+            
 
             return "Product ordered successfully and invoiceDetail created";
         }

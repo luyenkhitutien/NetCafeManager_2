@@ -180,7 +180,7 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
     }
 
     private void updateStatus() {
-
+        
     }
 
     private void selectedInvoiceDetailsByRow() {
@@ -272,7 +272,6 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
 
     private void openInvoiceDetails() {
         int idHoaDon = (int) tblQuanLyHoaDon.getValueAt(index, 1);
-        System.out.println("Lay thanh cong idHd: " + idHoaDon);
         index = tblQuanLyHoaDon.getSelectedRow();
         try {
             loadDataToArray();
@@ -322,7 +321,42 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
 
             getStatisticsSearchInvoice(startAt, endAt, computerName, userName, idEmployee);
         } catch (ParseException e) {
-//            Xnoti.msd(this, "Sai Định Dạng Ngày Tháng Năm", "Net");
+            e.printStackTrace();
+        }
+    }
+    
+    private void deleteInvoice(){
+        
+        index = tblQuanLyHoaDon.getSelectedRow();
+        int idHd = (int) tblQuanLyHoaDon.getValueAt(index, 1);
+        int comfirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa?", "Thay đổi dữ liệu", JOptionPane.YES_NO_OPTION);
+        try {
+            InvoiceDetailDAO iDetailDao = new InvoiceDetailDAO();
+            InvoiceDetail iDetail = new InvoiceDetail();
+            SessionDAO sesDao = new SessionDAO();
+            Session sess = new Session();
+            if (comfirm == JOptionPane.YES_OPTION) {
+                if (sess == null && iDetail == null) {
+                    invoiceDAO.delete(idHd);
+                    System.out.println("Xóa hóa đơn có id: " + idHd);
+                } else if (sess == null && iDetail != null) {
+                    iDetailDao.delete(iDetail.getId());
+                    invoiceDAO.delete(idHd);
+                    System.out.println("Xoa thanh cong HDCT => Id: " + iDetail.getId());
+                } else if (sess != null && iDetail == null) {
+                    sesDao.delete(sess.getId());
+                    invoiceDAO.delete(idHd);
+                    System.out.println("Xoa thanh cong Session => Id: " + sess.getId());
+                } else {
+                    iDetailDao.delete(iDetail.getId());
+                    sesDao.delete(sess.getId());
+                    invoiceDAO.delete(idHd);
+                }
+                loadDataToArray();
+                fillToTable();
+            }
+        } catch (Exception e) {
+            System.out.println("xoa khong thanhg cong");
             e.printStackTrace();
         }
     }
@@ -731,48 +765,13 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
         if (SwingUtilities.isLeftMouseButton(evt)) {
             index = tblQuanLyHoaDon.getSelectedRow();
             int idHd = (int) tblQuanLyHoaDon.getValueAt(index, 1);
-            System.out.println("Row: " + index + " IdHd: " + idHd);
-        } else {
-            index = tblQuanLyHoaDon.getSelectedRow();
-            int idHd = (int) tblQuanLyHoaDon.getValueAt(index, 1);
-            System.out.println(index + " IdHd: " + idHd);
         }
     }//GEN-LAST:event_tblQuanLyHoaDonMouseClicked
 
     private void mnitXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnitXoaActionPerformed
         // TODO add your handling code here:
-        index = tblQuanLyHoaDon.getSelectedRow();
-        int idHd = (int) tblQuanLyHoaDon.getValueAt(index, 1);
-        int comfirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa?", "Thay đổi dữ liệu", JOptionPane.YES_NO_OPTION);
-        try {
-            InvoiceDetailDAO iDetailDao = new InvoiceDetailDAO();
-            InvoiceDetail iDetail = new InvoiceDetail();
-            SessionDAO sesDao = new SessionDAO();
-            Session sess = new Session();
-            if (comfirm == JOptionPane.YES_OPTION) {
-                if (sess == null && iDetail == null) {
-                    invoiceDAO.delete(idHd);
-                    System.out.println("Xóa hóa đơn có id: " + idHd);
-                } else if (sess == null && iDetail != null) {
-                    iDetailDao.delete(iDetail.getId());
-                    invoiceDAO.delete(idHd);
-                    System.out.println("Xoa thanh cong HDCT => Id: " + iDetail.getId());
-                } else if (sess != null && iDetail == null) {
-                    sesDao.delete(sess.getId());
-                    invoiceDAO.delete(idHd);
-                    System.out.println("Xoa thanh cong Session => Id: " + sess.getId());
-                } else {
-                    iDetailDao.delete(iDetail.getId());
-                    sesDao.delete(sess.getId());
-                    invoiceDAO.delete(idHd);
-                }
-                loadDataToArray();
-                fillToTable();
-            }
-        } catch (Exception e) {
-            System.out.println("xoa khong thanhg cong");
-            e.printStackTrace();
-        }
+        deleteInvoice();
+        
     }//GEN-LAST:event_mnitXoaActionPerformed
 
     private void mnitHoaDonChiTietMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnitHoaDonChiTietMouseClicked
