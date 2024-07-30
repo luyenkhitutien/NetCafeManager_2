@@ -61,12 +61,22 @@ public class TinNhanJDialog extends javax.swing.JDialog {
                 txtGuiActionPerformed(evt);
             }
         });
+        txtGui.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtGuiKeyPressed(evt);
+            }
+        });
 
         btnGui.setFont(new java.awt.Font("Source Code Pro", 1, 16)); // NOI18N
         btnGui.setText("Gửi");
         btnGui.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuiActionPerformed(evt);
+            }
+        });
+        btnGui.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnGuiKeyPressed(evt);
             }
         });
 
@@ -135,6 +145,17 @@ public class TinNhanJDialog extends javax.swing.JDialog {
                  }
         });
     }//GEN-LAST:event_btnGuiActionPerformed
+
+    private void btnGuiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnGuiKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGuiKeyPressed
+
+    private void txtGuiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtGuiKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            btnGui.doClick();
+        }
+    }//GEN-LAST:event_txtGuiKeyPressed
 
 
     /**

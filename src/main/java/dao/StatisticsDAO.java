@@ -59,6 +59,7 @@ public class StatisticsDAO {
                 }
             }
         }catch(SQLException e){
+            e.printStackTrace();
             throw new RuntimeException();
         }
         return list;

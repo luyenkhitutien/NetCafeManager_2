@@ -17,6 +17,7 @@ import entity.Employee;
 import entity.Invoice;
 import entity.InvoiceDetail;
 import entity.Session;
+import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
@@ -40,6 +41,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import utils.Auth;
 import utils.XInitTable;
+import utils.Xnoti;
 
 /**
  *
@@ -320,6 +322,7 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
 
             getStatisticsSearchInvoice(startAt, endAt, computerName, userName, idEmployee);
         } catch (ParseException e) {
+//            Xnoti.msd(this, "Sai Định Dạng Ngày Tháng Năm", "Net");
             e.printStackTrace();
         }
     }
@@ -416,11 +419,32 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
         jLabel3.setText("Từ ngày:");
 
         txtTuNgay.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtTuNgay.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtTuNgayFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtTuNgayFocusLost(evt);
+            }
+        });
+        txtTuNgay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTuNgayActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Source Code Pro", 2, 18)); // NOI18N
         jLabel4.setText("Đến ngày:");
 
         txtDenNgay.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtDenNgay.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtDenNgayFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtDenNgayFocusLost(evt);
+            }
+        });
         txtDenNgay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDenNgayActionPerformed(evt);
@@ -799,12 +823,34 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
         // TODO add your handling code here:
         try {
-            search();
+            if (isValuedateSearch()) {
+                search();
+            }        
         } catch (Exception e) {
             e.printStackTrace();
 
         }
     }//GEN-LAST:event_btnTimKiemActionPerformed
+
+    private void txtTuNgayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTuNgayActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTuNgayActionPerformed
+
+    private void txtTuNgayFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTuNgayFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTuNgayFocusGained
+
+    private void txtTuNgayFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTuNgayFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTuNgayFocusLost
+
+    private void txtDenNgayFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDenNgayFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDenNgayFocusGained
+
+    private void txtDenNgayFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDenNgayFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDenNgayFocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -841,4 +887,16 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtDenNgay;
     private javax.swing.JTextField txtTuNgay;
     // End of variables declaration//GEN-END:variables
+    boolean isValuedateSearch(){
+        
+        if (txtTuNgay.getText().isEmpty()) {
+            Xnoti.msg(this, "Tu Ngay Trong", "Net");
+            return false;
+        }
+        if (txtDenNgay.getText().isEmpty()) {
+            Xnoti.msd(this, "Den Ngay Trong", "Net");
+            return false;
+        }
+        return true;
+    }
 }
