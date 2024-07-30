@@ -6,10 +6,12 @@ import GUI.client.TinNhanJDialog;
 import audio.AudioPlayer;
 import entity.Product;
 import io.IOClient;
+import java.awt.TrayIcon;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
+import utils.Xnoti;
 
 public class MainClient {
 
@@ -65,10 +67,16 @@ public class MainClient {
 
                 // Cập nhật giao diện người dùng với tin nhắn từ server
                 SwingUtilities.invokeLater(() -> {
-                    if (tinNhanForm.getTxtTinNhan().isVisible()) {
+                    if (tinNhanForm.isVisible()) {
                         String[] parts = response.split("[:;]");
                         String tinNhan = parts[parts.length - 1];
                         tinNhanForm.appendMessage("Máy chủ: " + tinNhan); // Gọi phương thức appendMessage trong TinNhanJDialog
+                    } else{
+                        
+                        String[] parts = response.split("[:;]");
+                        String tinNhan = parts[parts.length - 1];
+                        tinNhanForm.appendMessage("Máy chủ: " + tinNhan); // Gọi phương thức appendMessage trong TinNhanJDialog  
+                        Xnoti.showTrayMessage("Thông Báo!", "Bạn Có Tin Nhắn Mới! ", TrayIcon.MessageType.INFO);
                     }
                 });
 

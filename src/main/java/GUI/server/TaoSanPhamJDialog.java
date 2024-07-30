@@ -62,7 +62,7 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
 
         // Đặt kích thước ưu tiên cho JPanel pnlChinh
         pnlChinh.setPreferredSize(new Dimension(1000, 900));
-        fillToCbo();
+//        fillToCbo();
     }
 
     void fillToCbo() {
@@ -246,7 +246,6 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1024, 1024));
 
         pnlChinh.setLayout(null);
 
@@ -323,6 +322,12 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
         txtIDSanPham.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
 
         cboType.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
+        cboType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đồ Ăn", "Thức Uống ", "Card" }));
+        cboType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboTypeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -442,6 +447,10 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         reset();
     }//GEN-LAST:event_btnLamMoiActionPerformed
+
+    private void cboTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTypeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboTypeActionPerformed
 
     /**
      * @param args the command line arguments
