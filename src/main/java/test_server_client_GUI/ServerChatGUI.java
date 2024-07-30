@@ -31,7 +31,7 @@ public class ServerChatGUI extends JFrame {
         getContentPane().add(panel);
         placeComponents(panel);
         
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+//        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setResizable(false);
         
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

@@ -16,7 +16,7 @@ public class MainClient {
     public static final String HOST = "localhost";
     public static final int PORT = 1235;
     public static IOClient client;
-    public static final int COMPUTER_ID = 4;
+    public static final int COMPUTER_ID = 3;
     public static List<Product> listProducts;
     public static List<BigDecimal> listBalanceClient;
     public static Cilent clientForm;

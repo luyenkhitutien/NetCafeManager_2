@@ -285,7 +285,6 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
         txtLuong.setText(null);
         txtMatKhau.setText(null);
         txtSoDienThoai.setText(null);
-        btnThem.setText(null);
         txtTaoLuc.setText(null);
         txtTenNhanVien.setText(null);
         txtTenTaiKhoan.setText(null);
