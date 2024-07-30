@@ -27,6 +27,7 @@ public class Cilent extends javax.swing.JFrame {
 
     private BigDecimal balance;
     private BigDecimal price;
+    private Thread timerThread;
 
     private int totalTime; // Tổng thời gian (tính bằng giây)
     private int ratePerHour; // Giá mỗi giờ
@@ -95,67 +96,78 @@ public class Cilent extends javax.swing.JFrame {
 
     private void setBalanceClient(BigDecimal balance, BigDecimal price) {
         txtSoDu.setText(balance.toString());
-        BigDecimal totalTimeDecimal = balance.divide(price,RoundingMode.DOWN);
-       totalTime = totalTimeDecimal.intValue();
-       BigDecimal remainingBalance = balance.remainder(price); //=> tính số tiền còn lại khi chia hết cho số giờ
-       int remainingMinutes = remainingBalance.multiply(new BigDecimal("60")).divide(price,RoundingMode.DOWN).intValue();
-       Thread timerThread = new Thread(()->{
-           int hoursUsed = 0;
-           int minutesUsed = 0;
-           BigDecimal amountUsed = BigDecimal.ZERO;
-           try {
-               while(true){
-                   //Tăng số phút đã sử dụng
-                   minutesUsed++;
-                   if(minutesUsed == 60){
-                       minutesUsed =0;
-                       hoursUsed++;
-                   }
-                   //Tính số tiền đã sử dụng
-                   amountUsed = price.multiply(new BigDecimal(hoursUsed)).add(price.multiply(new BigDecimal(minutesUsed)).divide(new BigDecimal(60),RoundingMode.DOWN));
-                   //Tính thời gian còn lại
-                   int remainingHours = totalTime - hoursUsed;
-                   int remainingMinutesUpdate = remainingMinutes - minutesUsed;
-                   if(remainingMinutesUpdate < 0){
-                       remainingMinutesUpdate += 60;
-                       remainingHours--;
-                   }
-                   // format thời gian đã sử dụng và còn lại thành 00:00
-                   String formattedUsedTime = String.format("%02d:%02d", hoursUsed,minutesUsed);
-                   String formattedRaminingTime = String.format("%02d:%02d", remainingHours,remainingMinutesUpdate);
-                   txtThoiGianSuDung.setText(formattedUsedTime);
-                   txtThoiGianConLai.setText(formattedRaminingTime);
-                   txtTienDaSuDung.setText(amountUsed+"Đ");
-                   
-                   if (remainingHours <= 0 && remainingMinutesUpdate <= 0) {
+        BigDecimal totalTimeDecimal = balance.divide(price, RoundingMode.DOWN);
+        totalTime = totalTimeDecimal.intValue();
+        BigDecimal remainingBalance = balance.remainder(price); //=> tính số tiền còn lại khi chia hết cho số giờ
+        int remainingMinutes = remainingBalance.multiply(new BigDecimal("60")).divide(price, RoundingMode.DOWN).intValue();
+        timerThread = new Thread(() -> {
+            int hoursUsed = 0;
+            int minutesUsed = 0;
+            BigDecimal amountUsed = BigDecimal.ZERO;
+            try {
+                while (true) {
+                    //Tăng số phút đã sử dụng
+                    if(Thread.currentThread().isInterrupted()){
+                        break;
+                    }
+                    minutesUsed++;
+                    if (minutesUsed == 60) {
+                        minutesUsed = 0;
+                        hoursUsed++;
+                    }
+                    //Tính số tiền đã sử dụng
+                    amountUsed = price.multiply(new BigDecimal(hoursUsed)).add(price.multiply(new BigDecimal(minutesUsed)).divide(new BigDecimal(60), RoundingMode.DOWN));
+                    //Tính thời gian còn lại
+                    int remainingHours = totalTime - hoursUsed;
+                    int remainingMinutesUpdate = remainingMinutes - minutesUsed;
+                    if (remainingMinutesUpdate < 0) {
+                        remainingMinutesUpdate += 60;
+                        remainingHours--;
+                    }
+                    // format thời gian đã sử dụng và còn lại thành 00:00
+                    String formattedUsedTime = String.format("%02d:%02d", hoursUsed, minutesUsed);
+                    String formattedRaminingTime = String.format("%02d:%02d", remainingHours, remainingMinutesUpdate);
+                    txtThoiGianSuDung.setText(formattedUsedTime);
+                    txtThoiGianConLai.setText(formattedRaminingTime);
+                    txtTienDaSuDung.setText(amountUsed + "Đ");
+
+                    if (remainingHours <= 0 && remainingMinutesUpdate <= 0) {
                         System.out.println("Thời gian sử dụng đã hết.");
                         break;
                     }
-                   
-                   Thread.sleep(60000);
-               }
-           } catch (Exception e) {
-               e.printStackTrace();
-               System.out.println("Luồng như cặc chạy đ được");
-           }
-       });
-       // Khởi động luồng
+
+                    Thread.sleep(60000);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Luồng như cặc chạy đ được");
+            }
+        });
+        // Khởi động luồng
         timerThread.start();
-       // format thành 00:00
-       String formattedTime = String.format("%02d:%02d", totalTime,remainingMinutes);
-       txtTongThoiGian.setText(formattedTime);
+        // format thành 00:00
+        String formattedTime = String.format("%02d:%02d", totalTime, remainingMinutes);
+        txtTongThoiGian.setText(formattedTime);
     }
 
     public void getBalaceClient() {
-        if (this.isVisible()) {
             balance = MainClient.listBalanceClient.get(0);
             price = MainClient.listBalanceClient.get(1);
-            this.setBalanceClient(balance, price);
-        }
     }
 
     public void systemTray(String response) {
         Xnoti.showTrayMessage("New response from SERVER", response, TrayIcon.MessageType.INFO);
+    }
+    
+    private void resetForm(){
+        txtTongThoiGian.setText("");
+        txtSoDu.setText("");
+        txtThoiGianConLai.setText("");
+        txtThoiGianSuDung.setText("");
+        txtTienDaSuDung.setText("");
+        if (timerThread != null && timerThread.isAlive()) {
+            timerThread.interrupt();
+        }
     }
 
     /**
@@ -190,6 +202,14 @@ public class Cilent extends javax.swing.JFrame {
         jLabel8.setText("jLabel8");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                formComponentHidden(evt);
+            }
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         pnlChinh.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         pnlChinh.setLayout(null);
@@ -370,6 +390,19 @@ public class Cilent extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.MessageFormTrue();
     }//GEN-LAST:event_btnTinNhanActionPerformed
+
+    private void formComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentHidden
+        // TODO add your handling code here:
+        resetForm();
+    }//GEN-LAST:event_formComponentHidden
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:
+        if (timerThread == null || !timerThread.isAlive() || timerThread.isInterrupted()) {
+            setBalanceClient(balance, price);
+        }
+        
+    }//GEN-LAST:event_formComponentShown
 
     /**
      * @param args the command line arguments
