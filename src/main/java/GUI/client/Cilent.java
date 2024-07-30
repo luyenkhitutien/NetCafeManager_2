@@ -126,7 +126,7 @@ public class Cilent extends javax.swing.JFrame {
             remainingMinutesUpdate += 60;
             remainingHours--;
         }
-        // Định dạng thời gian đã sử dụng và thời gian còn lại thành 00:00
+        // Định dạng thời gian đã sử dụng và thời gian còn lại thành format "00:00"
         String formattedUsedTime = String.format("%02d:%02d", hoursUsed, minutesUsed);
         String formattedRemainingTime = String.format("%02d:%02d", remainingHours, remainingMinutesUpdate);
         txtThoiGianSuDung.setText(formattedUsedTime);
