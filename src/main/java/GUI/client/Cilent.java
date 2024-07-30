@@ -27,14 +27,13 @@ public class Cilent extends javax.swing.JFrame {
 
     private BigDecimal balance;
     private BigDecimal price;
+    private int totalTime;
+    private int remainingMinutes;
+    private int hoursUsed = 0;
+    private int minutesUsed = 0;
+    private BigDecimal amountUsed = BigDecimal.ZERO;
+    private boolean fiveMinuteWarningShown = false;
     private Thread timerThread;
-
-    private int totalTime; // Tổng thời gian (tính bằng giây)
-    private int ratePerHour; // Giá mỗi giờ
-    private int ratePerSecond; // Giá mỗi giây
-    private int usedTime; // Thời gian đã sử dụng (tính bằng giây)
-    private int remainingTime;
-    private Timer timer;
 
     public Cilent() {
         setUndecorated(true);
@@ -86,15 +85,27 @@ public class Cilent extends javax.swing.JFrame {
 //        tinnhan.setVisible(true);
     }
 
-    public class TimeUsage {
+    private void setBalanceClient(BigDecimal balance, BigDecimal price) {
 
-        int hoursUsed = 0;
-        int minutesUsed = 0;
-        int secondsUsed = 0;
-        BigDecimal amountUsed = BigDecimal.ZERO;
+        txtSoDu.setText(balance.toString());
+
+        BigDecimal totalTimeDecimal = balance.divide(price, RoundingMode.DOWN);
+        totalTime = totalTimeDecimal.intValue();
+        BigDecimal remainingBalance = balance.remainder(price); // Calculate remaining balance after whole hours
+        remainingMinutes = remainingBalance.multiply(new BigDecimal("60")).divide(price, RoundingMode.DOWN).intValue();
+
+        // Format total time to 00:00
+        String formattedTime = String.format("%02d:%02d", totalTime, remainingMinutes);
+        txtTongThoiGian.setText(formattedTime);
+
+        startTimerThread();
     }
 
-    private void setForm(int hoursUsed, int minutesUsed, BigDecimal amountUsed, int totalTime, int remainingMinutes) {
+    private void setForm() {
+        // Calculate the amount used
+        amountUsed = price.multiply(new BigDecimal(hoursUsed))
+                .add(price.multiply(new BigDecimal(minutesUsed)).divide(new BigDecimal(60), RoundingMode.DOWN));
+        // Calculate the remaining time
         int remainingHours = totalTime - hoursUsed;
         int remainingMinutesUpdate = remainingMinutes - minutesUsed;
         if (remainingMinutesUpdate < 0) {
@@ -108,62 +119,54 @@ public class Cilent extends javax.swing.JFrame {
         txtThoiGianConLai.setText(formattedRemainingTime);
         txtTienDaSuDung.setText(amountUsed + "Đ");
 
-        if (remainingHours == 0 && remainingMinutesUpdate <= 5) {
+        if (!fiveMinuteWarningShown && remainingHours == 0 && remainingMinutesUpdate <= 5) {
             Xnoti.msg(this, "Thời gian còn lại 5 phút", "Thông báo");
+            fiveMinuteWarningShown = true;
         }
 
         if (remainingHours <= 0 && remainingMinutesUpdate <= 0) {
             Xnoti.msg(this, "Thời gian sử dụng đã hết", "Thông báo");
-            return; // Exit the method if time is up
+            stopTimerThread(); // Stop the thread when time is up
         }
-
-        // Format total time to 00:00
-        String formattedTime = String.format("%02d:%02d", totalTime, remainingMinutes);
-        txtTongThoiGian.setText(formattedTime);
     }
 
-    private void setBalanceClient(BigDecimal balance, BigDecimal price) {
-        txtSoDu.setText(balance.toString());
-        BigDecimal totalTimeDecimal = balance.divide(price, RoundingMode.DOWN);
-        int totalTime = totalTimeDecimal.intValue();
-        BigDecimal remainingBalance = balance.remainder(price); // Calculate remaining balance after whole hours
-        int remainingMinutes = remainingBalance.multiply(new BigDecimal("60")).divide(price, RoundingMode.DOWN).intValue();
-
+    private void startTimerThread() {
         timerThread = new Thread(() -> {
-            int hoursUsed = 0;
-            int minutesUsed = 0;
-            BigDecimal amountUsed = BigDecimal.ZERO;
-            boolean fiveMinuteWarningShown = false; // flag to ensure notification is shown only once
             try {
                 while (true) {
                     if (Thread.currentThread().isInterrupted()) {
                         break;
                     }
+
                     // Increase the used minutes
                     minutesUsed++;
                     if (minutesUsed == 60) {
                         minutesUsed = 0;
                         hoursUsed++;
                     }
-                    // Calculate the amount used
-                    amountUsed = price.multiply(new BigDecimal(hoursUsed)).add(price.multiply(new BigDecimal(minutesUsed)).divide(new BigDecimal(60), RoundingMode.DOWN));
-                    // Update the form
-                    setForm(hoursUsed, minutesUsed, amountUsed, totalTime, remainingMinutes);
 
-                    // Check if the time is up
-                    if (totalTime - hoursUsed <= 0 && remainingMinutes - minutesUsed <= 0) {
+                    setForm();
+
+                    try {
+                        Thread.sleep(6000);
+                    } catch (InterruptedException e) {
+                        // Nếu bị interrupt trong khi sleep, thoát vòng lặp
+                        Thread.currentThread().interrupt(); // Khôi phục trạng thái interrupt
                         break;
                     }
-
-                    Thread.sleep(60000);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("Lỗi khởi động luồng tính toán thời gian sử dụng");
             }
         });
-        // Start the thread
         timerThread.start();
+    }
+
+    private void stopTimerThread() {
+        if (timerThread != null && timerThread.isAlive()) {
+            timerThread.interrupt();
+        }
     }
 
     public synchronized void getBalaceClient() {
@@ -181,9 +184,8 @@ public class Cilent extends javax.swing.JFrame {
         txtThoiGianConLai.setText("");
         txtThoiGianSuDung.setText("");
         txtTienDaSuDung.setText("");
-        if (timerThread != null && timerThread.isAlive()) {
-            timerThread.interrupt();
-        }
+
+        stopTimerThread();
     }
 
     /**
