@@ -140,7 +140,7 @@ public class Cilent extends javax.swing.JFrame {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                System.out.println("Luồng như cặc chạy đ được");
+                System.out.println("Lỗi khởi động luồng tính toán thời gian sử dụng");
             }
         });
         // Khởi động luồng
