@@ -228,7 +228,7 @@ public class IOServer {
                         }
                         case "LOGOUT" -> {
                             logout();
-                            removeClient();
+                            reset();
                         }
                         case "MAINTENANCE" -> {
                             String response = toMaintain();
@@ -248,6 +248,8 @@ public class IOServer {
                             sendResponse("RESPONSE_BALANCE", listBigDecimals);
                         }
                         case "SHUTDOWN" -> {
+                            removeClient();
+                            reset();
                             shutdown();
                         }
                         default -> {
@@ -438,11 +440,14 @@ public class IOServer {
             System.out.println("Client " + clientID + " Logged out successfully");
         }
 
-        private synchronized void removeClient() throws Exception {
-            IOServer.loggedInClientsMap.remove(clientID);
-            clientID = 0;
+        private synchronized void reset() throws Exception {
             session = null;
             invoice = null;
+        }
+        
+        private synchronized void removeClient(){
+            IOServer.loggedInClientsMap.remove(clientID);
+            clientID = 0;
         }
 
         public synchronized void shutdown() {

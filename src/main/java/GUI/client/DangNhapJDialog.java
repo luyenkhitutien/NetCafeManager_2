@@ -8,8 +8,10 @@ package GUI.client;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import main_client.MainClient;
+import static main_client.MainClient.dangNhapJDialog;
 import utils.CustomPanel;
 import utils.Xnoti;
 /**
@@ -28,13 +30,7 @@ public class DangNhapJDialog extends javax.swing.JDialog {
         init();
     }
     public void init(){
-        // Đặt kích thước cho JDialog
-//        setSize(new Dimension(1920, 1080));
-//        
-//        // Đặt kích thước ưu tiên cho JPanel pnlChinh
-//        pnlChinh.setPreferredSize(new Dimension(1920, 1080));
-//        pnlAnh.setPreferredSize(new Dimension(1920, 1080));
-//        lblAnh.setPreferredSize(new Dimension(1920, 1080));
+        setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
     }
     
     public void notify(String response){
@@ -46,7 +42,9 @@ public class DangNhapJDialog extends javax.swing.JDialog {
         String password = txtMatKhau.getText();
         try {
             MainClient.client.login(username, password);
-//            if(IOClient.)
+            
+            MainClient.clientForm.setVisible(true);
+            dangNhapJDialog.setVisible(false);
 
         } catch (IOException ex) {
             Logger.getLogger(DangNhapJDialog.class.getName()).log(Level.SEVERE, null, ex);

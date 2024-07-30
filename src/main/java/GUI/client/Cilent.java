@@ -38,6 +38,7 @@ public class Cilent extends javax.swing.JFrame {
     public Cilent() {
         setUndecorated(true);
         initComponents();
+        init();
         setLocationToRight();
     }
 
@@ -49,6 +50,10 @@ public class Cilent extends javax.swing.JFrame {
         int y = 0;  // or any other value depending on your requirement
         setLocation(x, y);
     }
+    
+    private void init(){
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+    }
 
     public void logout() {
         try {
@@ -56,10 +61,10 @@ public class Cilent extends javax.swing.JFrame {
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(Cilent.class.getName()).log(Level.SEVERE, null, ex);
         }
-        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-        DangNhapJDialog dangNhap = new DangNhapJDialog(frame, true);
-        dangNhap.setVisible(true);
+//        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        
         this.setVisible(false);
+        MainClient.dangNhapJDialog.setVisible(true);
     }
 
     public void changePasswordFormTrue() {

@@ -57,6 +57,11 @@ public class MainClient {
                     clientForm.getBalaceClient();
                     return;
                 }
+                
+                if(response.startsWith("Successfully open computer for guest")){
+                    // Xử lý khéo hiển thị giao diện cho khách vãng lai
+                    
+                }
 
                 // Cập nhật giao diện người dùng với tin nhắn từ server
                 SwingUtilities.invokeLater(() -> {
@@ -76,15 +81,11 @@ public class MainClient {
                 });
 
                 SwingUtilities.invokeLater(() -> {
-                    if (dangNhapJDialog.isVisible()) {
 //                        dangNhapJDialog.notify(response);
                         if (response.equalsIgnoreCase("Server response: Invalid credentials")) {
                             return;
                         } else if (response.startsWith("Server response: Login successful with client ID: ")) {
                             MainClient.client.importBalance();
-                            MainClient.clientForm.setVisible(true);
-                            dangNhapJDialog.dispose();
-                        }
                     }
                 });
             };

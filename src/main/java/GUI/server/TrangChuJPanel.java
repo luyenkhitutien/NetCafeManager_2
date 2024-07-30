@@ -25,7 +25,7 @@ import utils.Xnoti;
 public class TrangChuJPanel extends javax.swing.JPanel {
 
     private HashMap<Integer, JLabel> labelsMay;
-    public int selectedComputerId;
+    public int selectedComputerId = 0;
 
     /**
      * Creates new form TrangChuJPanel
