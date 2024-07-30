@@ -220,20 +220,19 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
             AccountDAO accDao = new AccountDAO();
             accDao.insert(account);
             txtIDNhanVIen.setText(String.valueOf(account.getId()));
-            try {
+            
                 Employee em = getFormEm();
                 em.setBalance(BigDecimal.ZERO);
                 System.out.println("inst_em: " + em);
                 EmployeeDAO emDao = new EmployeeDAO();
                 emDao.insert(em);
-                Xnoti.msg(this, "Thêm Thành Công", "NetCaFe");
+                Xnoti.msg(this, "Thêm Thành Công", "Thông báo");
                 fillOnUpdate();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            
 
         } catch (Exception e) {
             e.printStackTrace();
+            Xnoti.msg(this, "erro: ID tài khoản hoặc tên tài khoản đã tồn tại!", "Thông báo");
         }
         }      
     }
@@ -248,10 +247,10 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
                 Account acc = getForm();
                 accDao.update(acc);
                 emDao.update(em);
-                System.out.println("QLNV => " + acc + "\n" + em);
                 Xnoti.msg(this, "Cập Nhật Thành Công", "Thông báo");
                 fillOnUpdate();
             } catch (Exception e) {
+                Xnoti.msg(this, "erro: ID Tài khoản hoặc nhân viên chưa có!.\n Vui lòng chọn vào thông tin trên bảng để xóa", "Thông báo");
                 e.printStackTrace();
             }
         }

@@ -117,12 +117,10 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
             ProductDAO proDao = new ProductDAO();
             try {
                 proDao.insert(product);
-                System.out.println("Them thanh cong");
                 fillOnUpdate();
-                System.out.println(listener);
-                JOptionPane.showMessageDialog(this, "Them Thanh Cong");
+                Xnoti.msg(this, "Thêm sản phẩm thành công.", "Thông báo");
             } catch (Exception e) {
-                System.out.println("Them that bai");
+                Xnoti.msg(this, "Thêm thất bại!. ID sản phẩm đã tồn tại", "Thông báo");
             }
         }
 
@@ -136,9 +134,9 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
             try {
                 proDao.update(product);
                 fillOnUpdate();
-                System.out.println("Cap nhat thanh cong");
+                Xnoti.msg(this, "Cập nhập sản phẩm thành công.", "Thống báo");
             } catch (Exception e) {
-                System.out.println("cap nhat that bai");
+                Xnoti.msg(this, "Cập nhập thất bại. Không tìm thấy sản phẩm có ID: "+product.getId(), "Thông báo");
                 e.printStackTrace();
             }
         }
@@ -162,10 +160,11 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
                 proDao.delete(IDSanPham);
                 System.out.println("Sản phẩm có ID là: "+IDSanPham);
                 fillOnUpdate();
+                Xnoti.msg(this, "Xóa thành công sản phẩm có ID: "+IDSanPham, "Thông báo");
             } catch (Exception ex) {
-                Logger.getLogger(TaoSanPhamJDialog.class.getName()).log(Level.SEVERE, null, ex);
+                Xnoti.msg(this, "erro: Xóa thất bại. Vui lòng xóa ID sản phẩm: "+IDSanPham+" có trong hóa đơn trước. ", "Thông báo");
             }       
-            Xnoti.msg(this, "Xóa thành công sản phẩm có ID: "+IDSanPham, "Thông báo");
+           
             
         } else {
             Xnoti.msg(this, "erro: ID Sản phẩm rỗng!", "Thông báo");

@@ -200,7 +200,7 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("QLHV => Them tai khoan that bai!!");
+            Xnoti.msg(this, "Thêm hội viên thất bại. ID hoặc tên tài khoản đã tồn tại! ", "Thông báo");
         }
     }
 
@@ -218,6 +218,7 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
             Xnoti.msg(this, "Cập Nhật Thành Công", "NetCaFe");
             fillOnUpdate();
         } catch (Exception e) {
+            Xnoti.msg(this, "Cập nhập không thành công!. Không tồn tại ID tài khoản hoặc ID hội viên", "Thông báo");
         }
     }
 
@@ -242,9 +243,7 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
             int IDhv = Integer.parseInt(txtIDHoiVien.getText());
             int IDtk = Integer.parseInt(txtIDTaiKhoan.getText());
             memberDAO.delete(IDhv);
-            System.out.println("QLHV ==> Xoa hoi vien thanh cong: " + IDhv);
             accountDAO.delete(IDtk);
-            System.out.println("QLHV ==> Xoa tai khoan co Id" + IDhv + " la hoi vien ");
             Xnoti.msg(this, "Xóa Thành Công", "NetCaFe");
             fillOnUpdate();
         } catch (Exception e) {
