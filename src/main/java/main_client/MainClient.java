@@ -79,8 +79,9 @@ public class MainClient {
 
     // Phương thức để xử lý phản hồi số dư
     private static void handleBalanceResponse() {
-        listBalanceClient = client.getListBalanceClient();
-        SwingUtilities.invokeLater(() -> clientForm.getBalaceClient());
+        MainClient.listBalanceClient = client.getListBalanceClient();
+        System.out.println(MainClient.listBalanceClient);
+        dangNhapJDialog.setVisible(false);
     }
 
     // Phương thức để xử lý phản hồi mở máy tính cho khách
@@ -107,14 +108,6 @@ public class MainClient {
         SwingUtilities.invokeLater(() -> {
             if (dangNhapJDialog.isVisible()) {
                 dangNhapJDialog.notify(response);
-            } else {
-                System.out.println("MainClient => " + response);
-            }
-
-            if (response.equalsIgnoreCase("Server response: Invalid credentials")) {
-                return;
-            } else if (response.startsWith("Server response: Login successful with client ID: ")) {
-                client.importBalance();
             }
         });
     }

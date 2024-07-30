@@ -150,7 +150,7 @@ public class Cilent extends javax.swing.JFrame {
         txtTongThoiGian.setText(formattedTime);
     }
 
-    public void getBalaceClient() {
+    public synchronized void getBalaceClient() {
             balance = MainClient.listBalanceClient.get(0);
             price = MainClient.listBalanceClient.get(1);
     }

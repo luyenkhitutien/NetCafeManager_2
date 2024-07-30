@@ -12,6 +12,7 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import main_client.MainClient;
+import static main_client.MainClient.client;
 import static main_client.MainClient.dangNhapJDialog;
 import utils.CustomPanel;
 import utils.Xnoti;
@@ -44,9 +45,7 @@ public class DangNhapJDialog extends javax.swing.JDialog {
         String password = txtMatKhau.getText();
         try {
             MainClient.client.login(username, password);
-            
-            MainClient.clientForm.setVisible(true);
-            dangNhapJDialog.setVisible(false);
+            MainClient.client.importBalance();
 
         } catch (IOException ex) {
             Logger.getLogger(DangNhapJDialog.class.getName()).log(Level.SEVERE, null, ex);
@@ -255,6 +254,9 @@ public class DangNhapJDialog extends javax.swing.JDialog {
     private void formComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentHidden
         // TODO add your handling code here:
         
+        
+        MainClient.clientForm.getBalaceClient();
+        MainClient.clientForm.setVisible(true);
     }//GEN-LAST:event_formComponentHidden
 
     /**

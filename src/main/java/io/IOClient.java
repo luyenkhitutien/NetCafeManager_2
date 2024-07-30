@@ -254,7 +254,7 @@ public class IOClient {
         return listProducts;
     }
 
-    public List<BigDecimal> getListBalanceClient() {
+    public synchronized List<BigDecimal> getListBalanceClient() {
         return listBalanceClient;
     }
 
