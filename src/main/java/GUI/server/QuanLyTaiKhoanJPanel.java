@@ -86,6 +86,8 @@ public class QuanLyTaiKhoanJPanel extends javax.swing.JPanel {
     public boolean searchId(String text) throws Exception {
         try {
             for (char c : text.toCharArray()) {
+                // nếu là chữ-> false
+                // số -> true
                 if (!Character.isDigit(c)) {
                     return false;
                 }
