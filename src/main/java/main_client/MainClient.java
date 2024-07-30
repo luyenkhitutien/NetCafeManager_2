@@ -10,7 +10,6 @@ import java.awt.TrayIcon;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.swing.SwingUtilities;
-import javax.swing.SwingWorker;
 import utils.Xnoti;
 
 public class MainClient {
@@ -27,107 +26,96 @@ public class MainClient {
     private static AudioPlayer audioPlayer;
 
     public static void main(String[] args) {
-
         com.formdev.flatlaf.intellijthemes.FlatSolarizedLightIJTheme.setup();
 
         java.awt.EventQueue.invokeLater(() -> {
             clientForm = new Cilent();
             tinNhanForm = new TinNhanJDialog(clientForm, true);
-//            tinNhanForm.setVisible(true);
             dangNhapJDialog = new DangNhapJDialog(clientForm, false);
             dangNhapJDialog.setVisible(true);
-            
+
             // Thêm phát âm thanh khi ứng dụng khởi động
             audioPlayer = new AudioPlayer();
             audioPlayer.play("/resources/Audio_Tale-of-Immortal.wav", true); // Phát lặp lại
-            
+
             // Thêm sự kiện cho nút btnTinNhan
             clientForm.getBtnTinNhan().addActionListener(e -> {
                 if (!tinNhanForm.isVisible()) {
                     tinNhanForm.setVisible(true);
                 }
             });
+
             // Khởi tạo đối tượng callback
             IOClient.ResponseCallback callback = response -> {
                 if (response.startsWith("Received product list with size:")) {
-                    listProducts = client.getListProducts();
+                    handleProductListResponse();
                     return;
                 }
 
                 if (response.startsWith("Client getBalance(): ")) {
-                    listBalanceClient = client.getListBalanceClient();
-                    clientForm.getBalaceClient();
+                    handleBalanceResponse();
                     return;
                 }
-                
-                if(response.startsWith("Successfully open computer for guest")){
-                    // Xử lý khéo hiển thị giao diện cho khách vãng lai
-                    
+
+                if (response.startsWith("Successfully open computer for guest")) {
+                    handleGuestOpenComputerResponse();
+                    return;
                 }
 
-                // Cập nhật giao diện người dùng với tin nhắn từ server
-                SwingUtilities.invokeLater(() -> {
-                    if (tinNhanForm.isVisible()) {
-                        String[] parts = response.split("[:;]");
-                        String tinNhan = parts[parts.length - 1];
-                        tinNhanForm.appendMessage("Máy chủ: " + tinNhan); // Gọi phương thức appendMessage trong TinNhanJDialog
-                    } else{
-                        
-                        String[] parts = response.split("[:;]");
-                        String tinNhan = parts[parts.length - 1];
-                        tinNhanForm.appendMessage("Máy chủ: " + tinNhan); // Gọi phương thức appendMessage trong TinNhanJDialog  
-                        Xnoti.showTrayMessage("Thông Báo!", "Bạn Có Tin Nhắn Mới! ", TrayIcon.MessageType.INFO);
-                    }
-                });
-
-                SwingUtilities.invokeLater(() -> {
-                    if (dangNhapJDialog.isVisible()) {
-                        dangNhapJDialog.notify(response);
-                    } else {
-                        System.out.println("MainClient => " + response);
-                    }
-                });
-
-                SwingUtilities.invokeLater(() -> {
-//                        dangNhapJDialog.notify(response);
-                        if (response.equalsIgnoreCase("Server response: Invalid credentials")) {
-                            return;
-                        } else if (response.startsWith("Server response: Login successful with client ID: ")) {
-                            client.importBalance();
-                            client.importListProduct();
-                            
-                    }
-                });
+                handleServerMessage(response);
+                handleLoginResponse(response);
             };
 
-//             Khởi tạo client và bắt đầu lắng nghe với callback
+            // Khởi tạo client và bắt đầu lắng nghe với callback
             client = new IOClient(tinNhanForm);
-
             client.startListening(callback);
-
-            // Thực hiện các hành động khác của client
-            SwingWorker<Void, Void> worker = new SwingWorker<>() {
-                @Override
-                protected Void doInBackground() {
-                    if (dangNhapJDialog.isVisible()) {
-                        client.openComputer();
-                    }
-                    client.importListProduct();
-
-                    return null;
-                }
-
-                @Override
-                protected void done() {
-                    // Cập nhật form hoặc thực hiện bất kỳ hành động cuối cùng nào nếu cần thiết
-                    
-
-                }
-            };
-
-            worker.execute();
-        }
-        );
+        });
     }
 
+    // Phương thức để xử lý phản hồi danh sách sản phẩm
+    private static void handleProductListResponse() {
+        listProducts = client.getListProducts();
+    }
+
+    // Phương thức để xử lý phản hồi số dư
+    private static void handleBalanceResponse() {
+        listBalanceClient = client.getListBalanceClient();
+        SwingUtilities.invokeLater(() -> clientForm.getBalaceClient());
+    }
+
+    // Phương thức để xử lý phản hồi mở máy tính cho khách
+    private static void handleGuestOpenComputerResponse() {
+        // Xử lý khi mở máy tính cho khách vãng lai
+    }
+
+    // Phương thức để xử lý tin nhắn từ server
+    private static void handleServerMessage(String response) {
+        String[] parts = response.split("[:;]");
+        String tinNhan = parts[parts.length - 1];
+        SwingUtilities.invokeLater(() -> {
+            if (tinNhanForm.isVisible()) {
+                tinNhanForm.appendMessage("Máy chủ: " + tinNhan);
+            } else {
+                tinNhanForm.appendMessage("Máy chủ: " + tinNhan);
+                Xnoti.showTrayMessage("Thông Báo!", "Bạn Có Tin Nhắn Mới! ", TrayIcon.MessageType.INFO);
+            }
+        });
+    }
+
+    // Phương thức để xử lý phản hồi đăng nhập
+    private static void handleLoginResponse(String response) {
+        SwingUtilities.invokeLater(() -> {
+            if (dangNhapJDialog.isVisible()) {
+                dangNhapJDialog.notify(response);
+            } else {
+                System.out.println("MainClient => " + response);
+            }
+
+            if (response.equalsIgnoreCase("Server response: Invalid credentials")) {
+                return;
+            } else if (response.startsWith("Server response: Login successful with client ID: ")) {
+                client.importBalance();
+            }
+        });
+    }
 }

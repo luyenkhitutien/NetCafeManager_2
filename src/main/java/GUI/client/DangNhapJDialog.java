@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
 import main_client.MainClient;
 import static main_client.MainClient.dangNhapJDialog;
 import utils.CustomPanel;
@@ -28,6 +29,7 @@ public class DangNhapJDialog extends javax.swing.JDialog {
       setUndecorated(true); // Bỏ thanh điều khiển
         initComponents();
         init();
+        
     }
     public void init(){
         setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -64,6 +66,25 @@ public class DangNhapJDialog extends javax.swing.JDialog {
 
         return true;
     }
+    
+    private void startWorkerIfVisible() {
+        if (isVisible()) {
+            SwingWorker<Void, Void> worker = new SwingWorker<>() {
+                @Override
+                protected Void doInBackground() {
+                    MainClient.client.openComputer();
+                    MainClient.client.importListProduct();
+                    return null;
+                }
+
+                @Override
+                protected void done() {
+                    // Cập nhật form hoặc thực hiện bất kỳ hành động cuối cùng nào nếu cần thiết
+                }
+            };
+            worker.execute();
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -86,7 +107,11 @@ public class DangNhapJDialog extends javax.swing.JDialog {
         lblAnh = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1920, 1080));
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         pnlChinh.setPreferredSize(new java.awt.Dimension(1920, 1080));
 
@@ -217,6 +242,12 @@ public class DangNhapJDialog extends javax.swing.JDialog {
             btnLogin.doClick();
         }
     }//GEN-LAST:event_txtMatKhauKeyPressed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:
+        startWorkerIfVisible();
+        
+    }//GEN-LAST:event_formComponentShown
 
     /**
      * @param args the command line arguments
