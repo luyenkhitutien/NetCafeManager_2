@@ -17,7 +17,6 @@ import entity.Employee;
 import entity.Invoice;
 import entity.InvoiceDetail;
 import entity.Session;
-import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
@@ -134,7 +133,9 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
                 if (o1.getStatus().equalsIgnoreCase("Hoàn thành") && o2.getStatus().equalsIgnoreCase("Chưa hoàn thành")) {
                     return 1;
                 }
-                // Giữ nguyên thứ tự nếu cả hai cùng trạng thái
+                if (o1.getStatus().equalsIgnoreCase(o2.getStatus())) {
+                    return o2.getCreatedAt().compareTo(o1.getCreatedAt());
+                }
                 return 0;
             }
         });
@@ -145,11 +146,12 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
         model.setRowCount(0);
         int STT = 1;
         for (Invoice i : list) {
+            Object memberID = i.getMemberID() == 0  ? "Vãng lai" : i.getMemberID();
             Object[] row = {
                 STT++,
                 i.getId(),
                 i.getEmployeeID(),
-                i.getMemberID(),
+                memberID,
                 i.getCreatedAt(),
                 i.getStatus(),
                 i.getTotalAmount()
