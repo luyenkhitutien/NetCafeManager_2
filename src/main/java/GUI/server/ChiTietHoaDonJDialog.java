@@ -14,11 +14,18 @@ import entity.Product;
 import entity.Session;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import main_server.MainTest;
 import utils.XInitTable;
 import utils.Xnoti;
@@ -233,7 +240,61 @@ public class ChiTietHoaDonJDialog extends javax.swing.JDialog {
             Logger.getLogger(ChiTietHoaDonJDialog.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    void printInvoice(){
+        StringBuilder sb = new StringBuilder();
+        TableModel modelInvoice = tblInvoiceDetali.getModel();
+        TableModel modelSessions = tblSession.getModel();
 
+        // Lấy ID hóa đơn từ dòng đầu tiên của bảng hóa đơn chi tiết
+        String invoiceId = modelInvoice.getValueAt(0, 2).toString();
+        sb.append("==============================================\n");
+        sb.append("                  HÓA ĐƠN                     \n");
+        sb.append("==============================================\n");
+        sb.append(" ID hóa đơn:  ").append(invoiceId).append("\n");
+        sb.append("==============================================\n");
+
+        // Thêm tiêu đề phần chi tiết sản phẩm
+        sb.append("Chi tiết sản phẩm:\n");
+        sb.append(String.format("%-20s%-10s%-15s\n","Tên sản phẩm", "Số lượng", "Thành tiền"));
+        // Lấy dữ liệu chi tiết sản phẩm, bỏ qua cột 0, 1 và 6
+        for (int row = 0; row < modelInvoice.getRowCount(); row++) {
+            sb.append(String.format("%-20s%-10s%-15s\n",
+                    modelInvoice.getValueAt(row, 3),
+                    modelInvoice.getValueAt(row, 4),
+                    modelInvoice.getValueAt(row, 5)));
+        }
+        sb.append("==============================================\n");
+
+         // Thêm tiêu đề phần phí sử dụng máy
+        sb.append("Phí sử dụng máy:\n");
+        sb.append("ID Máy tính: ");
+        // Lấy dữ liệu phiên, bỏ qua cột 0, 1 và 2
+        for (int row = 0; row < modelSessions.getRowCount(); row++) {
+            sb.append(modelSessions.getValueAt(row, 3)).append("\nThời gian bắt đầu: ");
+            sb.append(modelSessions.getValueAt(row, 4)).append("\nThời gian kết thúc: ");
+            sb.append(modelSessions.getValueAt(row, 5)).append("\nTiền giờ chơi: ");
+            sb.append(modelSessions.getValueAt(row, 6)).append("\n");
+        }
+        sb.append("==============================================\n");
+
+        // Sử dụng JFileChooser để chọn nơi lưu trữ file
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Chọn nơi lưu file hóa đơn");
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileToSave+".txt"))) {
+                writer.write(sb.toString());
+                JOptionPane.showMessageDialog(this, "In thành công hóa đơn.");
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Lỗi in file");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Hủy lưu file.");
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -257,6 +318,7 @@ public class ChiTietHoaDonJDialog extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblInvoiceDetali = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
+        btnPrint = new javax.swing.JButton();
 
         mnitThayDoiTrangThai.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ThayDoi40x40.png"))); // NOI18N
         mnitThayDoiTrangThai.setText("Thay đổi trạng thái thanh toán");
@@ -318,7 +380,7 @@ public class ChiTietHoaDonJDialog extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTableSessionsLayout.createSequentialGroup()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pnlTableHoaDoinChiTiet.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -335,7 +397,6 @@ public class ChiTietHoaDonJDialog extends javax.swing.JDialog {
                 "STT", "ID", "ID hóa đơn", "Tên sản phẩm", "Số lượng", "Thành tiền", "Trạng thái"
             }
         ) {
-            @SuppressWarnings("rawtypes")
             Class[] types = new Class [] {
                 java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Boolean.class
             };
@@ -343,7 +404,6 @@ public class ChiTietHoaDonJDialog extends javax.swing.JDialog {
                 false, false, false, false, false, false, false
             };
 
-            @SuppressWarnings("rawtypes")
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
@@ -392,6 +452,14 @@ public class ChiTietHoaDonJDialog extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        btnPrint.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnPrint.setText("Print");
+        btnPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlChinhLayout = new javax.swing.GroupLayout(pnlChinh);
         pnlChinh.setLayout(pnlChinhLayout);
         pnlChinhLayout.setHorizontalGroup(
@@ -399,6 +467,10 @@ public class ChiTietHoaDonJDialog extends javax.swing.JDialog {
             .addComponent(pnlTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(pnlTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(pnlTableSessions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlChinhLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52))
         );
         pnlChinhLayout.setVerticalGroup(
             pnlChinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -407,7 +479,10 @@ public class ChiTietHoaDonJDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlTableSessions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(pnlTableSessions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -427,6 +502,11 @@ public class ChiTietHoaDonJDialog extends javax.swing.JDialog {
     private void mnitThayDoiTrangThaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnitThayDoiTrangThaiActionPerformed
         updateStatus();
     }//GEN-LAST:event_mnitThayDoiTrangThaiActionPerformed
+
+    private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
+        // TODO add your handling code here:
+        printInvoice();
+    }//GEN-LAST:event_btnPrintActionPerformed
 
     /**
      * @param args the command line arguments
@@ -454,39 +534,7 @@ public class ChiTietHoaDonJDialog extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(ChiTietHoaDonJDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the dialog */
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 ChiTietHoaDonJDialog dialog = new ChiTietHoaDonJDialog(new javax.swing.JFrame(), true, 1);
@@ -502,6 +550,7 @@ public class ChiTietHoaDonJDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnPrint;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
