@@ -90,80 +90,55 @@ public class Cilent extends javax.swing.JFrame {
 
     private void setBalanceClient(BigDecimal balance, BigDecimal price) {
         txtSoDu.setText(balance.toString());
-        System.out.println("Đang sử dụng máy có giá: " + price);
-        BigDecimal totalTimeDecimal = balance.divide(price, RoundingMode.DOWN);
-        totalTime = totalTimeDecimal.intValue();
-
-        BigDecimal remainingBalance = balance.remainder(price);
-        int remainingMinutes = remainingBalance.multiply(new BigDecimal("60")).divide(price, RoundingMode.DOWN).intValue();
-
-        TimeUsage timeUsage = new TimeUsage();
-
-        Thread timerThread = new Thread(() -> {
-            try {
-                while (true) {
-                    // Tăng số giây đã sử dụng
-                    timeUsage.secondsUsed++;
-                    if (timeUsage.secondsUsed == 60) {
-                        timeUsage.secondsUsed = 0;
-                        timeUsage.minutesUsed++;
-                        if (timeUsage.minutesUsed == 60) {
-                            timeUsage.minutesUsed = 0;
-                            timeUsage.hoursUsed++;
-                        }
-                    }
-
-                    // Tính số tiền đã sử dụng
-                    timeUsage.amountUsed = price.multiply(new BigDecimal(timeUsage.hoursUsed))
-                                      .add(price.multiply(new BigDecimal(timeUsage.minutesUsed))
-                                                .divide(new BigDecimal(60), RoundingMode.DOWN))
-                                      .add(price.multiply(new BigDecimal(timeUsage.secondsUsed))
-                                                .divide(new BigDecimal(3600), RoundingMode.DOWN));
-
-                    // Tính thời gian còn lại
-                    int remainingHours = totalTime - timeUsage.hoursUsed;
-                    int remainingMinutesUpdate = remainingMinutes - timeUsage.minutesUsed;
-                    int remainingSecondsUpdate = 60 - timeUsage.secondsUsed;
-                    if (remainingSecondsUpdate == 60) {
-                        remainingSecondsUpdate = 0;
-                        remainingMinutesUpdate--;
-                    }
-                    if (remainingMinutesUpdate < 0) {
-                        remainingMinutesUpdate += 60;
-                        remainingHours--;
-                    }
-
-                    // Định dạng thời gian đã sử dụng và còn lại thành 00:00:00
-                    String formattedUsedTime = String.format("%02d:%02d:%02d", timeUsage.hoursUsed, timeUsage.minutesUsed, timeUsage.secondsUsed);
-                    String formattedRemainingTime = String.format("%02d:%02d:%02d", remainingHours, remainingMinutesUpdate, remainingSecondsUpdate);
-
-                    // Cập nhật giao diện người dùng một cách thread-safe
-                    SwingUtilities.invokeLater(() -> {
-                        txtThoiGianSuDung.setText(formattedUsedTime);
-                        txtThoiGianConLai.setText(formattedRemainingTime);
-                        txtTienDaSuDung.setText(timeUsage.amountUsed + "Đ");
-                    });
-
-                    if (remainingHours <= 0 && remainingMinutesUpdate <= 0 && remainingSecondsUpdate <= 0) {
+        BigDecimal totalTimeDecimal = balance.divide(price,RoundingMode.DOWN);
+       totalTime = totalTimeDecimal.intValue();
+       BigDecimal remainingBalance = balance.remainder(price); //=> tính số tiền còn lại khi chia hết cho số giờ
+       int remainingMinutes = remainingBalance.multiply(new BigDecimal("60")).divide(price,RoundingMode.DOWN).intValue();
+       Thread timerThread = new Thread(()->{
+           int hoursUsed = 0;
+           int minutesUsed = 0;
+           BigDecimal amountUsed = BigDecimal.ZERO;
+           try {
+               while(true){
+                   //Tăng số phút đã sử dụng
+                   minutesUsed++;
+                   if(minutesUsed == 60){
+                       minutesUsed =0;
+                       hoursUsed++;
+                   }
+                   //Tính số tiền đã sử dụng
+                   amountUsed = price.multiply(new BigDecimal(hoursUsed)).add(price.multiply(new BigDecimal(minutesUsed)).divide(new BigDecimal(60),RoundingMode.DOWN));
+                   //Tính thời gian còn lại
+                   int remainingHours = totalTime - hoursUsed;
+                   int remainingMinutesUpdate = remainingMinutes - minutesUsed;
+                   if(remainingMinutesUpdate < 0){
+                       remainingMinutesUpdate += 60;
+                       remainingHours--;
+                   }
+                   // format thời gian đã sử dụng và còn lại thành 00:00
+                   String formattedUsedTime = String.format("%02d:%02d", hoursUsed,minutesUsed);
+                   String formattedRaminingTime = String.format("%02d:%02d", remainingHours,remainingMinutesUpdate);
+                   txtThoiGianSuDung.setText(formattedUsedTime);
+                   txtThoiGianConLai.setText(formattedRaminingTime);
+                   txtTienDaSuDung.setText(amountUsed+"Đ");
+                   
+                   if (remainingHours <= 0 && remainingMinutesUpdate <= 0) {
                         System.out.println("Thời gian sử dụng đã hết.");
                         break;
                     }
-
-                    // Tạm dừng luồng 1 giây (1000 ms)
-                    Thread.sleep(1000);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("Luồng gặp lỗi khi chạy");
-            }
-        });
-
-        // Khởi động luồng
+                   
+                   Thread.sleep(60000);
+               }
+           } catch (Exception e) {
+               e.printStackTrace();
+               System.out.println("Luồng như cặc chạy đ được");
+           }
+       });
+       // Khởi động luồng
         timerThread.start();
-
-        // Định dạng thời gian tổng cộng thành 00:00:00
-        String formattedTime = String.format("%02d:%02d:%02d", totalTime, remainingMinutes, 0);
-        txtTongThoiGian.setText(formattedTime);
+       // format thành 00:00
+       String formattedTime = String.format("%02d:%02d", totalTime,remainingMinutes);
+       txtTongThoiGian.setText(formattedTime);
     }
 
     public void getBalaceClient() {
