@@ -93,7 +93,9 @@ public class MainClient {
                         if (response.equalsIgnoreCase("Server response: Invalid credentials")) {
                             return;
                         } else if (response.startsWith("Server response: Login successful with client ID: ")) {
-                            MainClient.client.importBalance();
+                            client.importBalance();
+                            client.importListProduct();
+                            
                     }
                 });
             };
