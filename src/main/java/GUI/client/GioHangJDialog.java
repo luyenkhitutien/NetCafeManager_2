@@ -6,13 +6,13 @@ package GUI.client;
 
 import entity.Product;
 import io.IOServer;
+import java.io.IOException;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import main_client.MainClient;
 import utils.Xnoti;
@@ -22,8 +22,9 @@ import utils.Xnoti;
  * @author ASUS
  */
 public class GioHangJDialog extends javax.swing.JDialog {
-    public  static int soluong =0;
-    public static Integer price =0;
+
+    public static int soluong = 0;
+    public static Integer price = 0;
     private DefaultTableModel tablemodel = new DefaultTableModel();
     public IOServer ioServer;
     private List<Product> list = MainClient.listProducts;
@@ -38,6 +39,9 @@ public class GioHangJDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form GioHangJDialog
+     *
+     * @param parent
+     * @param modal
      */
     public GioHangJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -46,43 +50,35 @@ public class GioHangJDialog extends javax.swing.JDialog {
         tablemodel = (DefaultTableModel) tblGioHang.getModel();
 
         //  Tính tổng tiền sản phẩm
-        tblGioHang.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                tongTien();
-            }
+        tblGioHang.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
+            tongTien();
         });
     }
-    void oder(){
-        try {
-            for(int i = 0;i<tablemodel.getRowCount();i++){
-                String proName = (String) tablemodel.getValueAt(i, 1);
-                int quantt = (int) tablemodel.getValueAt(i, 2);
-                try {
-                    MainClient.client.orderProduct(proName, quantt);
-                    System.out.println("Product:"+proName+"Quantity :"+quantt);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println("Khong oder duoc");
-                }
+
+    void oder() {
+        for (int i = 0; i < tablemodel.getRowCount(); i++) {
+            String proName = (String) tablemodel.getValueAt(i, 1);
+            int quantt = (int) tablemodel.getValueAt(i, 2);
+            try {
+                MainClient.client.orderProduct(proName, quantt);
+                System.out.println("Product:" + proName + "Quantity :" + quantt);
+            } catch (IOException e) {
+                System.out.println("Khong oder duoc");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         tablemodel.setRowCount(0);
     }
-    
 
     public void tongTien() {
         double tongTien = 0;
         for (int row = 0; row < tablemodel.getRowCount(); row++) {
             Object value = tablemodel.getValueAt(row, 3); // Lấy giá trị ở cột 3 (cột giá)
             if (value != null) {
-                if(value instanceof Double){
+                if (value instanceof Double) {
                     tongTien += (Double) value;
-                } else if(value instanceof Integer){
+                } else if (value instanceof Integer) {
                     tongTien += (Integer) value;
-                } else if (value instanceof String){
+                } else if (value instanceof String) {
                     tongTien += Double.parseDouble((String) value);
                 }
             }
@@ -378,6 +374,4 @@ public class GioHangJDialog extends javax.swing.JDialog {
         this.btnOder = btnOder;
     }
 
- 
-    
 }
