@@ -387,7 +387,6 @@ public class IOServer {
             BigDecimal tongGia = invoice.getTotalAmount().add(thanhTien);
             invoice.setTotalAmount(tongGia);
             invoiceDAO.update(invoice);
-            
 
             return "Product ordered successfully and invoiceDetail created";
         }
