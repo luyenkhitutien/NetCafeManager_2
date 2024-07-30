@@ -71,7 +71,7 @@ public class MainClient {
                         String[] parts = response.split("[:;]");
                         String tinNhan = parts[parts.length - 1];
                         tinNhanForm.appendMessage("Máy chủ: " + tinNhan); // Gọi phương thức appendMessage trong TinNhanJDialog  
-                        Xnoti.showTrayMessage("Thông Báo", "Bạn Có Tin Nhắn Mới! ", TrayIcon.MessageType.INFO);
+                        Xnoti.showTrayMessage("Thông Báo!", "Bạn Có Tin Nhắn Mới! ", TrayIcon.MessageType.INFO);
                     }
                 });
 
