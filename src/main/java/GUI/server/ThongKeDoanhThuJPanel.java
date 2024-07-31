@@ -10,11 +10,13 @@ import dao.StatisticsDAO;
 import entity.Account;
 import entity.Computer;
 import java.awt.Font;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -51,6 +53,7 @@ public class ThongKeDoanhThuJPanel extends javax.swing.JPanel {
         for(Object[] row :data){
             model.addRow(row);
         }
+        tinhTong();
     }
     void getStatisticsComputer(Date dayBegin,Date dayEnd,String computerName,String username){
         try {
@@ -77,6 +80,7 @@ public class ThongKeDoanhThuJPanel extends javax.swing.JPanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        tinhTong();
     }
     void fillCboComputer(){
         try {
@@ -111,7 +115,16 @@ public class ThongKeDoanhThuJPanel extends javax.swing.JPanel {
     ThongKeDoanhThuJPanel(ServerMain aThis) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
+    void tinhTong(){
+        double tong = 0;
+        for (int i = 0; i < tblThongKeDoanhThu.getRowCount(); i++) {
+            double tt = (double) tblThongKeDoanhThu.getValueAt(i, 5);
+            tong +=tt;
+        }
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        String formatTong = currencyFormat.format(tong);
+        lblTongTien.setText(String.valueOf(formatTong));
+    }
     public void initTable() {
         // Tạo một Font mới với kiểu chữ "Times New Roman" và kích thước 24
         Font headerFont = new Font("Times New Roman", Font.BOLD, 17);
