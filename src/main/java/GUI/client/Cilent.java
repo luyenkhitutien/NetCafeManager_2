@@ -170,8 +170,10 @@ public class Cilent extends javax.swing.JFrame {
             txtTongThoiGian.setText("");
 
             // Guests' time and amount used are cumulative
-            amountUsed = amountUsed.add(pricePerMinute); // Increment amount used for every minute
-            int totalMinutesUsed = hoursUsed * 60 + minutesUsed + 1;
+            int totalMinutesUsed = hoursUsed * 60 + minutesUsed;
+            BigDecimal additionalAmountUsed = pricePerMinute.multiply(new BigDecimal(totalMinutesUsed));
+            amountUsed = additionalAmountUsed;
+
             hoursUsed = totalMinutesUsed / 60; // Recalculate hours used
             minutesUsed = totalMinutesUsed % 60; // Recalculate minutes used
         }
@@ -181,7 +183,7 @@ public class Cilent extends javax.swing.JFrame {
         txtThoiGianSuDung.setText(formattedUsedTime);
 
         // Update amount used display for both guests and members
-        txtTienDaSuDung.setText(amountUsed + "Đ");
+        txtTienDaSuDung.setText(amountUsed.toString() + "Đ");
     }
 
 // Phương thức bắt đầu timer
