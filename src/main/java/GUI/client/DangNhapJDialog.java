@@ -41,19 +41,50 @@ public class DangNhapJDialog extends javax.swing.JDialog {
     }
 
     private void login() {
-        String username = txtDangNhap.getText();
-        String password = new String(txtMatKhau.getPassword());
-        try {
-            MainClient.client.login(username, password);
-            if (MainClient.isIncorrect) {
-                return;
-            }
-            MainClient.client.importBalance();
+    String username = txtDangNhap.getText();
+    String password = new String(txtMatKhau.getPassword());
 
-        } catch (IOException ex) {
-            Logger.getLogger(DangNhapJDialog.class.getName()).log(Level.SEVERE, null, ex);
+    // Run the login process in a background thread
+    SwingWorker<Void, Void> worker = new SwingWorker<>() {
+        @Override
+        protected Void doInBackground() throws Exception {
+            try {
+                MainClient.client.login(username, password);
+
+                // Wait for the response
+                int retries = 10; // Adjust as necessary
+                while (retries > 0 && MainClient.isIncorrect) {
+                    Thread.sleep(100); // Adjust the sleep time as necessary
+                    retries--;
+                }
+
+                if (!MainClient.isIncorrect) {
+                    MainClient.client.importBalance();
+                }
+
+            } catch (IOException ex) {
+                Logger.getLogger(DangNhapJDialog.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return null;
         }
-    }
+
+        @Override
+        protected void done() {
+            if (MainClient.isIncorrect) {
+                // Handle incorrect login
+                JOptionPane.showMessageDialog(DangNhapJDialog.this, "Invalid credentials. Please try again.");
+            } else {
+                // Close the login dialog and open the main client form
+                setVisible(false);
+                MainClient.clientForm.getBalaceClient();
+                MainClient.clientForm.setVisible(true);
+            }
+        }
+    };
+
+    worker.execute();
+}
+
 
     private Boolean ValiDateForm() {
 
@@ -264,8 +295,6 @@ public class DangNhapJDialog extends javax.swing.JDialog {
     private void formComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentHidden
         // TODO add your handling code here:
         resetForm();
-        MainClient.clientForm.getBalaceClient();
-        MainClient.clientForm.setVisible(true);
     }//GEN-LAST:event_formComponentHidden
 
     /**

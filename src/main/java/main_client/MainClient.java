@@ -58,10 +58,12 @@ public class MainClient {
                 
                 if(response.startsWith("Server response: Login successful with client ID")){
                     isIncorrect = false;
+                    return;
                 }
                 
                 if(response.startsWith("Server response: Invalid credentials")){
                     isIncorrect = true;
+                    return;
                 }
 
                 handleServerMessage(response);
@@ -83,7 +85,6 @@ public class MainClient {
     private static void handleBalanceResponse() {
         MainClient.listBalanceClient = client.getListBalanceClient();
         System.out.println(MainClient.listBalanceClient);
-        dangNhapJDialog.setVisible(false);
     }
 
     // Phương thức để xử lý phản hồi mở máy tính cho khách
