@@ -72,11 +72,11 @@ public class GioHangJDialog extends javax.swing.JDialog {
         for (int i = 0; i < tablemodel.getRowCount(); i++) {
             String proName = (String) tablemodel.getValueAt(i, 1);
             int quantt = (int) tablemodel.getValueAt(i, 2);
-            BigDecimal price = new BigDecimal(tablemodel.getValueAt(i, 3).toString());
+            BigDecimal amount = new BigDecimal(tablemodel.getValueAt(i, 3).toString());
 
             try {
                 MainClient.client.orderProduct(proName, quantt);
-                totalOrderAmount = totalOrderAmount.add(price.multiply(new BigDecimal(quantt)));
+                totalOrderAmount = totalOrderAmount.add(amount); // Không cần nhân thêm số lượng nữa
             } catch (IOException e) {
                 Xnoti.msg(this, "Order không thành công", "Thông báo");
             }

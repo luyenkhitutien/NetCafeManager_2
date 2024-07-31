@@ -60,6 +60,7 @@ public class Cilent extends javax.swing.JFrame {
     public void logout() {
         try {
             MainClient.isIncorrect = true;
+            MainClient.isGuest = false;
             MainClient.client.logout();
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(Cilent.class.getName()).log(Level.SEVERE, null, ex);
@@ -103,6 +104,7 @@ public class Cilent extends javax.swing.JFrame {
             totalTime = 0;
             remainingMinutes = 0;
             txtTongThoiGian.setText("");
+            txtThoiGianConLai.setText("");
         } else {
             txtSoDu.setText(balance.toString());
 
@@ -122,21 +124,29 @@ public class Cilent extends javax.swing.JFrame {
     }
 
     private void setForm() {
-        BigDecimal currentBalance;
+        BigDecimal currentAmountUsed;
         try {
-            currentBalance = new BigDecimal(txtSoDu.getText());
+            currentAmountUsed = new BigDecimal(this.getTxtTienSuDung());
         } catch (NumberFormatException e) {
-            Xnoti.msg(this, "Invalid balance!", "Notification");
-            return;
+            currentAmountUsed = BigDecimal.ZERO;  
         }
 
-        // Calculate amount used
+        // Tính số tiền tăng thêm dựa trên thời gian sử dụng kể từ lần cập nhật trước đó
         BigDecimal pricePerMinute = price.divide(new BigDecimal(60), RoundingMode.DOWN);
-        amountUsed = price.multiply(new BigDecimal(hoursUsed))
-                .add(pricePerMinute.multiply(new BigDecimal(minutesUsed)));
+
+        // Cộng số tiền tăng thêm vào tổng số tiền đã sử dụng
+        amountUsed = currentAmountUsed.add(pricePerMinute);
 
         if (!MainClient.isGuest) {
-            // Calculate remaining time for members
+            BigDecimal currentBalance;
+            try {
+                currentBalance = new BigDecimal(txtSoDu.getText());
+            } catch (NumberFormatException e) {
+                Xnoti.msg(this, "Invalid balance!", "Notification");
+                return;
+            }
+
+            // Tính thời gian còn lại cho thành viên
             int remainingHours = totalTime - hoursUsed;
             int remainingMinutesUpdate = remainingMinutes - minutesUsed;
             if (remainingMinutesUpdate < 0) {
@@ -144,12 +154,12 @@ public class Cilent extends javax.swing.JFrame {
                 remainingHours--;
             }
 
-            // Format remaining time as "00:00"
+            // Định dạng thời gian còn lại dưới dạng "00:00"
             String formattedRemainingTime = String.format("%02d:%02d", remainingHours, remainingMinutesUpdate);
             txtThoiGianConLai.setText(formattedRemainingTime);
 
-            // Calculate and update remaining balance
-            BigDecimal remainingBalance = currentBalance.subtract(amountUsed);
+            // Tính toán và cập nhật số dư còn lại
+            BigDecimal remainingBalance = currentBalance.subtract(pricePerMinute);
             txtSoDu.setText(remainingBalance.toString());
 
             if (!fiveMinuteWarningShown && remainingHours == 0 && remainingMinutesUpdate <= 5) {
@@ -159,30 +169,22 @@ public class Cilent extends javax.swing.JFrame {
 
             if (remainingHours <= 0 && remainingMinutesUpdate <= 0) {
                 Xnoti.msg(this, "Time has run out", "Notification");
-                stopTimer(); // Stop the timer when time runs out
+                stopTimer(); // Dừng timer khi hết thời gian
             }
         } else {
-            // For guests, increment time used and amount used
-            txtSoDu.setText("0");
-
-            // No remaining time or total time display for guests
-            txtThoiGianConLai.setText("");
-            txtTongThoiGian.setText("");
-
-            // Guests' time and amount used are cumulative
+            // Đối với khách, tính tổng số phút đã sử dụng từ khi bắt đầu
             int totalMinutesUsed = hoursUsed * 60 + minutesUsed;
-            BigDecimal additionalAmountUsed = pricePerMinute.multiply(new BigDecimal(totalMinutesUsed));
-            amountUsed = additionalAmountUsed;
 
-            hoursUsed = totalMinutesUsed / 60; // Recalculate hours used
-            minutesUsed = totalMinutesUsed % 60; // Recalculate minutes used
+            // Tính lại giờ và phút đã sử dụng
+            hoursUsed = totalMinutesUsed / 60;
+            minutesUsed = totalMinutesUsed % 60;
         }
 
-        // Update used time display for both guests and members
+        // Cập nhật hiển thị thời gian đã sử dụng cho cả khách và thành viên
         String formattedUsedTime = String.format("%02d:%02d", hoursUsed, minutesUsed);
         txtThoiGianSuDung.setText(formattedUsedTime);
 
-        // Update amount used display for both guests and members
+        // Cập nhật hiển thị số tiền đã sử dụng cho cả khách và thành viên
         txtTienDaSuDung.setText(amountUsed.toString() + "Đ");
     }
 
