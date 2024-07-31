@@ -121,7 +121,6 @@ public class Cilent extends javax.swing.JFrame {
         }
     }
 
-// Phương thức cập nhật thông tin trên form
     private void setForm() {
         BigDecimal currentBalance;
         try {
@@ -132,8 +131,9 @@ public class Cilent extends javax.swing.JFrame {
         }
 
         // Calculate amount used
+        BigDecimal pricePerMinute = price.divide(new BigDecimal(60), RoundingMode.DOWN);
         amountUsed = price.multiply(new BigDecimal(hoursUsed))
-                .add(price.multiply(new BigDecimal(minutesUsed)).divide(new BigDecimal(60), RoundingMode.DOWN));
+                .add(pricePerMinute.multiply(new BigDecimal(minutesUsed)));
 
         if (!MainClient.isGuest) {
             // Calculate remaining time for members
@@ -170,9 +170,10 @@ public class Cilent extends javax.swing.JFrame {
             txtTongThoiGian.setText("");
 
             // Guests' time and amount used are cumulative
-            amountUsed = amountUsed.add(price.multiply(new BigDecimal(1 / 60.0))); // Increment amount used for every minute
-            hoursUsed = (amountUsed.intValue() / price.intValue()) / 60; // Recalculate hours used
-            minutesUsed = (amountUsed.intValue() / price.intValue()) % 60; // Recalculate minutes used
+            amountUsed = amountUsed.add(pricePerMinute); // Increment amount used for every minute
+            int totalMinutesUsed = hoursUsed * 60 + minutesUsed + 1;
+            hoursUsed = totalMinutesUsed / 60; // Recalculate hours used
+            minutesUsed = totalMinutesUsed % 60; // Recalculate minutes used
         }
 
         // Update used time display for both guests and members
@@ -541,12 +542,12 @@ public class Cilent extends javax.swing.JFrame {
     public String getTxtSoDu() {
         return txtSoDu.getText();
     }
-    
-    public void updateTxtTienSuDung(BigDecimal money){
+
+    public void updateTxtTienSuDung(BigDecimal money) {
         txtTienDaSuDung.setText(money.toString() + "Đ");
     }
-    
-    public String getTxtTienSuDung(){
+
+    public String getTxtTienSuDung() {
         return txtTienDaSuDung.getText().replace("Đ", "");
     }
 }

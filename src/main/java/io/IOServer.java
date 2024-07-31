@@ -344,7 +344,13 @@ public class IOServer {
 
         private List<BigDecimal> getClientBalance() {      
             try {
-                Member mem = memberDAO.selectByID(member.getId());
+                Member mem;
+                if(member != null){
+                    mem = memberDAO.selectByID(member.getId());
+                } else {
+                    mem = null;
+                }
+                
                 BigDecimal priceComputer = computer.getPricePerHour();
                 List<BigDecimal> listBigDecimals = new ArrayList<>();
                 
