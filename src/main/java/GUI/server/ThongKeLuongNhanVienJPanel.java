@@ -8,11 +8,13 @@ import dao.EmployeeDAO;
 import dao.StatisticsDAO;
 import entity.Employee;
 import java.awt.Font;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -83,6 +85,7 @@ public class ThongKeLuongNhanVienJPanel extends javax.swing.JPanel {
         for (Object[] row : data) {
             model.addRow(row);
         }
+        tongLuong();
     }
     void fillToTableByDate(Date startAt, Date endAt) {
         // Lấy dữ liệu từ DAO
@@ -96,7 +99,16 @@ public class ThongKeLuongNhanVienJPanel extends javax.swing.JPanel {
             model.addRow(row);
         }
     }
-
+    void tongLuong(){
+        double tong = 0;
+        for (int i = 0; i < tblThongKeLuong.getRowCount(); i++) {
+            double tl = (double) tblThongKeLuong.getValueAt(i, 5);
+            tong += tl;
+        }
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        String formatTong = currencyFormat.format(tong);
+        lblTongTienTra.setText(String.valueOf(formatTong));
+    }
     ThongKeLuongNhanVienJPanel(ServerMain aThis) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
