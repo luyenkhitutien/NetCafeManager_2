@@ -14,11 +14,11 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import main_client.MainClient;
 
-
-
 public class dichvu_text extends javax.swing.JFrame {
+
     private GioHangJDialog gioHangDialogInstance;
     List<Product> listUsing = MainClient.listProducts;
+
     public dichvu_text() {
         initComponents();
         setLocationRelativeTo(null);
@@ -27,7 +27,7 @@ public class dichvu_text extends javax.swing.JFrame {
         fillToCBO();
         dichvuListSP();
     }
-    
+
     public void xemGioHang() {
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
         gioHangDialogInstance = GioHangJDialog.getInstance(frame);
@@ -54,7 +54,7 @@ public class dichvu_text extends javax.swing.JFrame {
 
     public void fillPanel() {
         System.out.println("=================================");
-            System.out.println(listUsing.size());
+        System.out.println(listUsing.size());
         String type = String.valueOf(cboLoaiSanPham.getSelectedItem());
         pnlMenu.removeAll();
         pnlMenu.setLayout(new GridLayout(0, 4));
@@ -303,4 +303,5 @@ public class dichvu_text extends javax.swing.JFrame {
     private javax.swing.JPanel pnlMenu;
     private javax.swing.JScrollPane slpMenu;
     // End of variables declaration//GEN-END:variables
+
 }

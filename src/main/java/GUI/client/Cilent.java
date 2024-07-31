@@ -114,6 +114,14 @@ public class Cilent extends javax.swing.JFrame {
 
 // Phương thức cập nhật thông tin trên form
     private void setForm() {
+        BigDecimal currentBalance;
+        try {
+            currentBalance = new BigDecimal(txtSoDu.getText());
+        } catch (NumberFormatException e) {
+            Xnoti.msg(this, "Số dư không hợp lệ!", "Thông báo");
+            return;
+        }
+
         // Tính toán số tiền đã sử dụng
         amountUsed = price.multiply(new BigDecimal(hoursUsed))
                 .add(price.multiply(new BigDecimal(minutesUsed)).divide(new BigDecimal(60), RoundingMode.DOWN));
@@ -132,7 +140,7 @@ public class Cilent extends javax.swing.JFrame {
         txtTienDaSuDung.setText(amountUsed + "Đ");
 
         // Tính toán và cập nhật số dư còn lại
-        BigDecimal remainingBalance = balance.subtract(amountUsed);
+        BigDecimal remainingBalance = currentBalance.subtract(amountUsed);
         txtSoDu.setText(remainingBalance.toString());
 
         if (!fiveMinuteWarningShown && remainingHours == 0 && remainingMinutesUpdate <= 5) {
@@ -145,8 +153,8 @@ public class Cilent extends javax.swing.JFrame {
             stopTimer(); // Dừng timer khi thời gian đã hết
         }
     }
-
 // Phương thức bắt đầu timer
+
     private void startTimer() {
         timer = new Timer(6000, new ActionListener() { // 60000 milliseconds = 1 phút
             @Override
@@ -497,4 +505,11 @@ public class Cilent extends javax.swing.JFrame {
         this.btnTinNhan = btnTinNhan;
     }
 
+    public void updatetxtSoDu(BigDecimal balance) {
+        txtSoDu.setText(balance.toString());
+    }
+
+    public String getTxtSoDu() {
+        return txtSoDu.getText();
+    }
 }

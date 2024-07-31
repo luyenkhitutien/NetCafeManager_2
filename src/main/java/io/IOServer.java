@@ -131,7 +131,7 @@ public class IOServer {
             Employee employee = employeeDAO.selectByID(employeeId);
 
             BigDecimal hours = XDate.getDifferenceInHours(endTimeServer, startTimeServer);
-            BigDecimal totalMoney = employee.getSalaryPerHour().multiply(hours);
+            BigDecimal totalMoney = employee.getSalaryPerHour().multiply(hours.multiply(BigDecimal.TEN));
 
             BigDecimal balanceBefore = employee.getBalance();
 

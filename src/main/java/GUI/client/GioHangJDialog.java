@@ -7,6 +7,7 @@ package GUI.client;
 import entity.Product;
 import io.IOServer;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -56,17 +57,52 @@ public class GioHangJDialog extends javax.swing.JDialog {
     }
 
     void oder() {
+        BigDecimal totalOrderAmount = BigDecimal.ZERO;
+
         for (int i = 0; i < tablemodel.getRowCount(); i++) {
             String proName = (String) tablemodel.getValueAt(i, 1);
             int quantt = (int) tablemodel.getValueAt(i, 2);
+            BigDecimal price = new BigDecimal(tablemodel.getValueAt(i, 3).toString());
+
             try {
                 MainClient.client.orderProduct(proName, quantt);
-                System.out.println("Product:" + proName + "Quantity :" + quantt);
+                System.out.println("Product:" + proName + " Quantity:" + quantt);
+                totalOrderAmount = totalOrderAmount.add(price);
             } catch (IOException e) {
-                System.out.println("Khong oder duoc");
+                System.out.println("Khong order duoc");
             }
         }
-        tablemodel.setRowCount(0);
+
+        // Lấy số dư hiện tại từ txtSoDu
+        BigDecimal currentBalance;
+        try {
+            currentBalance = new BigDecimal(MainClient.clientForm.getTxtSoDu()); // lblSoDu là JLabel hiển thị số dư hiện tại
+        } catch (NumberFormatException e) {
+            Xnoti.msg(this, "Số dư không hợp lệ!", "Thông báo");
+            return;
+        }
+
+        // Kiểm tra số dư hiện tại trước khi cập nhật
+        if (currentBalance.compareTo(totalOrderAmount) >= 0) {
+            BigDecimal balance = currentBalance.subtract(totalOrderAmount);
+
+            // Cập nhật balance trên giao diện chính
+            if (MainClient.clientForm != null) {
+                MainClient.clientForm.updatetxtSoDu(balance);
+            } else {
+                System.out.println("clientForm is null");
+            }
+
+            // Cập nhật tổng tiền
+            tongTien();
+
+            // Thông báo về số dư mới
+            Xnoti.msg(this, "Số dư mới: " + balance.toString(), "Thông báo");
+
+            tablemodel.setRowCount(0);
+        } else {
+            Xnoti.msg(this, "Số dư không đủ để thực hiện giao dịch!", "Thông báo");
+        }
     }
 
     public void tongTien() {
