@@ -20,7 +20,7 @@ public class Xnoti {
     
     private static TrayIcon trayIcon;
     public static void msg(Component parent,String msg,String title){
-        JOptionPane.showMessageDialog(parent, msg, msg, 1);
+        JOptionPane.showMessageDialog(parent, msg, title, 1);
     }
     
     public static boolean confirm(Component parent, String message) {
@@ -30,10 +30,7 @@ public class Xnoti {
         return result == JOptionPane.YES_NO_OPTION;
     }
     public static void msd(Component parent,String msd,String title){
-        JOptionPane.showMessageDialog(parent, msd, msd, 0);
-    }
-    public static void msdTestNetBean(Component parent,String msd,String title){
-        JOptionPane.showMessageDialog(parent, msd, msd, 0);
+        JOptionPane.showMessageDialog(parent, msd, title, 0);
     }
        public static void showTrayMessage(String caption, String text, TrayIcon.MessageType messageType) {
         if (SystemTray.isSupported()) {
