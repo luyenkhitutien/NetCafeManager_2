@@ -888,14 +888,21 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtDenNgay;
     private javax.swing.JTextField txtTuNgay;
     // End of variables declaration//GEN-END:variables
-    boolean isValuedateSearch(){
-        
+    boolean isValuedateSearch(){        
         if (txtTuNgay.getText().isEmpty()) {
-            Xnoti.msg(this, "Tu Ngay Trong", "Net");
+            Xnoti.msg(this, "Thời Gian 'Bắt Đầu' Không Được Để Trống\nNăm-Tháng-Ngày", "NETCAFR");
             return false;
         }
         if (txtDenNgay.getText().isEmpty()) {
-            Xnoti.msd(this, "Den Ngay Trong", "Net");
+            Xnoti.msg(this, "Thời Gian 'Kết Thúc' Không Được Để Trống\nNăm-Tháng-Ngày", "NETCAFE");
+            return false;
+        }
+        if (!txtTuNgay.getText().matches("^(\\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$")) {
+            Xnoti.msg(this, "Sai Định Dạng Thời Gian'Bắt Đầu'!\nNăm-Tháng-Ngày", "NETCAFE");
+            return false;
+        }
+        if (!txtDenNgay.getText().matches("^(\\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$")) {
+            Xnoti.msg(this, "\"Sai Định Dạng Thời Gian 'Kết Thúc'!\\nNăm-Tháng-Ngày\"", "NETCAFE");
             return false;
         }
         return true;
