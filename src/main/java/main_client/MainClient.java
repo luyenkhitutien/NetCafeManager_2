@@ -7,9 +7,14 @@ import audio.AudioPlayer;
 import entity.Product;
 import io.IOClient;
 import java.awt.TrayIcon;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 import utils.Xnoti;
 
 public class MainClient {
@@ -53,16 +58,17 @@ public class MainClient {
                 }
 
                 if (response.startsWith("Server response: Opened for guest successfully with client ID")) {
+                    isGuest = true;
                     handleGuestOpenComputerResponse();
                     return;
                 }
-                
-                if(response.startsWith("Server response: Login successful with client ID")){
+
+                if (response.startsWith("Server response: Login successful with client ID")) {
                     isIncorrect = false;
                     return;
                 }
-                
-                if(response.startsWith("Server response: Invalid credentials")){
+
+                if (response.startsWith("Server response: Invalid credentials")) {
                     isIncorrect = true;
                     return;
                 }
@@ -91,10 +97,28 @@ public class MainClient {
     // Phương thức để xử lý phản hồi mở máy tính cho khách
     private static void handleGuestOpenComputerResponse() {
         // Xử lý khi mở máy tính cho khách vãng lai
-        isGuest = true;
-        MainClient.client.importBalance();
-        dangNhapJDialog.setVisible(false);
-        clientForm.setVisible(true);
+        SwingWorker<Void, Void> worker = new SwingWorker<>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                MainClient.client.importBalance();
+
+                // Wait for the response
+                int retries = 5; // Adjust as necessary
+                while (retries >= 5) {
+                    Thread.sleep(200); // Adjust the sleep time as necessary
+                    retries--;
+                }
+                return null;
+            }
+
+            @Override
+            protected void done() {
+                dangNhapJDialog.setVisible(false);
+                clientForm.setVisible(true);
+            }
+        };
+
+        worker.execute();
     }
 
     // Phương thức để xử lý tin nhắn từ server
