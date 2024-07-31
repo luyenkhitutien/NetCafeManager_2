@@ -24,6 +24,7 @@ public class MainClient {
     public static DangNhapJDialog dangNhapJDialog;
     public static TinNhanJDialog tinNhanForm;
     public static volatile boolean isIncorrect = true;
+    public static volatile boolean isGuest = false;
     private static AudioPlayer audioPlayer;
 
     public static void main(String[] args) {
@@ -90,6 +91,7 @@ public class MainClient {
     // Phương thức để xử lý phản hồi mở máy tính cho khách
     private static void handleGuestOpenComputerResponse() {
         // Xử lý khi mở máy tính cho khách vãng lai
+        
     }
 
     // Phương thức để xử lý tin nhắn từ server

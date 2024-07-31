@@ -23,7 +23,6 @@ public class DangNhapJDialog extends javax.swing.JDialog {
     /**
      * Creates new form DangNhapJDialog
      */
-
     public DangNhapJDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         setUndecorated(true); // Bỏ thanh điều khiển
@@ -41,52 +40,50 @@ public class DangNhapJDialog extends javax.swing.JDialog {
     }
 
     private void login() {
-    String username = txtDangNhap.getText();
-    String password = new String(txtMatKhau.getPassword());
+        String username = txtDangNhap.getText();
+        String password = new String(txtMatKhau.getPassword());
 
-    // Run the login process in a background thread
-    SwingWorker<Void, Void> worker = new SwingWorker<>() {
-        @Override
-        protected Void doInBackground() throws Exception {
-            try {
-                MainClient.client.login(username, password);
+        // Run the login process in a background thread
+        SwingWorker<Void, Void> worker = new SwingWorker<>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                try {
+                    MainClient.client.login(username, password);
 
-                // Wait for the response
-                int retries = 5; // Adjust as necessary
-                while (retries > 0 && MainClient.isIncorrect) {
-                    Thread.sleep(200); // Adjust the sleep time as necessary
-                    retries--;
+                    // Wait for the response
+                    int retries = 5; // Adjust as necessary
+                    while (retries > 0 && MainClient.isIncorrect) {
+                        Thread.sleep(200); // Adjust the sleep time as necessary
+                        retries--;
+                    }
+
+                    if (!MainClient.isIncorrect) {
+                        MainClient.client.importBalance();
+                    }
+
+                } catch (IOException ex) {
+                    Logger.getLogger(DangNhapJDialog.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                return null;
+            }
 
-                if (!MainClient.isIncorrect) {
-                    MainClient.client.importBalance();
+            @Override
+            protected void done() {
+                if (MainClient.isIncorrect) {
+                    // Handle incorrect login
+                    JOptionPane.showMessageDialog(DangNhapJDialog.this, "Invalid credentials. Please try again.");
+                } else {
+                    // Close the login dialog and open the main client form
+
+                    setVisible(false);
+
+                    MainClient.clientForm.setVisible(true);
                 }
-
-            } catch (IOException ex) {
-                Logger.getLogger(DangNhapJDialog.class.getName()).log(Level.SEVERE, null, ex);
             }
-            return null;
-        }
+        };
 
-        @Override
-        protected void done() {
-            if (MainClient.isIncorrect) {
-                // Handle incorrect login
-                JOptionPane.showMessageDialog(DangNhapJDialog.this, "Invalid credentials. Please try again.");
-            } else {
-                // Close the login dialog and open the main client form
-                
-                
-                setVisible(false);
-                
-                MainClient.clientForm.setVisible(true);
-            }
-        }
-    };
-
-    worker.execute();
-}
-
+        worker.execute();
+    }
 
     private Boolean ValiDateForm() {
 
@@ -120,8 +117,8 @@ public class DangNhapJDialog extends javax.swing.JDialog {
             worker.execute();
         }
     }
-    
-    private void resetForm(){
+
+    private void resetForm() {
         txtDangNhap.setText("");
         txtMatKhau.setText("");
     }
@@ -276,7 +273,7 @@ public class DangNhapJDialog extends javax.swing.JDialog {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
-        if(ValiDateForm()){
+        if (ValiDateForm()) {
             login();
         }
     }//GEN-LAST:event_btnLoginActionPerformed
