@@ -52,7 +52,7 @@ public class MainClient {
                     return;
                 }
 
-                if (response.startsWith("Server response: Successfully open computer for guest")) {
+                if (response.startsWith("Server response: Opened for guest successfully with client ID")) {
                     handleGuestOpenComputerResponse();
                     return;
                 }
