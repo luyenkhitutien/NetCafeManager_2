@@ -43,6 +43,7 @@ public class NapTienJDialog extends javax.swing.JDialog {
         member.setBalance(soDuConLai);
         memDao.update(member);
         
+        this.setVisible(false);
         Xnoti.msg(this, "Nạp tiền thành công", "Thông báo");
     } catch (NumberFormatException e) {
         Xnoti.msg(this, "Giá trị nhập vào không hợp lệ!", "Thông báo");
@@ -122,7 +123,6 @@ public class NapTienJDialog extends javax.swing.JDialog {
     private void txtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOKActionPerformed
         // TODO add your handling code here:
         napTien(this.id);
-        this.setVisible(false);
     }//GEN-LAST:event_txtOKActionPerformed
 
     /**
