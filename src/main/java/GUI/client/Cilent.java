@@ -170,7 +170,10 @@ public class Cilent extends javax.swing.JFrame {
 
             if (remainingHours <= 0 && remainingMinutesUpdate <= 0) {
                 Xnoti.msg(this, "Time has run out", "Notification");
-                stopTimer(); // Dừng timer khi hết thời gian
+                stopTimer();
+                // Dừng timer khi hết thời gian
+                
+                logout();
             }
         } else {
             // Đối với khách, tính tổng số phút đã sử dụng từ khi bắt đầu
