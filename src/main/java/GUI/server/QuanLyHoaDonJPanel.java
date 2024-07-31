@@ -17,7 +17,6 @@ import entity.Employee;
 import entity.Invoice;
 import entity.InvoiceDetail;
 import entity.Session;
-import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
@@ -134,7 +133,9 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
                 if (o1.getStatus().equalsIgnoreCase("Hoàn thành") && o2.getStatus().equalsIgnoreCase("Chưa hoàn thành")) {
                     return 1;
                 }
-                // Giữ nguyên thứ tự nếu cả hai cùng trạng thái
+                if (o1.getStatus().equalsIgnoreCase(o2.getStatus())) {
+                    return o2.getCreatedAt().compareTo(o1.getCreatedAt());
+                }
                 return 0;
             }
         });
@@ -145,11 +146,12 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
         model.setRowCount(0);
         int STT = 1;
         for (Invoice i : list) {
+            Object memberID = i.getMemberID() == 0  ? "Vãng lai" : i.getMemberID();
             Object[] row = {
                 STT++,
                 i.getId(),
                 i.getEmployeeID(),
-                i.getMemberID(),
+                memberID,
                 i.getCreatedAt(),
                 i.getStatus(),
                 i.getTotalAmount()
@@ -886,14 +888,21 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtDenNgay;
     private javax.swing.JTextField txtTuNgay;
     // End of variables declaration//GEN-END:variables
-    boolean isValuedateSearch(){
-        
+    boolean isValuedateSearch(){        
         if (txtTuNgay.getText().isEmpty()) {
-            Xnoti.msg(this, "Tu Ngay Trong", "Net");
+            Xnoti.msg(this, "Thời Gian 'Bắt Đầu' Không Được Để Trống\nNăm-Tháng-Ngày", "NETCAFR");
             return false;
         }
         if (txtDenNgay.getText().isEmpty()) {
-            Xnoti.msd(this, "Den Ngay Trong", "Net");
+            Xnoti.msg(this, "Thời Gian 'Kết Thúc' Không Được Để Trống\nNăm-Tháng-Ngày", "NETCAFE");
+            return false;
+        }
+        if (!txtTuNgay.getText().matches("^(\\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$")) {
+            Xnoti.msg(this, "Sai Định Dạng Thời Gian'Bắt Đầu'!\nNăm-Tháng-Ngày", "NETCAFE");
+            return false;
+        }
+        if (!txtDenNgay.getText().matches("^(\\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$")) {
+            Xnoti.msg(this, "\"Sai Định Dạng Thời Gian 'Kết Thúc'!\\nNăm-Tháng-Ngày\"", "NETCAFE");
             return false;
         }
         return true;
