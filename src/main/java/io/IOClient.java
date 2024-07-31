@@ -94,11 +94,6 @@ public class IOClient {
         String request = "LOGOUT";
         out.writeObject(request);
         out.flush();
-
-        // Ngắt thread lắng nghe
-        if (listeningThread != null && listeningThread.isAlive()) {
-            listeningThread.interrupt();
-        }
     }
 
     public synchronized void shutdown() {
@@ -115,6 +110,11 @@ public class IOClient {
             // Đảm bảo logout được thực hiện trước khi shutdown
             if (!isLogout) {
                 logout();
+                // Ngắt thread lắng nghe
+
+            }
+            if (listeningThread != null && listeningThread.isAlive()) {
+                listeningThread.interrupt();
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -180,20 +180,15 @@ public class IOClient {
                     System.out.println("IOClient responseType:" + responseType);
 
                     if (responseType != null) {
-                        String[] parts = responseType.split(";"); 
+                        String[] parts = responseType.split(";");
                         String command = parts[0];
-                        System.out.println("command client => "+command);
+                        System.out.println("command client => " + command);
                         switch (command) {
                             case "RESPONSE_TEXT" -> {
                                 String response = (String) in.readObject();
                                 callback.onResponseReceived("Server response: " + response);
                             }
                             case "SHUTDOWN" -> {
-                                try {
-                                    this.logout();
-                                } catch (IOException | ClassNotFoundException e) {
-                                    e.printStackTrace();
-                                }
                                 this.shutdown();
                                 callback.onResponseReceived("Server response: SHUTDOWN");
                                 break; // Thoát khỏi vòng lặp
@@ -242,7 +237,7 @@ public class IOClient {
         String fullMessage = "Message from Server: " + message;
         System.out.println(fullMessage);
         if (tinNhan != null) {
-            System.out.println("tinNhanKhongNull: =>"+tinNhan);
+            System.out.println("tinNhanKhongNull: =>" + tinNhan);
             SwingUtilities.invokeLater(() -> tinNhan.appendMessage(fullMessage));
         } else {
             System.out.println("IOClient => Khong nhan duoc tin nhan");
