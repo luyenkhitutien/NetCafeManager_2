@@ -343,15 +343,21 @@ public class IOServer {
         }
 
         private List<BigDecimal> getClientBalance() {
-            if (member != null) {
-                BigDecimal balanceClient = member.getBalance();
-                BigDecimal priceComputer = computer.getPricePerHour();
+            try {
+                Member mem = memberDAO.selectByID(member.getId());
+                if (mem != null) {
+                    BigDecimal balanceClient = mem.getBalance();
+                    BigDecimal priceComputer = computer.getPricePerHour();
 
-                List<BigDecimal> listBigDecimals = new ArrayList<>();
-                listBigDecimals.add(0, balanceClient);
-                listBigDecimals.add(1, priceComputer);
-                return listBigDecimals;
+                    List<BigDecimal> listBigDecimals = new ArrayList<>();
+                    listBigDecimals.add(0, balanceClient);
+                    listBigDecimals.add(1, priceComputer);
+                    return listBigDecimals;
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(IOServer.class.getName()).log(Level.SEVERE, null, ex);
             }
+
             return null;
         }
 

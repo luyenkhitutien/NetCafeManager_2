@@ -14,7 +14,7 @@ import utils.Xnoti;
 
 public class MainClient {
 
-    public static final String HOST = "localhost";
+    public static final String HOST = "192.168.1.23";
     public static final int PORT = 1235;
     public static IOClient client;
     public static final int COMPUTER_ID = 3;
