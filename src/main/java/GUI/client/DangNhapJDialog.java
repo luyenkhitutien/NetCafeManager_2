@@ -4,7 +4,6 @@
  */
 package GUI.client;
 
-
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,36 +13,39 @@ import javax.swing.SwingWorker;
 import main_client.MainClient;
 import utils.CustomPanel;
 import utils.Xnoti;
+
 /**
  *
  * @author ASUS
  */
 public class DangNhapJDialog extends javax.swing.JDialog {
+
     /**
      * Creates new form DangNhapJDialog
      */
-   
+
     public DangNhapJDialog(java.awt.Frame parent, boolean modal) {
-      super(parent, modal);
-      setUndecorated(true); // Bỏ thanh điều khiển
+        super(parent, modal);
+        setUndecorated(true); // Bỏ thanh điều khiển
         initComponents();
         init();
-        
+
     }
-    public void init(){
+
+    public void init() {
         setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
     }
-    
-    public void notify(String response){
+
+    public void notify(String response) {
         JOptionPane.showMessageDialog(this, response);
     }
-    
-    public void login(){
+
+    private void login() {
         String username = txtDangNhap.getText();
         String password = txtMatKhau.getText();
         try {
             MainClient.client.login(username, password);
-            if(MainClient.isIncorrect){
+            if (MainClient.isIncorrect) {
                 return;
             }
             MainClient.client.importBalance();
@@ -53,7 +55,7 @@ public class DangNhapJDialog extends javax.swing.JDialog {
         }
     }
 
-    public Boolean ValiDateForm() {
+    private Boolean ValiDateForm() {
 
         if (txtDangNhap.getText().trim().isEmpty()) {
             Xnoti.msg(this, "Không để trống tên đăng nhập", "Thông báo trống");
@@ -66,7 +68,7 @@ public class DangNhapJDialog extends javax.swing.JDialog {
 
         return true;
     }
-    
+
     private void startWorkerIfVisible() {
         if (isVisible()) {
             SwingWorker<Void, Void> worker = new SwingWorker<>() {
@@ -84,6 +86,11 @@ public class DangNhapJDialog extends javax.swing.JDialog {
             };
             worker.execute();
         }
+    }
+    
+    private void resetForm(){
+        txtDangNhap.setText("");
+        txtMatKhau.setText("");
     }
 
     /**
@@ -236,12 +243,14 @@ public class DangNhapJDialog extends javax.swing.JDialog {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
-        login();
+        if(ValiDateForm()){
+            login();
+        }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void txtMatKhauKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMatKhauKeyPressed
-            // TODO add your handling code here:
-                    if (evt.getKeyCode()== java.awt.event.KeyEvent.VK_ENTER) {
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
             btnLogin.doClick();
         }
     }//GEN-LAST:event_txtMatKhauKeyPressed
@@ -249,11 +258,12 @@ public class DangNhapJDialog extends javax.swing.JDialog {
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
         startWorkerIfVisible();
-        
+
     }//GEN-LAST:event_formComponentShown
 
     private void formComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentHidden
         // TODO add your handling code here:
+        resetForm();
         MainClient.clientForm.getBalaceClient();
         MainClient.clientForm.setVisible(true);
     }//GEN-LAST:event_formComponentHidden
@@ -289,10 +299,9 @@ public class DangNhapJDialog extends javax.swing.JDialog {
         //</editor-fold>
 
         /* Create and display the dialog */
-        
         java.awt.EventQueue.invokeLater(() -> {
             DangNhapJDialog dialog = new DangNhapJDialog(new javax.swing.JFrame(), true);
-            
+
             dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {

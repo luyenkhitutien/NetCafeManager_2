@@ -23,7 +23,7 @@ public class MainClient {
     public static Cilent clientForm;
     public static DangNhapJDialog dangNhapJDialog;
     public static TinNhanJDialog tinNhanForm;
-    public static boolean isIncorrect = true;
+    public static volatile boolean isIncorrect = true;
     private static AudioPlayer audioPlayer;
 
     public static void main(String[] args) {
