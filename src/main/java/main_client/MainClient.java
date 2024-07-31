@@ -92,7 +92,9 @@ public class MainClient {
     private static void handleGuestOpenComputerResponse() {
         // Xử lý khi mở máy tính cho khách vãng lai
         isGuest = true;
-        
+        MainClient.client.importBalance();
+        dangNhapJDialog.setVisible(false);
+        clientForm.setVisible(true);
     }
 
     // Phương thức để xử lý tin nhắn từ server
