@@ -24,7 +24,6 @@ public class IOClient {
     private List<Product> listProducts;
     private List<BigDecimal> listBalanceClient;
     private TinNhanJDialog tinNhan;
-//    private final IOClient client = null;
 
     public IOClient(TinNhanJDialog tinNhan) {
         this.tinNhan = tinNhan;
@@ -177,7 +176,6 @@ public class IOClient {
                     }
 
                     String responseType = (String) in.readObject();
-                    System.out.println("IOClient responseType:" + responseType);
 
                     if (responseType != null) {
                         String[] parts = responseType.split(";");
@@ -256,5 +254,9 @@ public class IOClient {
     public interface ResponseCallback {
 
         void onResponseReceived(String response);
+    }
+    
+    public ResponseCallback getIOCallback(){
+        return callback;
     }
 }

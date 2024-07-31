@@ -23,6 +23,7 @@ public class MainClient {
     public static Cilent clientForm;
     public static DangNhapJDialog dangNhapJDialog;
     public static TinNhanJDialog tinNhanForm;
+    public static boolean isIncorrect = true;
     private static AudioPlayer audioPlayer;
 
     public static void main(String[] args) {
@@ -38,13 +39,6 @@ public class MainClient {
             audioPlayer = new AudioPlayer();
             audioPlayer.play("/resources/Audio_Tale-of-Immortal.wav", true); // Phát lặp lại
 
-            // Thêm sự kiện cho nút btnTinNhan
-            clientForm.getBtnTinNhan().addActionListener(e -> {
-                if (!tinNhanForm.isVisible()) {
-                    tinNhanForm.setVisible(true);
-                }
-            });
-
             // Khởi tạo đối tượng callback
             IOClient.ResponseCallback callback = response -> {
                 if (response.startsWith("Received product list with size:")) {
@@ -57,7 +51,7 @@ public class MainClient {
                     return;
                 }
 
-                if (response.startsWith("Successfully open computer for guest")) {
+                if (response.startsWith("Server response: Successfully open computer for guest")) {
                     handleGuestOpenComputerResponse();
                     return;
                 }
@@ -108,6 +102,12 @@ public class MainClient {
         SwingUtilities.invokeLater(() -> {
             if (dangNhapJDialog.isVisible()) {
                 dangNhapJDialog.notify(response);
+                if(response.startsWith("Server response: Login successful with client ID")){
+                    isIncorrect = false;
+                }
+                if(response.startsWith("Server response: Invalid credentials")){
+                    isIncorrect = true;
+                }
             }
         });
     }

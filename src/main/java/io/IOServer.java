@@ -343,13 +343,16 @@ public class IOServer {
         }
 
         private List<BigDecimal> getClientBalance() {
-            BigDecimal balanceClient = member.getBalance();
-            BigDecimal priceComputer = computer.getPricePerHour();
-            
-            List<BigDecimal> listBigDecimals = new ArrayList<>();
-            listBigDecimals.add(0, balanceClient);
-            listBigDecimals.add(1, priceComputer);
-            return listBigDecimals;
+            if (member != null) {
+                BigDecimal balanceClient = member.getBalance();
+                BigDecimal priceComputer = computer.getPricePerHour();
+
+                List<BigDecimal> listBigDecimals = new ArrayList<>();
+                listBigDecimals.add(0, balanceClient);
+                listBigDecimals.add(1, priceComputer);
+                return listBigDecimals;
+            }
+            return null;
         }
 
         private synchronized String changePassword(String newPassword) throws SQLException, Exception {

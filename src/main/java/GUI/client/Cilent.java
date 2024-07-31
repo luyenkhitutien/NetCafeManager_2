@@ -63,7 +63,6 @@ public class Cilent extends javax.swing.JFrame {
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(Cilent.class.getName()).log(Level.SEVERE, null, ex);
         }
-//        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
 
         this.setVisible(false);
         MainClient.dangNhapJDialog.setVisible(true);
@@ -82,9 +81,7 @@ public class Cilent extends javax.swing.JFrame {
     }
 
     public void MessageFormTrue() {
-//        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-//        TinNhanJDialog tinnhan = new TinNhanJDialog(frame, true);
-//        tinnhan.setVisible(true);
+        MainClient.tinNhanForm.setVisible(true);
     }
 
     public synchronized void getBalaceClient() {
