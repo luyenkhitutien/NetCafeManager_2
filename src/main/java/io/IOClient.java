@@ -255,8 +255,4 @@ public class IOClient {
 
         void onResponseReceived(String response);
     }
-    
-    public ResponseCallback getIOCallback(){
-        return callback;
-    }
 }
