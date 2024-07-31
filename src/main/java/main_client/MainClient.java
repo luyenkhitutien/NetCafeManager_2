@@ -14,7 +14,7 @@ import utils.Xnoti;
 
 public class MainClient {
 
-    public static final String HOST = "192.168.1.23";
+    public static final String HOST = "172.20.10.2";
     public static final int PORT = 1235;
     public static IOClient client;
     public static final int COMPUTER_ID = 3;
@@ -83,7 +83,7 @@ public class MainClient {
 
     // Phương thức để xử lý phản hồi số dư
     private static void handleBalanceResponse() {
-        MainClient.listBalanceClient = client.getListBalanceClient();
+        listBalanceClient = client.getListBalanceClient();
         System.out.println(MainClient.listBalanceClient);
     }
 

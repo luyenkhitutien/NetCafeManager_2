@@ -429,6 +429,7 @@ public class Cilent extends javax.swing.JFrame {
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
+        MainClient.clientForm.getBalaceClient();
         setBalanceClient(balance, price);
 
     }//GEN-LAST:event_formComponentShown

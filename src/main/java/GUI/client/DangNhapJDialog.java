@@ -52,9 +52,9 @@ public class DangNhapJDialog extends javax.swing.JDialog {
                 MainClient.client.login(username, password);
 
                 // Wait for the response
-                int retries = 10; // Adjust as necessary
+                int retries = 5; // Adjust as necessary
                 while (retries > 0 && MainClient.isIncorrect) {
-                    Thread.sleep(100); // Adjust the sleep time as necessary
+                    Thread.sleep(200); // Adjust the sleep time as necessary
                     retries--;
                 }
 
@@ -75,8 +75,10 @@ public class DangNhapJDialog extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(DangNhapJDialog.this, "Invalid credentials. Please try again.");
             } else {
                 // Close the login dialog and open the main client form
+                
+                
                 setVisible(false);
-                MainClient.clientForm.getBalaceClient();
+                
                 MainClient.clientForm.setVisible(true);
             }
         }
