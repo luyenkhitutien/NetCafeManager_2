@@ -56,7 +56,17 @@ public class GioHangJDialog extends javax.swing.JDialog {
         });
     }
 
-    void oder() {
+    private void order() {
+        BigDecimal totalOrderAmount = calculateTotalOrderAmount();
+
+        if (MainClient.isGuest) {
+            updateGuestAmountUsed(totalOrderAmount);
+        } else {
+            updateMemberBalance(totalOrderAmount);
+        }
+    }
+
+    private BigDecimal calculateTotalOrderAmount() {
         BigDecimal totalOrderAmount = BigDecimal.ZERO;
 
         for (int i = 0; i < tablemodel.getRowCount(); i++) {
@@ -66,42 +76,61 @@ public class GioHangJDialog extends javax.swing.JDialog {
 
             try {
                 MainClient.client.orderProduct(proName, quantt);
-                System.out.println("Product:" + proName + " Quantity:" + quantt);
-                totalOrderAmount = totalOrderAmount.add(price);
+                totalOrderAmount = totalOrderAmount.add(price.multiply(new BigDecimal(quantt)));
             } catch (IOException e) {
-                System.out.println("Khong order duoc");
+                Xnoti.msg(this, "Order không thành công", "Thông báo");
             }
         }
 
-        // Lấy số dư hiện tại từ txtSoDu
-        BigDecimal currentBalance;
-        try {
-            currentBalance = new BigDecimal(MainClient.clientForm.getTxtSoDu()); // lblSoDu là JLabel hiển thị số dư hiện tại
-        } catch (NumberFormatException e) {
-            Xnoti.msg(this, "Số dư không hợp lệ!", "Thông báo");
-            return;
-        }
+        return totalOrderAmount;
+    }
 
-        // Kiểm tra số dư hiện tại trước khi cập nhật
+    private void updateGuestAmountUsed(BigDecimal totalOrderAmount) {
+        BigDecimal currentAmountUsed = getCurrentAmountUsed();
+        BigDecimal newAmountUsed = currentAmountUsed.add(totalOrderAmount);
+        MainClient.clientForm.updateTxtTienSuDung(newAmountUsed);
+
+        lblTongTien.setText("");
+        Xnoti.msg(this, "Tổng tiền đã sử dụng: " + newAmountUsed.toString(), "Thông báo");
+
+        tablemodel.setRowCount(0);
+    }
+
+    private void updateMemberBalance(BigDecimal totalOrderAmount) {
+        BigDecimal currentBalance = getCurrentBalance();
+
         if (currentBalance.compareTo(totalOrderAmount) >= 0) {
             BigDecimal balance = currentBalance.subtract(totalOrderAmount);
+            MainClient.clientForm.updateTxtSoDu(balance);
 
-            // Cập nhật balance trên giao diện chính
-            if (MainClient.clientForm != null) {
-                MainClient.clientForm.updatetxtSoDu(balance);
-            } else {
-                System.out.println("clientForm is null");
-            }
-
-            // Cập nhật tổng tiền
             lblTongTien.setText("");
 
-            // Thông báo về số dư mới
+            BigDecimal currentAmountUsed = getCurrentAmountUsed();
+            BigDecimal newAmountUsed = currentAmountUsed.add(totalOrderAmount);
+            MainClient.clientForm.updateTxtTienSuDung(newAmountUsed);
+
             Xnoti.msg(this, "Số dư mới: " + balance.toString(), "Thông báo");
 
             tablemodel.setRowCount(0);
         } else {
             Xnoti.msg(this, "Số dư không đủ để thực hiện giao dịch!", "Thông báo");
+        }
+    }
+
+    private BigDecimal getCurrentAmountUsed() {
+        try {
+            return new BigDecimal(MainClient.clientForm.getTxtTienSuDung());
+        } catch (NumberFormatException e) {
+            return BigDecimal.ZERO;
+        }
+    }
+
+    private BigDecimal getCurrentBalance() {
+        try {
+            return new BigDecimal(MainClient.clientForm.getTxtSoDu());
+        } catch (NumberFormatException e) {
+            Xnoti.msg(this, "Số dư không hợp lệ!", "Thông báo");
+            return BigDecimal.ZERO;
         }
     }
 
@@ -310,7 +339,7 @@ public class GioHangJDialog extends javax.swing.JDialog {
 
     private void btnOderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOderActionPerformed
         // TODO add your handling code here:
-        oder();
+        order();
     }//GEN-LAST:event_btnOderActionPerformed
 
     private void tblGioHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGioHangMouseClicked

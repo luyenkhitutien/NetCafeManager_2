@@ -342,22 +342,24 @@ public class IOServer {
             }
         }
 
-        private List<BigDecimal> getClientBalance() {
+        private List<BigDecimal> getClientBalance() {      
             try {
                 Member mem = memberDAO.selectByID(member.getId());
+                BigDecimal priceComputer = computer.getPricePerHour();
+                List<BigDecimal> listBigDecimals = new ArrayList<>();
+                
                 if (mem != null) {
                     BigDecimal balanceClient = mem.getBalance();
-                    BigDecimal priceComputer = computer.getPricePerHour();
-
-                    List<BigDecimal> listBigDecimals = new ArrayList<>();
                     listBigDecimals.add(0, balanceClient);
-                    listBigDecimals.add(1, priceComputer);
-                    return listBigDecimals;
+                } else {
+                    listBigDecimals.add(0, BigDecimal.ZERO);
                 }
+                
+                listBigDecimals.add(1, priceComputer);
+                return listBigDecimals;
             } catch (Exception ex) {
                 Logger.getLogger(IOServer.class.getName()).log(Level.SEVERE, null, ex);
             }
-
             return null;
         }
 

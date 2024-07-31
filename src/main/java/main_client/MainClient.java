@@ -91,6 +91,7 @@ public class MainClient {
     // Phương thức để xử lý phản hồi mở máy tính cho khách
     private static void handleGuestOpenComputerResponse() {
         // Xử lý khi mở máy tính cho khách vãng lai
+        isGuest = true;
         
     }
 
