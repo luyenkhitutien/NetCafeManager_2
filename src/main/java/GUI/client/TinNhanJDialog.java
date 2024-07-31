@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import main_client.MainClient;
+import utils.Xnoti;
 
 /**
  *
@@ -29,6 +30,14 @@ public class TinNhanJDialog extends javax.swing.JDialog {
 //        SwingUtilities.invokeLater(()-> txtTinNhan.append(message+ "\n"));
 //        txtTinNhan.append(message + "\n");
 //    }
+    private boolean validateForm(){
+        if(txtGui.getText().isEmpty() || txtGui.getText().trim().equals("")){
+            Xnoti.msg(this, "Tin nhắn trống", "Cảnh báo");
+            return false;
+        }
+        return true;
+    }
+    
     public void appendMessage(String message){
         SwingUtilities.invokeLater(() -> {
             txtTinNhan.append(message + "\n");
@@ -136,14 +145,17 @@ public class TinNhanJDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_txtGuiActionPerformed
 
     private void btnGuiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuiActionPerformed
-             SwingUtilities.invokeLater(() -> {
-                 try {
-                     MainClient.client.sendMessageToServer(txtGui.getText());
-                     txtTinNhan.append("Bạn: "+txtGui.getText()+"\n");
-                 } catch (IOException ex) {
-                     Logger.getLogger(TinNhanJDialog.class.getName()).log(Level.SEVERE, null, ex);
-                 }
-        });
+        if (validateForm()) {
+            SwingUtilities.invokeLater(() -> {
+                try {
+                    MainClient.client.sendMessageToServer(txtGui.getText());
+                    txtTinNhan.append("Bạn: " + txtGui.getText() + "\n");
+                } catch (IOException ex) {
+                    Logger.getLogger(TinNhanJDialog.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+        }
+
     }//GEN-LAST:event_btnGuiActionPerformed
 
     private void btnGuiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnGuiKeyPressed
