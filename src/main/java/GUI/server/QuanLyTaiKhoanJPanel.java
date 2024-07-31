@@ -120,9 +120,10 @@ public class QuanLyTaiKhoanJPanel extends javax.swing.JPanel {
     }
 
     void getRowDelete(int index) {
+        
         try {
+            
             int rowId = (int) tblQuanLyTaiKhoan.getValueAt(index, 1);
-//            String role = (String) tblQuanLyTaiKhoan.getValueAt(index, 4);
             MemberDAO memDao = new MemberDAO();
             EmployeeDAO emDao = new EmployeeDAO();
             Account acc = listAcount.get(index);
@@ -144,7 +145,7 @@ public class QuanLyTaiKhoanJPanel extends javax.swing.JPanel {
             fillToTable();
             Xnoti.msg(this, "Xóa thành công", "Thông báo");
         } catch (Exception e) {
-            Xnoti.msg(this, "erro: Xóa không thành công", "Thông báo");
+            Xnoti.msg(this, "erro: Xóa bại. Bạn cần phải xóa ID hội viên có trong hóa đơn!", "Thông báo");
             e.printStackTrace();
             
         }

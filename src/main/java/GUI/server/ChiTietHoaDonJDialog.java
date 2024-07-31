@@ -43,6 +43,7 @@ public class ChiTietHoaDonJDialog extends javax.swing.JDialog {
     private Session session;
     private Product product;
     private Invoice invoice;
+    private Boolean isConfirm = true;
 
     InvoiceDetailDAO invoiceDetailDAO = new InvoiceDetailDAO();
     InvoiceDAO invoiceDAO = new InvoiceDAO();
@@ -167,11 +168,7 @@ public class ChiTietHoaDonJDialog extends javax.swing.JDialog {
                 return false;
             }
         }
-        if (listSessions == null) {
-            return false;
-        } else if (listSessions.isEmpty()) {
-            return false;
-        }
+        
         return true;
     }
 
@@ -186,9 +183,12 @@ public class ChiTietHoaDonJDialog extends javax.swing.JDialog {
                 return;
             }
             session = listSessions.get(0);
-            if (session.getEndTime() != null) {
+            if (session.getEndTime() != null && listInvoiceDetails.isEmpty()) {
                 updataStatusInvoice();
-                Xnoti.msg(this, "Hóa đơn " + invoiceID + " không có ODER. Tự động hoàn thành", "Thông báo");
+                if(isConfirm){
+                    Xnoti.msg(this, "Hóa đơn " + invoiceID + " không có ODER. Tự động hoàn thành", "Thông báo");
+                }
+                
             }
         }
     }
@@ -207,7 +207,7 @@ public class ChiTietHoaDonJDialog extends javax.swing.JDialog {
                     MainTest.mainForm.managerInvoice.loadDataToArray();
                     MainTest.mainForm.managerInvoice.fillToTable();
                 } else {
-                    Boolean isConfirm = Xnoti.confirm(this, "Bạn có muốn xác nhận thanh toán cho vãng lai?");
+                    isConfirm = Xnoti.confirm(this, "Bạn có muốn xác nhận thanh toán cho vãng lai?");
                     if (isConfirm) {
                         invoice.setStatus("Hoàn thành");
                         invoiceDAO.update(invoice);
