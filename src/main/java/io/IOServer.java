@@ -131,7 +131,7 @@ public class IOServer {
             Employee employee = employeeDAO.selectByID(employeeId);
 
             BigDecimal hours = XDate.getDifferenceInHours(endTimeServer, startTimeServer);
-            BigDecimal totalMoney = employee.getSalaryPerHour().multiply(hours.multiply(BigDecimal.TEN));
+            BigDecimal totalMoney = employee.getSalaryPerHour().multiply(hours);
 
             BigDecimal balanceBefore = employee.getBalance();
 
@@ -418,7 +418,7 @@ public class IOServer {
             MainTest.mainForm.home.updateLabelColor(computer.getId(), Color.YELLOW);
 
             BigDecimal hours = XDate.getDifferenceInHours(session.getEndTime(), session.getStartTime());
-            BigDecimal totalMoneyUsage = hours.multiply(computer.getPricePerHour());
+            BigDecimal totalMoneyUsage = computer.getPricePerHour().multiply(hours).multiply(BigDecimal.TEN);
 
             List<InvoiceDetail> invoiceDetails = invoiceDetailDAO.selectByInvoiceID(invoice.getId());
             BigDecimal totalPrice = BigDecimal.ZERO;
