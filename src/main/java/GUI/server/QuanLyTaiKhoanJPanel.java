@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import utils.XInitTable;
+import utils.Xnoti;
 
 /**
  *
@@ -141,10 +142,11 @@ public class QuanLyTaiKhoanJPanel extends javax.swing.JPanel {
             System.out.println("QLTK => Fill table");
             loadDataToArray();
             fillToTable();
-            System.out.println();
+            Xnoti.msg(this, "Xóa thành công", "Thông báo");
         } catch (Exception e) {
+            Xnoti.msg(this, "erro: Xóa không thành công", "Thông báo");
             e.printStackTrace();
-            System.out.println("Xoa khong thanh");
+            
         }
     }
 
@@ -523,8 +525,6 @@ public class QuanLyTaiKhoanJPanel extends javax.swing.JPanel {
         try {
             int index = tblQuanLyTaiKhoan.getSelectedRow();
             int rowId = (int) tblQuanLyTaiKhoan.getValueAt(index, 1);
-            Member mem = new Member();
-            mem = memberDAO.selectByID(rowId);
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
             NapTienJDialog napTien = new NapTienJDialog(frame, true, rowId);
             napTien.setVisible(true);

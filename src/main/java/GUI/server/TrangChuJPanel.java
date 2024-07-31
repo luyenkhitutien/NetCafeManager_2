@@ -67,7 +67,7 @@ public class TrangChuJPanel extends javax.swing.JPanel {
             mnitNapTien.setVisible(true);
         } else if (color == Color.YELLOW) {
             mnitMoMay.setVisible(true);
-            mnitTatMay.setVisible(false);
+            mnitTatMay.setVisible(true);
             mnitTinNhan.setVisible(false);
             mnitNapTien.setVisible(false);
         } else{

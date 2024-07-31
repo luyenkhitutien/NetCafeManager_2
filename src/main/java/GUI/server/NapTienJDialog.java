@@ -6,29 +6,51 @@ package GUI.server;
 
 import dao.MemberDAO;
 import entity.Member;
+import java.math.BigDecimal;
+import utils.Xnoti;
 
 /**
  *
  * @author ASUS
  */
 public class NapTienJDialog extends javax.swing.JDialog {
+    
+    public static Integer id;
+    private MemberDAO memDao;
+    private Member member;
 
-    public static  Integer id;
-    public NapTienJDialog(java.awt.Frame parent, boolean modal,Integer idMember) {
+    public NapTienJDialog(java.awt.Frame parent, boolean modal, Integer idMember) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
         this.id = idMember;
     }
-    void napTien(Integer idMember){
-        try {
-        MemberDAO memDao = new MemberDAO();
-        memDao.NapTien(idMember, Double.parseDouble(txtNapTien.getText()));
-            System.out.println("Nạp thành công cho hội viên id: "+idMember+ " "+txtNapTien.getText()+"VnĐ");
-        } catch (Exception e) {
-            e.printStackTrace();
+
+    private void napTien(Integer idMember) {
+    try {
+        memDao = new MemberDAO();
+        member = memDao.selectByAccountID(idMember);
+        
+        if (member == null) {
+            Xnoti.msg(this, "Hội viên không tồn tại!", "Thông báo");
+            return;
         }
+
+        BigDecimal soDuConLai = member.getBalance();
+        BigDecimal soTienNap = new BigDecimal(txtNapTien.getText());
+
+        soDuConLai = soDuConLai.add(soTienNap);
+        member.setBalance(soDuConLai);
+        memDao.update(member);
+        
+        Xnoti.msg(this, "Nạp tiền thành công", "Thông báo");
+    } catch (NumberFormatException e) {
+        Xnoti.msg(this, "Giá trị nhập vào không hợp lệ!", "Thông báo");
+    } catch (Exception e) {
+        Xnoti.msg(this, "Erro: Nạp tiền không thành công!", "Thông báo");
+        e.printStackTrace();
     }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -99,9 +121,8 @@ public class NapTienJDialog extends javax.swing.JDialog {
 
     private void txtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOKActionPerformed
         // TODO add your handling code here:
-        System.out.println(this.id);
         napTien(this.id);
-//        dispose();
+        this.setVisible(false);
     }//GEN-LAST:event_txtOKActionPerformed
 
     /**
