@@ -59,6 +59,7 @@ public class Cilent extends javax.swing.JFrame {
 
     public void logout() {
         try {
+            MainClient.isIncorrect = true;
             MainClient.client.logout();
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(Cilent.class.getName()).log(Level.SEVERE, null, ex);

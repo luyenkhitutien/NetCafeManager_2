@@ -42,7 +42,7 @@ public class DangNhapJDialog extends javax.swing.JDialog {
 
     private void login() {
         String username = txtDangNhap.getText();
-        String password = txtMatKhau.getText();
+        String password = new String(txtMatKhau.getPassword());
         try {
             MainClient.client.login(username, password);
             if (MainClient.isIncorrect) {

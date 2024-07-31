@@ -55,6 +55,14 @@ public class MainClient {
                     handleGuestOpenComputerResponse();
                     return;
                 }
+                
+                if(response.startsWith("Server response: Login successful with client ID")){
+                    isIncorrect = false;
+                }
+                
+                if(response.startsWith("Server response: Invalid credentials")){
+                    isIncorrect = true;
+                }
 
                 handleServerMessage(response);
                 handleLoginResponse(response);
@@ -102,12 +110,6 @@ public class MainClient {
         SwingUtilities.invokeLater(() -> {
             if (dangNhapJDialog.isVisible()) {
                 dangNhapJDialog.notify(response);
-                if(response.startsWith("Server response: Login successful with client ID")){
-                    isIncorrect = false;
-                }
-                if(response.startsWith("Server response: Invalid credentials")){
-                    isIncorrect = true;
-                }
             }
         });
     }
