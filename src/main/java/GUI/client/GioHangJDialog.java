@@ -94,7 +94,7 @@ public class GioHangJDialog extends javax.swing.JDialog {
             }
 
             // Cập nhật tổng tiền
-            tongTien();
+            lblTongTien.setText("");
 
             // Thông báo về số dư mới
             Xnoti.msg(this, "Số dư mới: " + balance.toString(), "Thông báo");
@@ -138,6 +138,11 @@ public class GioHangJDialog extends javax.swing.JDialog {
         btnOder = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -198,7 +203,7 @@ public class GioHangJDialog extends javax.swing.JDialog {
         jLabel2.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
         jLabel2.setText("Tổng tiền:");
 
-        lblTongTien.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        lblTongTien.setFont(new java.awt.Font("Source Sans Pro", 1, 18)); // NOI18N
 
         btnOder.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
         btnOder.setText("ODER");
@@ -232,8 +237,8 @@ public class GioHangJDialog extends javax.swing.JDialog {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
-                                .addComponent(lblTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(80, 80, 80))
+                                .addComponent(lblTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(21, 21, 21))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnXoaLuaChon)
                                 .addGap(45, 45, 45)
@@ -260,7 +265,7 @@ public class GioHangJDialog extends javax.swing.JDialog {
                         .addGap(31, 31, 31)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(lblTongTien))))
+                            .addComponent(lblTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(21, 21, 21)
                 .addComponent(btnOder, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(65, 65, 65))
@@ -311,6 +316,11 @@ public class GioHangJDialog extends javax.swing.JDialog {
     private void tblGioHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGioHangMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_tblGioHangMouseClicked
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:
+        tongTien();
+    }//GEN-LAST:event_formComponentShown
 
     /**
      * @param args the command line arguments
