@@ -106,7 +106,6 @@ public class Cilent extends javax.swing.JFrame {
             totalTime = 0;
             remainingMinutes = 0;
             txtTongThoiGian.setText("");
-            txtThoiGianConLai.setText("");
         } else {
             txtSoDu.setText(balance.toString());
 
@@ -210,7 +209,6 @@ public class Cilent extends javax.swing.JFrame {
         // Reset các trường văn bản
         txtTongThoiGian.setText("");
         txtSoDu.setText("");
-        txtThoiGianConLai.setText("");
         txtThoiGianSuDung.setText("");
         txtTienDaSuDung.setText("");
 
