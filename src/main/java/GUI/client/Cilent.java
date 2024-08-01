@@ -139,6 +139,7 @@ public class Cilent extends javax.swing.JFrame {
             // Cập nhật lại thời gian còn lại dựa trên số dư mới
             recalculateTimeBasedOnBalance(currentBalance);
         }
+        
     }
 
     private void recalculateTimeBasedOnBalance(BigDecimal balance) {
