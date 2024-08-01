@@ -6,7 +6,6 @@ package GUI.client;
 
 import entity.Product;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -90,7 +89,7 @@ public class SanPhamJPanel extends javax.swing.JPanel {
         gioHangDialogInstance.setTablemodel(table);
 //        gioHangDialogInstance.setVisible(true);
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

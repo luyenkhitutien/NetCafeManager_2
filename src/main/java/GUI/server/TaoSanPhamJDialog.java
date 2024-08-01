@@ -224,7 +224,7 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
         try {
             double luong = Double.parseDouble(txtGia.getText().trim());
             if (luong < 0) {
-                Xnoti.msg(this, "erro: Lương/giờ phải là số dương!", "Thông báo");
+                Xnoti.msg(this, "erro: Giá Sản Phẩm Phải Là Số Dương!", "Thông báo");
                 txtGia.requestFocus();
                 return false;
             }

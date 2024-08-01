@@ -141,6 +141,12 @@ public class ThongKeDoanhThuJPanel extends javax.swing.JPanel {
         tblThongKeDoanhThu.repaint();
 
     }
+    
+    private boolean isValidate(){
+        
+        
+        return true;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

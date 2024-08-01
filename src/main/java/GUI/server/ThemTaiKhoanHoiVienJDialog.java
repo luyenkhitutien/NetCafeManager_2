@@ -16,9 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JTextField;
 import utils.CustomPanel;
 import utils.Xnoti;
@@ -338,11 +336,17 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
 
         txtIDTaiKhoan.setEditable(false);
         txtIDTaiKhoan.setFont(new java.awt.Font("Source Code Pro", 0, 18)); // NOI18N
+        txtIDTaiKhoan.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabel7.setFont(new java.awt.Font("Source Code Pro", 1, 16)); // NOI18N
         jLabel7.setText("Tên tài khoản:");
 
         txtTenTaiKhoan.setFont(new java.awt.Font("Source Code Pro", 0, 18)); // NOI18N
+        txtTenTaiKhoan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTenTaiKhoanActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Source Code Pro", 1, 16)); // NOI18N
         jLabel4.setText("Mật khẩu:");
@@ -370,7 +374,7 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
                             .addComponent(jLabel3)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7))
-                        .addGap(0, 12, Short.MAX_VALUE)
+                        .addGap(0, 49, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(15, 15, 15)
@@ -417,6 +421,7 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
         txtTenHoiVien.setFont(new java.awt.Font("Source Code Pro", 0, 18)); // NOI18N
 
         txtIDHoiVien.setFont(new java.awt.Font("Source Code Pro", 0, 18)); // NOI18N
+        txtIDHoiVien.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabel9.setFont(new java.awt.Font("Source Code Pro", 1, 16)); // NOI18N
         jLabel9.setText("Tạo lúc:");
@@ -438,7 +443,7 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
                     .addComponent(jLabel8)
                     .addComponent(jLabel5)
                     .addComponent(jLabel9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtTenHoiVien, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtSoDu, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -625,6 +630,10 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
             insert();
         }
     }//GEN-LAST:event_txtTaoActionPerformed
+
+    private void txtTenTaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenTaiKhoanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTenTaiKhoanActionPerformed
 
     /**
      * @param args the command line arguments
