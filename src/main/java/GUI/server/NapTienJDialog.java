@@ -56,7 +56,6 @@ public class NapTienJDialog extends javax.swing.JDialog {
         //Gửi lệnh xử lý xuống cho client
         int con_clientID = MainTest.mainForm.home.selectedComputerId;
         if (con_clientID == 0) {
-            Xnoti.showTrayMessage("Thông Báo!", "Client is offline", TrayIcon.MessageType.INFO);
             return;
         }
         try {
@@ -64,7 +63,7 @@ public class NapTienJDialog extends javax.swing.JDialog {
         } catch (IOException ex) {
             Logger.getLogger(NapTienJDialog.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Xnoti.showTrayMessage("Thông Báo!", "Successfully real-time balance.", TrayIcon.MessageType.INFO);
+        Xnoti.msg(this, "Successfully displays the real-time balance", "Thông báo");
     }
 
     /**
