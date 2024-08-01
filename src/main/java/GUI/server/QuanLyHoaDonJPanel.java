@@ -9,6 +9,7 @@ import dao.ComputerDAO;
 import dao.EmployeeDAO;
 import dao.InvoiceDAO;
 import dao.InvoiceDetailDAO;
+import dao.MemberDAO;
 import dao.SessionDAO;
 import dao.StatisticsDAO;
 import entity.Account;
@@ -16,6 +17,7 @@ import entity.Computer;
 import entity.Employee;
 import entity.Invoice;
 import entity.InvoiceDetail;
+import entity.Member;
 import entity.Session;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -56,6 +58,12 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
     EmployeeDAO emDao = new EmployeeDAO();
     AccountDAO accDao = new AccountDAO();
     InvoiceDAO invoiceDAO = new InvoiceDAO();
+    InvoiceDetailDAO invoiceDetailDAO = new InvoiceDetailDAO();
+    SessionDAO sessionDAO = new SessionDAO();
+
+    private InvoiceDetail invoiceDetai;
+    private Session session;
+
     List<Invoice> list = new ArrayList<>();
     DefaultTableModel model = new DefaultTableModel();
     int index;
@@ -146,7 +154,7 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
         model.setRowCount(0);
         int STT = 1;
         for (Invoice i : list) {
-            Object memberID = i.getMemberID() == 0  ? "Vãng lai" : i.getMemberID();
+            Object memberID = i.getMemberID() == 0 ? "Vãng lai" : i.getMemberID();
             Object[] row = {
                 STT++,
                 i.getId(),
@@ -182,7 +190,7 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
     }
 
     private void updateStatus() {
-        
+
     }
 
     private void selectedInvoiceDetailsByRow() {
@@ -326,34 +334,31 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
             e.printStackTrace();
         }
     }
-    
-    private void deleteInvoice(){
-        
+
+    private void deleteInvoice() {
+
         index = tblQuanLyHoaDon.getSelectedRow();
         int idHd = (int) tblQuanLyHoaDon.getValueAt(index, 1);
         int comfirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa?", "Thay đổi dữ liệu", JOptionPane.YES_NO_OPTION);
         try {
-            InvoiceDetailDAO iDetailDao = new InvoiceDetailDAO();
-            InvoiceDetail iDetail = new InvoiceDetail();
-            SessionDAO sesDao = new SessionDAO();
-            Session sess = new Session();
+
             if (comfirm == JOptionPane.YES_OPTION) {
-                if (sess == null && iDetail == null) {
-                    invoiceDAO.delete(idHd);
-                    System.out.println("Xóa hóa đơn có id: " + idHd);
-                } else if (sess == null && iDetail != null) {
-                    iDetailDao.delete(iDetail.getId());
-                    invoiceDAO.delete(idHd);
-                    System.out.println("Xoa thanh cong HDCT => Id: " + iDetail.getId());
-                } else if (sess != null && iDetail == null) {
-                    sesDao.delete(sess.getId());
-                    invoiceDAO.delete(idHd);
-                    System.out.println("Xoa thanh cong Session => Id: " + sess.getId());
-                } else {
-                    iDetailDao.delete(iDetail.getId());
-                    sesDao.delete(sess.getId());
-                    invoiceDAO.delete(idHd);
+
+                // Xóa Seession
+                session = sessionDAO.selectByHdId(idHd);
+                if(session != null){
+                    sessionDAO.delete(session.getId());
                 }
+                
+                // Xóa invoiceDeTail
+                invoiceDetai = invoiceDetailDAO.selectByHdCTId(idHd);
+                if (invoiceDetai != null) {
+                    invoiceDetailDAO.delete(invoiceDetai.getId());
+                }
+                // Xóa invoice
+                invoiceDAO.delete(idHd);
+                Xnoti.msg(this, "Xóa thành công !", "Thông báo");
+
                 loadDataToArray();
                 fillToTable();
             }
@@ -773,7 +778,7 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
     private void mnitXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnitXoaActionPerformed
         // TODO add your handling code here:
         deleteInvoice();
-        
+
     }//GEN-LAST:event_mnitXoaActionPerformed
 
     private void mnitHoaDonChiTietMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnitHoaDonChiTietMouseClicked
@@ -826,7 +831,7 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
         try {
             if (isValuedateSearch()) {
                 search();
-            }        
+            }
         } catch (Exception e) {
             e.printStackTrace();
 
@@ -888,7 +893,7 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtDenNgay;
     private javax.swing.JTextField txtTuNgay;
     // End of variables declaration//GEN-END:variables
-    boolean isValuedateSearch(){        
+    boolean isValuedateSearch() {
         if (txtTuNgay.getText().isEmpty()) {
             Xnoti.msg(this, "Thời Gian 'Bắt Đầu' Không Được Để Trống\nNăm-Tháng-Ngày", "NETCAFR");
             return false;

@@ -49,7 +49,14 @@ public class DangNhapJDialog extends javax.swing.JDialog {
     }
 
     public Integer getEmployeeID() {
-        return employee.getId();
+        
+        if(employee != null ){
+            return employee.getId();
+        }
+        return account.getId();
+    }
+    public Integer getAdmin() {
+        return account.getId();
     }
 
     private Boolean ValiDateForm() {
