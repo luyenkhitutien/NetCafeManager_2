@@ -69,7 +69,7 @@ public class MainClient {
                     return;
                 }
                 
-                if(response.startsWith("recharges money for the client")){
+                if(response.startsWith("recharges money for client")){
                     handleRechargeResponse(response);
                     return;
                 }
@@ -161,7 +161,7 @@ public class MainClient {
                 BigDecimal newBalance = listBalanceClient.get(0);
                 BigDecimal priceClient = listBalanceClient.get(1);
                 clientForm.setBalanceClient(newBalance, priceClient);
-                Xnoti.showTrayMessage("Thông Báo!", response + "Số dư đã được cập nhật", TrayIcon.MessageType.INFO);
+                Xnoti.showTrayMessage("Thông Báo!", response, TrayIcon.MessageType.INFO);
             }
         }.execute();
     }

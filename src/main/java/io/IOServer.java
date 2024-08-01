@@ -445,16 +445,16 @@ public class IOServer {
 
             session.setTotalAmount(totalMoneyUsage);
             invoice.setTotalAmount(totalMoneyUsage.add(totalPrice));
-
-            if (member != null) {
-                BigDecimal balanceBefore = member.getBalance();
+            Member mem = memberDAO.selectByID(member.getId());
+            if (mem != null) {
+                BigDecimal balanceBefore = mem.getBalance();
                 BigDecimal totalAmount = invoice.getTotalAmount();
                 System.out.println("Balance Before: " + balanceBefore);
                 System.out.println("Total Amount: " + totalAmount);
 
                 BigDecimal newBalance = balanceBefore.subtract(totalAmount);
-                member.setBalance(newBalance);
-                memberDAO.update(member);
+                mem.setBalance(newBalance);
+                memberDAO.update(mem);
 
                 System.out.println("New Balance: " + newBalance);
             }

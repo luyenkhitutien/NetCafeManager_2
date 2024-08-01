@@ -64,7 +64,7 @@ public class NapTienJDialog extends javax.swing.JDialog {
         } catch (IOException ex) {
             Logger.getLogger(NapTienJDialog.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Xnoti.showTrayMessage("Thông Báo!", "Successfully displays the real-time balance.", TrayIcon.MessageType.INFO);
+        Xnoti.showTrayMessage("Thông Báo!", "Successfully real-time balance.", TrayIcon.MessageType.INFO);
     }
 
     /**
