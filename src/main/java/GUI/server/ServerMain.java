@@ -12,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import main_server.MainTest;
+import utils.Auth;
+import utils.Xnoti;
 
 /**
  *
@@ -409,12 +411,21 @@ public class ServerMain extends javax.swing.JFrame {
 
     private void lblThongKeDoanhThuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblThongKeDoanhThuMouseClicked
         // TODO add your handling code here:
-        cardLayout.show(mainPanel, "ThongKeDoanhThu");
+        if(Auth.isAdminLogin){
+             cardLayout.show(mainPanel, "ThongKeDoanhThu");
+        }else{
+            Xnoti.msg(this, "Bạn không có quyền để truy cập!", "Thông báo");
+        }
+       
     }//GEN-LAST:event_lblThongKeDoanhThuMouseClicked
 
     private void lblThongKeLuongNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblThongKeLuongNhanVienMouseClicked
         // TODO add your handling code here:
-        cardLayout.show(mainPanel, "ThongKeLuongNhanVien");
+        if(Auth.isAdminLogin){
+            cardLayout.show(mainPanel, "ThongKeLuongNhanVien");
+        }else{
+            Xnoti.msg(this, "Bạn không có quyền để truy cập!", "Thông báo");
+        }
     }//GEN-LAST:event_lblThongKeLuongNhanVienMouseClicked
 
     /**
