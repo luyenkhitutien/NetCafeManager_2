@@ -101,7 +101,7 @@ public class GioHangJDialog extends javax.swing.JDialog {
 
         if (currentBalance.compareTo(totalOrderAmount) >= 0) {
             BigDecimal balance = currentBalance.subtract(totalOrderAmount);
-            MainClient.clientForm.updateTxtSoDu(balance);
+            MainClient.clientForm.updateTxtSoDu(balance, totalOrderAmount);
 
             lblTongTien.setText("");
 
