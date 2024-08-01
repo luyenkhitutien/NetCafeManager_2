@@ -188,6 +188,18 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
             txtGia.requestFocus();
             return false;
         }
+        try {
+            double luong = Double.parseDouble(txtGia.getText().trim());
+            if (luong < 0) {
+                Xnoti.msg(this, "erro: Lương/giờ phải là số dương!", "Thông báo");
+                txtGia.requestFocus();
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            Xnoti.msg(this, "erro: Giá không hợp lệ!", "Thông báo");
+            txtGia.requestFocus();
+            return false;
+        }
         if (lblPicture.getIcon() == null) {
             Xnoti.msg(this, "Erro: Ảnh sản phẩm rỗng!", "Thông báo");
             lblPicture.requestFocus();
@@ -206,6 +218,18 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
         }
         if (txtGia.getText().trim().isEmpty()) {
             Xnoti.msd(this, "erro: Giá sản phẩm rỗng! ", "Thông báo");
+            txtGia.requestFocus();
+            return false;
+        }
+        try {
+            double luong = Double.parseDouble(txtGia.getText().trim());
+            if (luong < 0) {
+                Xnoti.msg(this, "erro: Lương/giờ phải là số dương!", "Thông báo");
+                txtGia.requestFocus();
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            Xnoti.msg(this, "erro: Giá không hợp lệ!", "Thông báo");
             txtGia.requestFocus();
             return false;
         }
