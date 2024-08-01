@@ -56,7 +56,7 @@ public class GioHangJDialog extends javax.swing.JDialog {
         });
     }
 
-    private void order() {
+   private void order() {
         BigDecimal totalOrderAmount = calculateTotalOrderAmount();
 
         if (MainClient.isGuest) {
@@ -64,6 +64,9 @@ public class GioHangJDialog extends javax.swing.JDialog {
         } else {
             updateMemberBalance(totalOrderAmount);
         }
+
+        // Cập nhật thời gian sử dụng và số dư còn lại trên clientForm
+        MainClient.clientForm.setForm();
     }
 
     private BigDecimal calculateTotalOrderAmount() {
@@ -76,7 +79,7 @@ public class GioHangJDialog extends javax.swing.JDialog {
 
             try {
                 MainClient.client.orderProduct(proName, quantt);
-                totalOrderAmount = totalOrderAmount.add(amount); // Không cần nhân thêm số lượng nữa
+                totalOrderAmount = totalOrderAmount.add(amount);
             } catch (IOException e) {
                 Xnoti.msg(this, "Order không thành công", "Thông báo");
             }
@@ -88,7 +91,7 @@ public class GioHangJDialog extends javax.swing.JDialog {
     private void updateGuestAmountUsed(BigDecimal totalOrderAmount) {
         BigDecimal currentAmountUsed = getCurrentAmountUsed();
         BigDecimal newAmountUsed = currentAmountUsed.add(totalOrderAmount);
-        MainClient.clientForm.updateTxtTienSuDung(newAmountUsed);
+        MainClient.clientForm.updateTxtTienSuDung(totalOrderAmount);
 
         lblTongTien.setText("");
         Xnoti.msg(this, "Tổng tiền đã sử dụng: " + newAmountUsed.toString(), "Thông báo");
@@ -104,10 +107,6 @@ public class GioHangJDialog extends javax.swing.JDialog {
             MainClient.clientForm.updateTxtSoDu(balance, totalOrderAmount);
 
             lblTongTien.setText("");
-
-            BigDecimal currentAmountUsed = getCurrentAmountUsed();
-            BigDecimal newAmountUsed = currentAmountUsed.add(totalOrderAmount);
-            MainClient.clientForm.updateTxtTienSuDung(newAmountUsed);
 
             Xnoti.msg(this, "Số dư mới: " + balance.toString(), "Thông báo");
 

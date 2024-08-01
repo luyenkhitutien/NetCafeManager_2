@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import javax.swing.UIManager;
 import main_server.MainTest;
 import test_server_client_GUI.ServerChatGUI;
+import utils.Auth;
 import utils.XDate;
 
 public class IOServer {
@@ -85,7 +86,7 @@ public class IOServer {
         } catch (IOException ex) {
             Logger.getLogger(IOServer.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     public synchronized String closeClientByComputerID(int knownComputerID) throws IOException {
@@ -284,7 +285,7 @@ public class IOServer {
             computer.setStatus("Đang chờ");
             computerDAO.update(computer);
             MainTest.mainForm.home.updateLabelColor(computer.getId(), Color.YELLOW);
-            
+
             return "Computer " + computerID + " waiting open..........";
         }
 
@@ -295,7 +296,7 @@ public class IOServer {
             computer.setStatus("Đang bảo trì");
             computerDAO.update(computer);
             MainTest.mainForm.home.updateLabelColor(computer.getId(), Color.RED);
-            
+
             return "Computer " + computerID + " successfully to maintain";
         }
 
@@ -322,14 +323,14 @@ public class IOServer {
             }
 
             account = accountDAO.selectByUsernameAndPassword(username, password);
-            if (account != null) {
+            if (account != null && Auth.isMembers(account)) {
 
                 computer.setStatus("Đang sử dụng");
                 computerDAO.update(computer);
                 MainTest.mainForm.home.updateLabelColor(computer.getId(), Color.GREEN);
-                
-                member = memberDAO.selectByAccountID(account.getId());
 
+                member = memberDAO.selectByAccountID(account.getId());
+                
                 invoice = new Invoice(member.getId(), server.getEmployeeId(), BigDecimal.ZERO, XDate.now(), "Chưa hoàn thành");
                 invoiceDAO.insert(invoice);
 
@@ -342,26 +343,28 @@ public class IOServer {
             }
         }
 
-        private List<BigDecimal> getClientBalance() {      
+        private List<BigDecimal> getClientBalance() {
             try {
                 Member mem;
-                if(member != null){
+                if (member != null) {
                     mem = memberDAO.selectByID(member.getId());
                 } else {
                     mem = null;
                 }
-                
+
                 BigDecimal priceComputer = computer.getPricePerHour();
+                BigDecimal priceComputerGuest = priceComputer.add(BigDecimal.valueOf(3000));
                 List<BigDecimal> listBigDecimals = new ArrayList<>();
-                
+
                 if (mem != null) {
                     BigDecimal balanceClient = mem.getBalance();
                     listBigDecimals.add(0, balanceClient);
+                    listBigDecimals.add(1, priceComputer);
                 } else {
-                    listBigDecimals.add(0, BigDecimal.ZERO);
+                    listBigDecimals.add(0, BigDecimal.ZERO); //Khách vãng lai không có số dư => mặc định là 0 
+                    listBigDecimals.add(1, priceComputerGuest); // Giá máy +3000đ
                 }
-                
-                listBigDecimals.add(1, priceComputer);
+
                 return listBigDecimals;
             } catch (Exception ex) {
                 Logger.getLogger(IOServer.class.getName()).log(Level.SEVERE, null, ex);
@@ -390,16 +393,16 @@ public class IOServer {
             }
 
             product = productDAO.selectByName(productName);
-            
+
             invoiceDetail = new InvoiceDetail();
             invoiceDetail.setCompleted(false);
             invoiceDetail.setProductID(product.getId());
             invoiceDetail.setInvoiceID(invoice.getId());
             invoiceDetail.setQuantity(quantity);
             invoiceDetail.setPrice(product.getPrice().multiply(new BigDecimal(quantity)));
-            
+
             invoiceDetailDAO.insert(invoiceDetail);
-            
+
             BigDecimal thanhTien = invoiceDetail.getPrice();
             BigDecimal tongGia = invoice.getTotalAmount().add(thanhTien);
             invoice.setTotalAmount(tongGia);
@@ -466,8 +469,8 @@ public class IOServer {
             session = null;
             invoice = null;
         }
-        
-        private synchronized void removeClient(){
+
+        private synchronized void removeClient() {
             IOServer.loggedInClientsMap.remove(clientID);
             clientID = 0;
         }
