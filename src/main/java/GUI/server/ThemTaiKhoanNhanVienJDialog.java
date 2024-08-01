@@ -130,16 +130,28 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
             txtLuong.requestFocus();
             return false;
         }
+        double luong = Double.parseDouble(txtLuong.getText().trim());
+        if (luong < 0) {
+            Xnoti.msg(this, "erro: Lương/giờ phải là số dương!", "Thông báo");
+            txtLuong.requestFocus();
+            return false;
+        }
         if (txtDiaChi.getText().trim().isEmpty()) {
             Xnoti.msg(this, "erro: Địa chỉ của nhân viên rỗng!", "Thông báo");
             txtDiaChi.requestFocus();
             return false;
         }
         if (txtSoDienThoai.getText().trim().isEmpty()) {
-            Xnoti.msg(this, "erro: Địa chỉ của nhân viên rỗng!", "Thông báo");
+            Xnoti.msg(this, "erro: Số điện thoại của nhân viên rỗng!", "Thông báo");
             txtSoDienThoai.requestFocus();
             return false;
         }
+        String soDienThoai = txtSoDienThoai.getText().trim();
+        if (!soDienThoai.matches("\\d{10,11}")) {
+        Xnoti.msg(this, "erro: Số điện thoại phải là số và có độ dài từ 10 đến 11 ký tự!", "Thông báo");
+        txtSoDienThoai.requestFocus();
+        return false;
+    }
         
 
         return true;
@@ -157,6 +169,12 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
             txtLuong.requestFocus();
             return false;
         }
+        double luong = Double.parseDouble(txtLuong.getText().trim());
+        if (luong < 0) {
+            Xnoti.msg(this, "erro: Lương/giờ phải là số dương!", "Thông báo");
+            txtLuong.requestFocus();
+            return false;
+        }
         if (txtDiaChi.getText().trim().isEmpty()) {
             Xnoti.msg(this, "erro: Địa chỉ của nhân viên rỗng!", "Thông báo");
             txtDiaChi.requestFocus();
@@ -166,6 +184,12 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
             Xnoti.msg(this, "erro: Số điện thoại của nhân viên rỗng!", "Thông báo");
             txtSoDienThoai.requestFocus();
             return false;
+        }
+        String soDienThoai = txtSoDienThoai.getText().trim();
+        if (!soDienThoai.matches("\\d{10,11}")) {
+        Xnoti.msg(this, "erro: Số điện thoại phải là số và có độ dài từ 10 đến 11 ký tự!", "Thông báo");
+        txtSoDienThoai.requestFocus();
+        return false;
         }
         if (txtTenTaiKhoan.getText().trim().isEmpty()) {
             Xnoti.msg(this, "erro: Tên Tài khoản rỗng!", "Thông báo");
