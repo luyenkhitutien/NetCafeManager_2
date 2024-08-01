@@ -143,8 +143,7 @@ public class Cilent extends javax.swing.JFrame {
             try {
                 currentBalance = new BigDecimal(txtSoDu.getText());
             } catch (NumberFormatException e) {
-                Xnoti.msg(this, "Invalid balance!", "Notification");
-                return;
+                currentBalance = BigDecimal.ZERO;
             }
 
             // Tính thời gian còn lại cho thành viên
