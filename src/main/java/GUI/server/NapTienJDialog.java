@@ -7,6 +7,7 @@ package GUI.server;
 import dao.MemberDAO;
 import entity.Member;
 import java.math.BigDecimal;
+import main_server.MainTest;
 import utils.Xnoti;
 
 /**
@@ -23,34 +24,39 @@ public class NapTienJDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-        this.id = idMember;
+        NapTienJDialog.id = idMember;
     }
 
     private void napTien(Integer idMember) {
-    try {
-        memDao = new MemberDAO();
-        member = memDao.selectByAccountID(idMember);
-        
-        if (member == null) {
-            Xnoti.msg(this, "Hội viên không tồn tại!", "Thông báo");
-            return;
+        try {
+            memDao = new MemberDAO();
+            member = memDao.selectByAccountID(idMember);
+
+            if (member == null) {
+                Xnoti.msg(this, "Hội viên không tồn tại!", "Thông báo");
+                return;
+            }
+
+            BigDecimal soDuConLai = member.getBalance();
+            BigDecimal soTienNap = new BigDecimal(txtNapTien.getText());
+
+            soDuConLai = soDuConLai.add(soTienNap);
+            member.setBalance(soDuConLai);
+            memDao.update(member);
+            
+            //Gửi lệnh xử lý xuống cho client
+            
+            MainTest.server.sendMessageToClient(0, "Charge to client");
+            
+            // Hoàn tất nạp tiền
+            this.setVisible(false);
+            Xnoti.msg(this, "Nạp tiền thành công", "Thông báo");
+        } catch (NumberFormatException e) {
+            Xnoti.msg(this, "Giá trị nhập vào không hợp lệ!", "Thông báo");
+        } catch (Exception e) {
+            Xnoti.msg(this, "Erro: Nạp tiền không thành công!", "Thông báo");
+            e.printStackTrace();
         }
-
-        BigDecimal soDuConLai = member.getBalance();
-        BigDecimal soTienNap = new BigDecimal(txtNapTien.getText());
-
-        soDuConLai = soDuConLai.add(soTienNap);
-        member.setBalance(soDuConLai);
-        memDao.update(member);
-        
-        this.setVisible(false);
-        Xnoti.msg(this, "Nạp tiền thành công", "Thông báo");
-    } catch (NumberFormatException e) {
-        Xnoti.msg(this, "Giá trị nhập vào không hợp lệ!", "Thông báo");
-    } catch (Exception e) {
-        Xnoti.msg(this, "Erro: Nạp tiền không thành công!", "Thông báo");
-        e.printStackTrace();
-    }
 }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -122,7 +128,7 @@ public class NapTienJDialog extends javax.swing.JDialog {
 
     private void txtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOKActionPerformed
         // TODO add your handling code here:
-        napTien(this.id);
+        napTien(NapTienJDialog.id);
     }//GEN-LAST:event_txtOKActionPerformed
 
     /**
