@@ -23,7 +23,7 @@ import utils.Xnoti;
  * @author ASUS
  */
 public class GioHangJDialog extends javax.swing.JDialog {
-
+    
     public static int soluong = 0;
     public static Integer price = 0;
     private DefaultTableModel tablemodel = new DefaultTableModel();

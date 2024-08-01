@@ -27,6 +27,8 @@ import utils.Xnoti;
  */
 public class Cilent extends javax.swing.JFrame {
 
+    private BigDecimal amountUsedFromOrder = BigDecimal.ZERO;
+
     private BigDecimal balance;
     private BigDecimal price;
     private int totalTime;
@@ -123,74 +125,45 @@ public class Cilent extends javax.swing.JFrame {
         }
     }
 
-    private void setForm() {
-        BigDecimal currentAmountUsed;
-        try {
-            currentAmountUsed = new BigDecimal(this.getTxtTienSuDung());
-        } catch (NumberFormatException e) {
-            currentAmountUsed = BigDecimal.ZERO;
-        }
-
-        // Tính số tiền tăng thêm dựa trên thời gian sử dụng kể từ lần cập nhật trước đó
-        BigDecimal pricePerMinute = price.divide(new BigDecimal(60), RoundingMode.DOWN);
-
-        // Cộng số tiền tăng thêm vào tổng số tiền đã sử dụng
-        amountUsed = currentAmountUsed.add(pricePerMinute);
-
-        if (!MainClient.isGuest) {
-            BigDecimal currentBalance;
-            try {
-                currentBalance = new BigDecimal(txtSoDu.getText());
-            } catch (NumberFormatException e) {
-                currentBalance = BigDecimal.ZERO;
-            }
-
-            // Tính thời gian còn lại cho thành viên
-            int remainingHours = totalTime - hoursUsed;
-            int remainingMinutesUpdate = remainingMinutes - minutesUsed;
-            if (remainingMinutesUpdate < 0) {
-                remainingMinutesUpdate += 60;
-                remainingHours--;
-            }
-
-            // Định dạng thời gian còn lại dưới dạng "00:00"
-            String formattedRemainingTime = String.format("%02d:%02d", remainingHours, remainingMinutesUpdate);
-            txtThoiGianConLai.setText(formattedRemainingTime);
-
-            // Tính toán và cập nhật số dư còn lại
-            BigDecimal remainingBalance = currentBalance.subtract(pricePerMinute);
-            txtSoDu.setText(remainingBalance.toString());
-
-            if (!fiveMinuteWarningShown && remainingHours == 0 && remainingMinutesUpdate <= 5) {
-                Xnoti.msg(this, "Remaining time is 5 minutes", "Notification");
-                fiveMinuteWarningShown = true;
-            }
-
-            if (remainingHours <= 0 && remainingMinutesUpdate <= 0) {
-                Xnoti.msg(this, "Time has run out", "Notification");
-                stopTimer();
-                // Dừng timer khi hết thời gian
-                
-                logout();
-            }
-        } else {
-            // Đối với khách, tính tổng số phút đã sử dụng từ khi bắt đầu
-            int totalMinutesUsed = hoursUsed * 60 + minutesUsed;
-
-            // Tính lại giờ và phút đã sử dụng
-            hoursUsed = totalMinutesUsed / 60;
-            minutesUsed = totalMinutesUsed % 60;
-        }
-
-        // Cập nhật hiển thị thời gian đã sử dụng cho cả khách và thành viên
+    public void setForm() {
+        // Cập nhật hiển thị thời gian đã sử dụng
         String formattedUsedTime = String.format("%02d:%02d", hoursUsed, minutesUsed);
         txtThoiGianSuDung.setText(formattedUsedTime);
 
-        // Cập nhật hiển thị số tiền đã sử dụng cho cả khách và thành viên
-        txtTienDaSuDung.setText(amountUsed.toString() + "Đ");
+        // Cập nhật hiển thị số tiền đã sử dụng
+        txtTienDaSuDung.setText(amountUsed.add(amountUsedFromOrder).toString() + "Đ");
+
+        if (!MainClient.isGuest) {
+            BigDecimal currentBalance = getCurrentBalance();
+            txtSoDu.setText(currentBalance.toString());
+
+            // Cập nhật lại thời gian còn lại dựa trên số dư mới
+            recalculateTimeBasedOnBalance(currentBalance);
+        }
+
     }
 
-// Phương thức bắt đầu timer
+    private void recalculateTimeBasedOnBalance(BigDecimal balance) {
+        BigDecimal pricePerMinute = price.divide(new BigDecimal(60), RoundingMode.DOWN);
+
+        // Tính tổng số phút có thể sử dụng dựa trên số dư hiện tại
+        int totalMinutesAvailable = balance.divide(pricePerMinute, RoundingMode.DOWN).intValue();
+
+        // Tính lại tổng thời gian còn lại
+        int remainingHours = totalMinutesAvailable / 60;
+        int remainingMinutes = totalMinutesAvailable % 60;
+        String formattedRemainingTime = String.format("%02d:%02d", remainingHours, remainingMinutes);
+        txtTongThoiGian.setText(formattedRemainingTime);
+    }
+
+    private BigDecimal getCurrentBalance() {
+        try {
+            return new BigDecimal(txtSoDu.getText());
+        } catch (NumberFormatException e) {
+            return BigDecimal.ZERO;
+        }
+    }
+
     private void startTimer() {
         timer = new Timer(60000, new ActionListener() { // 60000 milliseconds = 1 phút
             @Override
@@ -202,7 +175,23 @@ public class Cilent extends javax.swing.JFrame {
                     hoursUsed++;
                 }
 
+                // Cập nhật số tiền đã sử dụng
+                BigDecimal pricePerMinute = price.divide(new BigDecimal(60), RoundingMode.DOWN);
+                amountUsed = amountUsed.add(pricePerMinute);
+
+                // Cập nhật giao diện
                 setForm();
+
+                // Kiểm tra nếu số dư hết
+                BigDecimal currentBalance = getCurrentBalance().subtract(pricePerMinute);
+                if (currentBalance.compareTo(BigDecimal.ZERO) <= 0) {
+                    Xnoti.msg(MainClient.clientForm, "Số dư đã hết", "Thông báo");
+                    stopTimer();
+                    logout();
+                } else {
+                    txtSoDu.setText(currentBalance.toString());
+                    recalculateTimeBasedOnBalance(currentBalance);
+                }
             }
         });
         timer.setInitialDelay(0); // Bắt đầu ngay lập tức
@@ -541,8 +530,11 @@ public class Cilent extends javax.swing.JFrame {
         this.btnTinNhan = btnTinNhan;
     }
 
-    public void updateTxtSoDu(BigDecimal balance) {
+    public void updateTxtSoDu(BigDecimal balance, BigDecimal amountFromOrder) {
+        amountUsedFromOrder = amountUsedFromOrder.add(amountFromOrder);
         txtSoDu.setText(balance.toString());
+        recalculateTimeBasedOnBalance(balance); // Tính lại thời gian dựa trên số dư mới
+        setForm(); // Cập nhật thông tin hiển thị
     }
 
     public String getTxtSoDu() {
