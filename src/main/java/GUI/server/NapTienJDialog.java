@@ -6,7 +6,6 @@ package GUI.server;
 
 import dao.MemberDAO;
 import entity.Member;
-import java.awt.TrayIcon;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.logging.Level;
@@ -48,7 +47,7 @@ public class NapTienJDialog extends javax.swing.JDialog {
         } catch (NumberFormatException e) {
             Xnoti.msg(this, "Giá trị nhập vào không hợp lệ!", "Thông báo");
         } catch (Exception e) {
-            Xnoti.msg(this, "Error: Nạp tiền không thành công!", "Thông báo");
+            Xnoti.msg(this, "Nạp tiền không thành công!", "Error");
         }
     }
     
@@ -62,6 +61,7 @@ public class NapTienJDialog extends javax.swing.JDialog {
             MainTest.server.sendMessageToClient(con_clientID, "Recharges money for the client");
         } catch (IOException ex) {
             Logger.getLogger(NapTienJDialog.class.getName()).log(Level.SEVERE, null, ex);
+            Xnoti.msg(this, "Connection failed", "Error");
         }
         Xnoti.msg(this, "Successfully displays the real-time balance", "Thông báo");
     }
