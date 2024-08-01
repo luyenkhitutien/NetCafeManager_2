@@ -110,7 +110,7 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
         em.setBalance(BigDecimal.valueOf(Double.parseDouble(txtTongLuong.getText())));
         return em;
     }
-    
+
     private boolean valiDateForm_update() {
         if (txtIDTaiKhoan.getText().trim().isEmpty()) {
             Xnoti.msg(this, "erro: ID Tài khoản rỗng!", "Thông báo");
@@ -130,9 +130,15 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
             txtLuong.requestFocus();
             return false;
         }
-        double luong = Double.parseDouble(txtLuong.getText().trim());
-        if (luong < 0) {
-            Xnoti.msg(this, "erro: Lương/giờ phải là số dương!", "Thông báo");
+        try {
+            double luong = Double.parseDouble(txtLuong.getText().trim());
+            if (luong < 0) {
+                Xnoti.msg(this, "erro: Lương/giờ phải là số dương!", "Thông báo");
+                txtLuong.requestFocus();
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            Xnoti.msg(this, "erro: Lương/giờ phải là số!", "Thông báo");
             txtLuong.requestFocus();
             return false;
         }
@@ -148,17 +154,16 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
         }
         String soDienThoai = txtSoDienThoai.getText().trim();
         if (!soDienThoai.matches("\\d{10,11}")) {
-        Xnoti.msg(this, "erro: Số điện thoại phải là số và có độ dài từ 10 đến 11 ký tự!", "Thông báo");
-        txtSoDienThoai.requestFocus();
-        return false;
-    }
-        
+            Xnoti.msg(this, "erro: Số điện thoại phải là số và có độ dài từ 10 đến 11 ký tự!", "Thông báo");
+            txtSoDienThoai.requestFocus();
+            return false;
+        }
 
         return true;
     }
 
     private boolean valiDateForm_insert() {
-        
+
         if (txtTenNhanVien.getText().trim().isEmpty()) {
             Xnoti.msg(this, "erro: Tên nhân viên rỗng!", "Thông báo");
             txtTenNhanVien.requestFocus();
@@ -169,9 +174,15 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
             txtLuong.requestFocus();
             return false;
         }
-        double luong = Double.parseDouble(txtLuong.getText().trim());
-        if (luong < 0) {
-            Xnoti.msg(this, "erro: Lương/giờ phải là số dương!", "Thông báo");
+        try {
+            double luong = Double.parseDouble(txtLuong.getText().trim());
+            if (luong < 0) {
+                Xnoti.msg(this, "erro: Lương/giờ phải là số dương!", "Thông báo");
+                txtLuong.requestFocus();
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            Xnoti.msg(this, "erro: Lương/giờ phải là số!", "Thông báo");
             txtLuong.requestFocus();
             return false;
         }
@@ -187,9 +198,9 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
         }
         String soDienThoai = txtSoDienThoai.getText().trim();
         if (!soDienThoai.matches("\\d{10,11}")) {
-        Xnoti.msg(this, "erro: Số điện thoại phải là số và có độ dài từ 10 đến 11 ký tự!", "Thông báo");
-        txtSoDienThoai.requestFocus();
-        return false;
+            Xnoti.msg(this, "erro: Số điện thoại phải là số và có độ dài từ 10 đến 11 ký tự!", "Thông báo");
+            txtSoDienThoai.requestFocus();
+            return false;
         }
         if (txtTenTaiKhoan.getText().trim().isEmpty()) {
             Xnoti.msg(this, "erro: Tên Tài khoản rỗng!", "Thông báo");
@@ -238,13 +249,13 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
     }
 
     private void insert() {
-        if(valiDateForm_insert()){
+        if (valiDateForm_insert()) {
             try {
-            Account account = getForm();
-            AccountDAO accDao = new AccountDAO();
-            accDao.insert(account);
-            txtIDNhanVIen.setText(String.valueOf(account.getId()));
-            
+                Account account = getForm();
+                AccountDAO accDao = new AccountDAO();
+                accDao.insert(account);
+                txtIDNhanVIen.setText(String.valueOf(account.getId()));
+
                 Employee em = getFormEm();
                 em.setBalance(BigDecimal.ZERO);
                 System.out.println("inst_em: " + em);
@@ -252,13 +263,12 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
                 emDao.insert(em);
                 Xnoti.msg(this, "Thêm Thành Công", "Thông báo");
                 fillOnUpdate();
-            
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            Xnoti.msg(this, "erro: ID tài khoản hoặc tên tài khoản đã tồn tại!", "Thông báo");
+            } catch (Exception e) {
+                e.printStackTrace();
+                Xnoti.msg(this, "erro: ID tài khoản hoặc tên tài khoản đã tồn tại!", "Thông báo");
+            }
         }
-        }      
     }
 
     private void update() {
@@ -301,7 +311,7 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
             Xnoti.msg(this, "erro: ID Tài khoản hoặc nhân viên chưa có!.\n Vui lòng chọn vào thông tin trên bảng để xóa", "Thông báo");
         }
     }
-    
+
     private void reset() {
         txtDiaChi.setText(null);
         txtIDNhanVIen.setText(null);

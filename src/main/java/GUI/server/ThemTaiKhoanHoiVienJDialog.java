@@ -100,9 +100,15 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
             txtSoDu.requestFocus();
             return false;
         }
-        double soDu = Double.parseDouble(txtSoDu.getText().trim());
-        if (soDu <= 0) {
-            Xnoti.msg(this, "erro: Số dư phải là số dương!", "Thông báo");
+        try {
+            double soDu = Double.parseDouble(txtSoDu.getText().trim());
+            if (soDu <= 0) {
+                Xnoti.msg(this, "erro: Số dư phải là số dương!", "Thông báo");
+                txtSoDu.requestFocus();
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            Xnoti.msg(this, "erro: Số dư phải là số!", "Thông báo");
             txtSoDu.requestFocus();
             return false;
         }
@@ -142,9 +148,15 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
             txtSoDu.requestFocus();
             return false;
         }
-        double soDu = Double.parseDouble(txtSoDu.getText().trim());
-        if (soDu <= 0) {
-            Xnoti.msg(this, "erro: Số dư phải là số dương!", "Thông báo");
+        try {
+            double soDu = Double.parseDouble(txtSoDu.getText().trim());
+            if (soDu <= 0) {
+                Xnoti.msg(this, "erro: Số dư phải là số dương!", "Thông báo");
+                txtSoDu.requestFocus();
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            Xnoti.msg(this, "erro: Số dư phải là số!", "Thông báo");
             txtSoDu.requestFocus();
             return false;
         }
@@ -589,7 +601,7 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
-        if ( valiDateGetFormMem_Update()) {
+        if (valiDateGetFormMem_Update()) {
             update();
         }
 
