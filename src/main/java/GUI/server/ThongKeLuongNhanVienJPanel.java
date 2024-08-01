@@ -386,10 +386,10 @@ public class ThongKeLuongNhanVienJPanel extends javax.swing.JPanel {
         try {
            if(txtDenNgay.getText().trim().equalsIgnoreCase("") || txtTuNgay.getText().trim().equalsIgnoreCase("")){
                 Xnoti.msg(this, "Vui lòng điền đầy đủ thời gian bắt đầu và thời gian kết thúc!", "Thông báo trống!");
-            }else{
+            }else if(isValidateSearch()){
                 Date startAt = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(txtTuNgay.getText()+" 00:00:00.0");
-            Date endAt = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(txtDenNgay.getText()+" 23:59:59.9");
-            fillToTableByDate(startAt, endAt);
+                Date endAt = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(txtDenNgay.getText()+" 23:59:59.9");
+                fillToTableByDate(startAt, endAt);
             } 
         } catch (Exception e) {
             e.printStackTrace();
@@ -412,7 +412,7 @@ public class ThongKeLuongNhanVienJPanel extends javax.swing.JPanel {
             try {
             // Chuyển đổi dữ liệu từ các trường nhập liệu
             if(txtDenNgay.getText().trim().equalsIgnoreCase("") || txtTuNgay.getText().trim().equalsIgnoreCase("")){
-                Xnoti.msg(this, "Vui lòng điền đầy đủ thời gian bắt đầu và thời gian kết thúc!", "Thông báo trống!");
+                Xnoti.msg(this, "Vui lòng điền đầy đủ thời gian bắt đầu và thời gian kết thúc!\nNăm-Tháng-Ngày", "Thông báo trống!");
             }else{
                 Date startAt = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(txtTuNgay.getText()+" 00:00:00.0");
             Date endAt = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(txtDenNgay.getText()+" 23:59:59.9");
@@ -471,4 +471,15 @@ public class ThongKeLuongNhanVienJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtDenNgay;
     private javax.swing.JTextField txtTuNgay;
     // End of variables declaration//GEN-END:variables
+    boolean isValidateSearch(){
+        if(!txtTuNgay.getText().matches("^(\\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$")) {
+            Xnoti.msg(this, "Sai Định Dạng Thời Gian'Bắt Đầu'!\nNăm-Tháng-Ngày", "NETCAFE");
+            return false;
+        }
+         if(!txtDenNgay.getText().matches("^(\\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$")) {
+            Xnoti.msg(this, "Sai Định Dạng Thời Gian'Bắt Đầu'!\nNăm-Tháng-Ngày", "NETCAFE");
+            return false;
+        }
+        return true;
+    }
 }
