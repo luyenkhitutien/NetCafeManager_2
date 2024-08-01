@@ -13,15 +13,12 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import utils.RoundedPanel;
@@ -189,9 +186,9 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
             return false;
         }
         try {
-            double luong = Double.parseDouble(txtGia.getText().trim());
-            if (luong < 0) {
-                Xnoti.msg(this, "erro: Lương/giờ phải là số dương!", "Thông báo");
+            double gia = Double.parseDouble(txtGia.getText().trim());
+            if (gia < 0) {
+                Xnoti.msg(this, "erro: Giá không hợp lệ!", "Thông báo");
                 txtGia.requestFocus();
                 return false;
             }
@@ -222,8 +219,8 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
             return false;
         }
         try {
-            double luong = Double.parseDouble(txtGia.getText().trim());
-            if (luong < 0) {
+            double gia = Double.parseDouble(txtGia.getText().trim());
+            if (gia < 0) {
                 Xnoti.msg(this, "erro: Giá Sản Phẩm Phải Là Số Dương!", "Thông báo");
                 txtGia.requestFocus();
                 return false;
