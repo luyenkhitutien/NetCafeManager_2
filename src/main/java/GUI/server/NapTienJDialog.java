@@ -6,7 +6,10 @@ package GUI.server;
 
 import dao.MemberDAO;
 import entity.Member;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import main_server.MainTest;
 import utils.Xnoti;
 
@@ -33,8 +36,9 @@ public class NapTienJDialog extends javax.swing.JDialog {
             member = memDao.selectByAccountID(idMember);
 
             if (member == null) {
-                Xnoti.msg(this, "Hội viên không tồn tại!", "Thông báo");
-                return;
+                int idConputer = MainTest.mainForm.home.selectedComputerId;
+                MainTest.server.sendMessageToClient(idConputer, "Charge to client");
+                
             }
 
             BigDecimal soDuConLai = member.getBalance();
@@ -46,7 +50,7 @@ public class NapTienJDialog extends javax.swing.JDialog {
             
             //Gửi lệnh xử lý xuống cho client
             
-            MainTest.server.sendMessageToClient(0, "Charge to client");
+           
             
             // Hoàn tất nạp tiền
             this.setVisible(false);
