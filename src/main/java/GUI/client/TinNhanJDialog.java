@@ -150,6 +150,7 @@ public class TinNhanJDialog extends javax.swing.JDialog {
                 try {
                     MainClient.client.sendMessageToServer(txtGui.getText());
                     txtTinNhan.append("Bạn: " + txtGui.getText() + "\n");
+                    txtGui.setText(null);
                 } catch (IOException ex) {
                     Logger.getLogger(TinNhanJDialog.class.getName()).log(Level.SEVERE, null, ex);
                 }
