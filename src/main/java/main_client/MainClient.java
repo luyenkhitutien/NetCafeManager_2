@@ -69,7 +69,7 @@ public class MainClient {
                     return;
                 }
                 
-                if(response.startsWith("recharges money for client")){
+                if(response.startsWith("Recharges money for the client")){
                     handleRechargeResponse(response);
                     return;
                 }
