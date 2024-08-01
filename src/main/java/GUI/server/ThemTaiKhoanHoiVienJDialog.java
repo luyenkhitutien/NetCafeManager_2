@@ -100,6 +100,12 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
             txtSoDu.requestFocus();
             return false;
         }
+        double soDu = Double.parseDouble(txtSoDu.getText().trim());
+        if (soDu <= 0) {
+            Xnoti.msg(this, "erro: Số dư phải là số dương!", "Thông báo");
+            txtSoDu.requestFocus();
+            return false;
+        }
 
         return true;
     }
@@ -133,6 +139,12 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
         }
         if (txtSoDu.getText().trim().isEmpty()) {
             Xnoti.msg(this, "erro: Số dư rỗng!", "Thông báo");
+            txtSoDu.requestFocus();
+            return false;
+        }
+        double soDu = Double.parseDouble(txtSoDu.getText().trim());
+        if (soDu <= 0) {
+            Xnoti.msg(this, "erro: Số dư phải là số dương!", "Thông báo");
             txtSoDu.requestFocus();
             return false;
         }
