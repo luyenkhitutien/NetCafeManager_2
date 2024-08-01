@@ -68,6 +68,11 @@ public class MainClient {
                     isIncorrect = true;
                     return;
                 }
+                
+                if(response.startsWith("recharges money for the client")){
+                    handleRechargeResponse(response);
+                    return;
+                }
 
                 handleServerMessage(response);
                 handleLoginResponse(response);
@@ -138,5 +143,26 @@ public class MainClient {
                 dangNhapJDialog.notify(response);
             }
         });
+    }
+    
+    //Phương thức để xử lý phản hồi nạp tiền
+    private static void handleRechargeResponse(String response){
+        new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                client.importBalance();
+                listBalanceClient = client.getListBalanceClient();
+                return null;
+            }
+
+            @Override
+            protected void done() {
+
+                BigDecimal newBalance = listBalanceClient.get(0);
+                BigDecimal priceClient = listBalanceClient.get(1);
+                clientForm.setBalanceClient(newBalance, priceClient);
+                Xnoti.showTrayMessage("Thông Báo!", response + "Số dư đã được cập nhật", TrayIcon.MessageType.INFO);
+            }
+        }.execute();
     }
 }

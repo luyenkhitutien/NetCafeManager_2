@@ -6,6 +6,7 @@ package GUI.server;
 
 import dao.MemberDAO;
 import entity.Member;
+import java.awt.TrayIcon;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.logging.Level;
@@ -35,33 +36,39 @@ public class NapTienJDialog extends javax.swing.JDialog {
             memDao = new MemberDAO();
             member = memDao.selectByAccountID(idMember);
 
-            if (member == null) {
-                int idConputer = MainTest.mainForm.home.selectedComputerId;
-                MainTest.server.sendMessageToClient(idConputer, "Charge to client");
-                
-            }
-
             BigDecimal soDuConLai = member.getBalance();
             BigDecimal soTienNap = new BigDecimal(txtNapTien.getText());
 
             soDuConLai = soDuConLai.add(soTienNap);
             member.setBalance(soDuConLai);
             memDao.update(member);
-            
-            //Gửi lệnh xử lý xuống cho client
-            
-           
-            
+
             // Hoàn tất nạp tiền
+            rechargeForClient();
             this.setVisible(false);
             Xnoti.msg(this, "Nạp tiền thành công", "Thông báo");
         } catch (NumberFormatException e) {
             Xnoti.msg(this, "Giá trị nhập vào không hợp lệ!", "Thông báo");
         } catch (Exception e) {
-            Xnoti.msg(this, "Erro: Nạp tiền không thành công!", "Thông báo");
-            e.printStackTrace();
+            Xnoti.msg(this, "Error: Nạp tiền không thành công!", "Thông báo");
         }
-}
+    }
+    
+    public void rechargeForClient() {
+        //Gửi lệnh xử lý xuống cho client
+        int con_clientID = MainTest.mainForm.home.selectedComputerId;
+        if (con_clientID == 0) {
+            Xnoti.showTrayMessage("Thông Báo!", "Client is offline", TrayIcon.MessageType.INFO);
+            return;
+        }
+        try {
+            MainTest.server.sendMessageToClient(con_clientID, "Recharges money for the client");
+        } catch (IOException ex) {
+            Logger.getLogger(NapTienJDialog.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Xnoti.showTrayMessage("Thông Báo!", "Successfully displays the real-time balance.", TrayIcon.MessageType.INFO);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -133,6 +140,7 @@ public class NapTienJDialog extends javax.swing.JDialog {
     private void txtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOKActionPerformed
         // TODO add your handling code here:
         napTien(NapTienJDialog.id);
+        
     }//GEN-LAST:event_txtOKActionPerformed
 
     /**

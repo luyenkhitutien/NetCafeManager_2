@@ -23,7 +23,7 @@ import utils.Xnoti;
  * @author ASUS
  */
 public class GioHangJDialog extends javax.swing.JDialog {
-    
+
     public static int soluong = 0;
     public static Integer price = 0;
     private DefaultTableModel tablemodel = new DefaultTableModel();
@@ -56,7 +56,7 @@ public class GioHangJDialog extends javax.swing.JDialog {
         });
     }
 
-   private void order() {
+    private void order() {
         BigDecimal totalOrderAmount = calculateTotalOrderAmount();
 
         if (MainClient.isGuest) {
@@ -89,7 +89,7 @@ public class GioHangJDialog extends javax.swing.JDialog {
     }
 
     private void updateGuestAmountUsed(BigDecimal totalOrderAmount) {
-        BigDecimal currentAmountUsed = getCurrentAmountUsed();
+        BigDecimal currentAmountUsed = MainClient.clientForm.getTxtTienDaSuDung();
         BigDecimal newAmountUsed = currentAmountUsed.add(totalOrderAmount);
         MainClient.clientForm.updateTxtTienSuDung(totalOrderAmount);
 
@@ -100,7 +100,7 @@ public class GioHangJDialog extends javax.swing.JDialog {
     }
 
     private void updateMemberBalance(BigDecimal totalOrderAmount) {
-        BigDecimal currentBalance = getCurrentBalance();
+        BigDecimal currentBalance = MainClient.clientForm.getTxtSoDu();
 
         if (currentBalance.compareTo(totalOrderAmount) >= 0) {
             BigDecimal balance = currentBalance.subtract(totalOrderAmount);
@@ -113,23 +113,6 @@ public class GioHangJDialog extends javax.swing.JDialog {
             tablemodel.setRowCount(0);
         } else {
             Xnoti.msg(this, "Số dư không đủ để thực hiện giao dịch!", "Thông báo");
-        }
-    }
-
-    private BigDecimal getCurrentAmountUsed() {
-        try {
-            return new BigDecimal(MainClient.clientForm.getTxtTienSuDung());
-        } catch (NumberFormatException e) {
-            return BigDecimal.ZERO;
-        }
-    }
-
-    private BigDecimal getCurrentBalance() {
-        try {
-            return new BigDecimal(MainClient.clientForm.getTxtSoDu());
-        } catch (NumberFormatException e) {
-            Xnoti.msg(this, "Số dư không hợp lệ!", "Thông báo");
-            return BigDecimal.ZERO;
         }
     }
 

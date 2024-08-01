@@ -4,7 +4,7 @@
  */
 package GUI.client;
 
-import io.IOClient;
+
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

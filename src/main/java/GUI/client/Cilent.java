@@ -31,8 +31,6 @@ public class Cilent extends javax.swing.JFrame {
 
     private BigDecimal balance;
     private BigDecimal price;
-    private int totalTime;
-    private int remainingMinutes;
     private int hoursUsed = 0;
     private int minutesUsed = 0;
     private BigDecimal amountUsed = BigDecimal.ZERO;
@@ -88,19 +86,20 @@ public class Cilent extends javax.swing.JFrame {
         MainClient.tinNhanForm.setVisible(true);
     }
 
-    public synchronized void getBalaceClient() {
-        balance = MainClient.listBalanceClient.get(0);
-        price = MainClient.listBalanceClient.get(1);
-    }
-
     public void systemTray(String response) {
         Xnoti.showTrayMessage("New response from SERVER", response, TrayIcon.MessageType.INFO);
     }
 
 // Phương thức thiết lập số dư cho khách hàng
-    private void setBalanceClient(BigDecimal balance, BigDecimal price) {
-        this.price = price; // Lưu giá sử dụng để tính toán sau này
-        if (MainClient.isGuest) {
+    public void setBalanceClient(BigDecimal newBalance, BigDecimal price) {
+
+        //Xử lý khi có số dư mới để cập nhật chính xác số dư ở thời gian thực
+        BigDecimal moneyUsing = getTxtTienDaSuDung();
+
+        this.balance = newBalance.subtract(moneyUsing);
+        this.price = price;
+
+        if (MainClient.isGuest) { //Khách vãng lai
             txtSoDu.setText("0");
             txtTongThoiGian.setText("");
         } else {
@@ -122,7 +121,7 @@ public class Cilent extends javax.swing.JFrame {
         txtTienDaSuDung.setText(amountUsed.add(amountUsedFromOrder).toString() + "Đ");
 
         if (!MainClient.isGuest) {
-            BigDecimal currentBalance = getCurrentBalance();
+            BigDecimal currentBalance = getTxtSoDu();
             recalculateTimeBasedOnBalance(currentBalance);
         }
     }
@@ -135,14 +134,6 @@ public class Cilent extends javax.swing.JFrame {
         int remainingMinutes = totalMinutesAvailable % 60;
         String formattedRemainingTime = String.format("%02d:%02d", remainingHours, remainingMinutes);
         txtTongThoiGian.setText(formattedRemainingTime);
-    }
-
-    private BigDecimal getCurrentBalance() {
-        try {
-            return new BigDecimal(txtSoDu.getText());
-        } catch (NumberFormatException e) {
-            return BigDecimal.ZERO;
-        }
     }
 
     private void startTimer() {
@@ -167,7 +158,7 @@ public class Cilent extends javax.swing.JFrame {
                 setForm();
 
                 if (!MainClient.isGuest) {
-                    BigDecimal currentBalance = getCurrentBalance().subtract(pricePerMinute);
+                    BigDecimal currentBalance = getTxtSoDu().subtract(pricePerMinute);
 
                     if (currentBalance.compareTo(BigDecimal.ZERO) <= 0) {
                         Xnoti.msg(MainClient.clientForm, "Số dư đã hết", "Thông báo");
@@ -426,8 +417,9 @@ public class Cilent extends javax.swing.JFrame {
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
-        MainClient.clientForm.getBalaceClient();
-        setBalanceClient(balance, price);
+        BigDecimal balanceClient = MainClient.listBalanceClient.get(0);
+        BigDecimal priceClient = MainClient.listBalanceClient.get(1);
+        setBalanceClient(balanceClient, priceClient);
     }//GEN-LAST:event_formComponentShown
 
     /**
@@ -505,9 +497,13 @@ public class Cilent extends javax.swing.JFrame {
         txtSoDu.setText(balance.toString());
         recalculateTimeBasedOnBalance(balance); // Tính lại thời gian dựa trên số dư mới
     }
-
-    public String getTxtSoDu() {
-        return txtSoDu.getText();
+    
+    public BigDecimal getTxtSoDu() {
+        try {
+            return new BigDecimal(txtSoDu.getText());
+        } catch (NumberFormatException e) {
+            return BigDecimal.ZERO;
+        }
     }
 
     public void updateTxtTienSuDung(BigDecimal money) {
@@ -515,7 +511,13 @@ public class Cilent extends javax.swing.JFrame {
         txtTienDaSuDung.setText(amountUsed.add(amountUsedFromOrder).toString() + "Đ");
     }
 
-    public String getTxtTienSuDung() {
-        return txtTienDaSuDung.getText().replace("Đ", "");
+    public BigDecimal getTxtTienDaSuDung() {
+        try {
+            // Loại bỏ ký tự không cần thiết và khoảng trắng thừa
+            String text = txtTienDaSuDung.getText().replace("Đ", "").trim();
+            return new BigDecimal(text);
+        } catch (NumberFormatException e) {
+            return BigDecimal.ZERO;
+        }
     }
 }
