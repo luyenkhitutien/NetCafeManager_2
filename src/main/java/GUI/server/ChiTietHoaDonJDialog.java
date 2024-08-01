@@ -209,6 +209,7 @@ public class ChiTietHoaDonJDialog extends javax.swing.JDialog {
                 } else {
                     isConfirm = Xnoti.confirm(this, "Bạn có muốn xác nhận thanh toán cho vãng lai?");
                     if (isConfirm) {
+                        invoice.setMemberID(null);
                         invoice.setStatus("Hoàn thành");
                         invoiceDAO.update(invoice);
                         MainTest.mainForm.managerInvoice.loadDataToArray();
