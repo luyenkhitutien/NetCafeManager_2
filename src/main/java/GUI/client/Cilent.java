@@ -128,8 +128,7 @@ public class Cilent extends javax.swing.JFrame {
         try {
             currentAmountUsed = new BigDecimal(this.getTxtTienSuDung());
         } catch (NumberFormatException e) {
-            Xnoti.msg(this, "Invalid amountUsed!", "Notification");
-            return;
+            currentAmountUsed = BigDecimal.ZERO;
         }
 
         // Tính số tiền tăng thêm dựa trên thời gian sử dụng kể từ lần cập nhật trước đó
