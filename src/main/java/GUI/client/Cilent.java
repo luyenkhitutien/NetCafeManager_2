@@ -27,6 +27,8 @@ import utils.Xnoti;
  */
 public class Cilent extends javax.swing.JFrame {
 
+    private BigDecimal amountUsedFromOrder = BigDecimal.ZERO;
+
     private BigDecimal balance;
     private BigDecimal price;
     private int totalTime;
@@ -104,7 +106,6 @@ public class Cilent extends javax.swing.JFrame {
             totalTime = 0;
             remainingMinutes = 0;
             txtTongThoiGian.setText("");
-            txtThoiGianConLai.setText("");
         } else {
             txtSoDu.setText(balance.toString());
 
@@ -123,76 +124,46 @@ public class Cilent extends javax.swing.JFrame {
         }
     }
 
-    private void setForm() {
-        BigDecimal currentAmountUsed;
-        try {
-            currentAmountUsed = new BigDecimal(this.getTxtTienSuDung());
-        } catch (NumberFormatException e) {
-            currentAmountUsed = BigDecimal.ZERO;
-        }
-
-        // Tính số tiền tăng thêm dựa trên thời gian sử dụng kể từ lần cập nhật trước đó
-        BigDecimal pricePerMinute = price.divide(new BigDecimal(60), RoundingMode.DOWN);
-
-        // Cộng số tiền tăng thêm vào tổng số tiền đã sử dụng
-        amountUsed = currentAmountUsed.add(pricePerMinute);
-
-        if (!MainClient.isGuest) {
-            BigDecimal currentBalance;
-            try {
-                currentBalance = new BigDecimal(txtSoDu.getText());
-            } catch (NumberFormatException e) {
-                currentBalance = BigDecimal.ZERO;
-            }
-
-            // Tính thời gian còn lại cho thành viên
-            int remainingHours = totalTime - hoursUsed;
-            int remainingMinutesUpdate = remainingMinutes - minutesUsed;
-            if (remainingMinutesUpdate < 0) {
-                remainingMinutesUpdate += 60;
-                remainingHours--;
-            }
-
-            // Định dạng thời gian còn lại dưới dạng "00:00"
-            String formattedRemainingTime = String.format("%02d:%02d", remainingHours, remainingMinutesUpdate);
-            txtThoiGianConLai.setText(formattedRemainingTime);
-
-            // Tính toán và cập nhật số dư còn lại
-            BigDecimal remainingBalance = currentBalance.subtract(pricePerMinute);
-            txtSoDu.setText(remainingBalance.toString());
-
-            if (!fiveMinuteWarningShown && remainingHours == 0 && remainingMinutesUpdate <= 5) {
-                Xnoti.msg(this, "Remaining time is 5 minutes", "Notification");
-                fiveMinuteWarningShown = true;
-            }
-
-            if (remainingHours <= 0 && remainingMinutesUpdate <= 0) {
-                Xnoti.msg(this, "Time has run out", "Notification");
-                stopTimer();
-                // Dừng timer khi hết thời gian
-                
-                logout();
-            }
-        } else {
-            // Đối với khách, tính tổng số phút đã sử dụng từ khi bắt đầu
-            int totalMinutesUsed = hoursUsed * 60 + minutesUsed;
-
-            // Tính lại giờ và phút đã sử dụng
-            hoursUsed = totalMinutesUsed / 60;
-            minutesUsed = totalMinutesUsed % 60;
-        }
-
-        // Cập nhật hiển thị thời gian đã sử dụng cho cả khách và thành viên
+    public void setForm() {
+        // Cập nhật hiển thị thời gian đã sử dụng
         String formattedUsedTime = String.format("%02d:%02d", hoursUsed, minutesUsed);
         txtThoiGianSuDung.setText(formattedUsedTime);
 
-        // Cập nhật hiển thị số tiền đã sử dụng cho cả khách và thành viên
-        txtTienDaSuDung.setText(amountUsed.toString() + "Đ");
+        // Cập nhật hiển thị số tiền đã sử dụng
+        txtTienDaSuDung.setText(amountUsed.add(amountUsedFromOrder).toString() + "Đ");
+
+        if (!MainClient.isGuest) {
+            BigDecimal currentBalance = getCurrentBalance();
+            txtSoDu.setText(currentBalance.toString());
+
+            // Cập nhật lại thời gian còn lại dựa trên số dư mới
+            recalculateTimeBasedOnBalance(currentBalance);
+        }
     }
 
-// Phương thức bắt đầu timer
+    private void recalculateTimeBasedOnBalance(BigDecimal balance) {
+        BigDecimal pricePerMinute = price.divide(new BigDecimal(60), RoundingMode.DOWN);
+
+        // Tính tổng số phút có thể sử dụng dựa trên số dư hiện tại
+        int totalMinutesAvailable = balance.divide(pricePerMinute, RoundingMode.DOWN).intValue();
+
+        // Tính lại tổng thời gian còn lại
+        int remainingHours = totalMinutesAvailable / 60;
+        int remainingMinutes = totalMinutesAvailable % 60;
+        String formattedRemainingTime = String.format("%02d:%02d", remainingHours, remainingMinutes);
+        txtTongThoiGian.setText(formattedRemainingTime);
+    }
+
+    private BigDecimal getCurrentBalance() {
+        try {
+            return new BigDecimal(txtSoDu.getText());
+        } catch (NumberFormatException e) {
+            return BigDecimal.ZERO;
+        }
+    }
+
     private void startTimer() {
-        timer = new Timer(60000, new ActionListener() { // 60000 milliseconds = 1 phút
+        timer = new Timer(6000, new ActionListener() { // 60000 milliseconds = 1 phút
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Tăng số phút đã sử dụng
@@ -202,7 +173,23 @@ public class Cilent extends javax.swing.JFrame {
                     hoursUsed++;
                 }
 
+                // Cập nhật số tiền đã sử dụng
+                BigDecimal pricePerMinute = price.divide(new BigDecimal(60), RoundingMode.DOWN);
+                amountUsed = amountUsed.add(pricePerMinute);
+
+                // Cập nhật giao diện
                 setForm();
+
+                // Kiểm tra nếu số dư hết
+                BigDecimal currentBalance = getCurrentBalance().subtract(pricePerMinute);
+                if (currentBalance.compareTo(BigDecimal.ZERO) <= 0) {
+                    Xnoti.msg(MainClient.clientForm, "Số dư đã hết", "Thông báo");
+                    stopTimer();
+                    logout();
+                } else {
+                    txtSoDu.setText(currentBalance.toString());
+                    recalculateTimeBasedOnBalance(currentBalance);
+                }
             }
         });
         timer.setInitialDelay(0); // Bắt đầu ngay lập tức
@@ -221,7 +208,6 @@ public class Cilent extends javax.swing.JFrame {
         // Reset các trường văn bản
         txtTongThoiGian.setText("");
         txtSoDu.setText("");
-        txtThoiGianConLai.setText("");
         txtThoiGianSuDung.setText("");
         txtTienDaSuDung.setText("");
 
@@ -251,7 +237,6 @@ public class Cilent extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         lblAnhBaner = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -261,7 +246,6 @@ public class Cilent extends javax.swing.JFrame {
         btnDangXuat = new javax.swing.JButton();
         txtTongThoiGian = new javax.swing.JTextField();
         txtThoiGianSuDung = new javax.swing.JTextField();
-        txtThoiGianConLai = new javax.swing.JTextField();
         txtSoDu = new javax.swing.JTextField();
         txtTienDaSuDung = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
@@ -286,9 +270,6 @@ public class Cilent extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Source Code Pro", 1, 14)); // NOI18N
         jLabel2.setText("Thời gian sử dụng:");
-
-        jLabel3.setFont(new java.awt.Font("Source Code Pro", 1, 14)); // NOI18N
-        jLabel3.setText("Thời gian còn lại:");
 
         jLabel4.setFont(new java.awt.Font("Source Code Pro", 1, 14)); // NOI18N
         jLabel4.setText("Số dư:");
@@ -332,9 +313,6 @@ public class Cilent extends javax.swing.JFrame {
         txtThoiGianSuDung.setEditable(false);
         txtThoiGianSuDung.setFont(new java.awt.Font("Source Code Pro", 1, 14)); // NOI18N
 
-        txtThoiGianConLai.setEditable(false);
-        txtThoiGianConLai.setFont(new java.awt.Font("Source Code Pro", 1, 14)); // NOI18N
-
         txtSoDu.setEditable(false);
         txtSoDu.setFont(new java.awt.Font("Source Code Pro", 1, 14)); // NOI18N
         txtSoDu.addActionListener(new java.awt.event.ActionListener() {
@@ -358,13 +336,11 @@ public class Cilent extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel3)
                             .addComponent(jLabel4)
                             .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtThoiGianSuDung)
-                            .addComponent(txtThoiGianConLai)
                             .addComponent(txtSoDu)
                             .addComponent(txtTienDaSuDung, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtTongThoiGian, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -390,11 +366,7 @@ public class Cilent extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtThoiGianSuDung, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtThoiGianConLai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(18, 18, 18)
+                .addGap(64, 64, 64)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtSoDu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
@@ -519,7 +491,6 @@ public class Cilent extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
@@ -527,7 +498,6 @@ public class Cilent extends javax.swing.JFrame {
     private javax.swing.JLabel lblAnhBaner;
     private javax.swing.JPanel pnlChinh;
     private javax.swing.JTextField txtSoDu;
-    private javax.swing.JTextField txtThoiGianConLai;
     private javax.swing.JTextField txtThoiGianSuDung;
     private javax.swing.JTextField txtTienDaSuDung;
     private javax.swing.JTextField txtTongThoiGian;
@@ -541,8 +511,11 @@ public class Cilent extends javax.swing.JFrame {
         this.btnTinNhan = btnTinNhan;
     }
 
-    public void updateTxtSoDu(BigDecimal balance) {
+    public void updateTxtSoDu(BigDecimal balance, BigDecimal amountFromOrder) {
+        amountUsedFromOrder = amountUsedFromOrder.add(amountFromOrder);
         txtSoDu.setText(balance.toString());
+        recalculateTimeBasedOnBalance(balance); // Tính lại thời gian dựa trên số dư mới
+        setForm(); // Cập nhật thông tin hiển thị
     }
 
     public String getTxtSoDu() {
