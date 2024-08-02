@@ -44,7 +44,7 @@ public class MainClient {
             
             // Thêm phát âm thanh khi ứng dụng khởi động
             audioPlayer = new AudioPlayer();
-            audioPlayer.play("/resources/Audio_Tale-of-Immortal.wav", true); // Phát lặp lại
+            audioPlayer.play("/Audio_Tale-of-Immortal.wav", true); // Phát lặp lại
         });
     }
 
