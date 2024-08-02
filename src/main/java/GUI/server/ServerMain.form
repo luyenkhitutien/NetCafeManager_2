@@ -170,7 +170,7 @@
             <Component class="javax.swing.JLabel" name="jLabel1">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Times New Roman" size="14" style="2"/>
+                  <Font name="Monospaced" size="14" style="2"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Xin ch&#xe0;o:"/>
               </Properties>
@@ -178,7 +178,7 @@
             <Component class="javax.swing.JLabel" name="lblUserName">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Dialog" size="16" style="1"/>
+                  <Font name="Source Code Pro" size="16" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Admin"/>
               </Properties>
@@ -217,9 +217,9 @@
             <Component class="javax.swing.JLabel" name="lblQuanLy">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Times New Roman" size="18" style="1"/>
+                  <Font name="Monospaced" size="20" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="               QU&#x1ea2;N L&#xdd;"/>
+                <Property name="text" type="java.lang.String" value="      QU&#x1ea2;N L&#xdd;"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblQuanLyMouseClicked"/>
@@ -235,9 +235,9 @@
             <Component class="javax.swing.JLabel" name="lblQuanLyTaiKhoan">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Times New Roman" size="20" style="2"/>
+                  <Font name="Source Code Pro" size="18" style="2"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="--  Qu&#x1ea3;n l&#xfd; t&#xe0;i kho&#x1ea3;n"/>
+                <Property name="text" type="java.lang.String" value="-- Qu&#x1ea3;n l&#xfd; t&#xe0;i kho&#x1ea3;n"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblQuanLyTaiKhoanMouseClicked"/>
@@ -246,7 +246,7 @@
             <Component class="javax.swing.JLabel" name="lblQuanLySanPham">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Times New Roman" size="20" style="2"/>
+                  <Font name="Source Code Pro" size="18" style="2"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="-- Qu&#x1ea3;n l&#xfd; s&#x1ea3;n ph&#x1ea9;m"/>
               </Properties>
@@ -257,7 +257,7 @@
             <Component class="javax.swing.JLabel" name="lblThongKeLuongNhanVien">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Times New Roman" size="20" style="2"/>
+                  <Font name="Source Code Pro" size="18" style="2"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="-- Th&#x1ed1;ng k&#xea; l&#x1b0;&#x1a1;ng nh&#xe2;n vi&#xea;n"/>
               </Properties>
@@ -268,7 +268,7 @@
             <Component class="javax.swing.JLabel" name="lblQuanLyMay">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Times New Roman" size="20" style="2"/>
+                  <Font name="Source Code Pro" size="18" style="2"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="-- Qu&#x1ea3;n l&#xfd; m&#xe1;y"/>
               </Properties>
@@ -279,9 +279,9 @@
             <Component class="javax.swing.JLabel" name="lblThongKe">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Times New Roman" size="18" style="1"/>
+                  <Font name="Monospaced" size="20" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="              TH&#x1ed0;NG K&#xca;"/>
+                <Property name="text" type="java.lang.String" value="      TH&#x1ed0;NG K&#xca;"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblThongKeMouseClicked"/>
@@ -297,7 +297,7 @@
             <Component class="javax.swing.JLabel" name="lblQuanLyHoaDon">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Times New Roman" size="20" style="2"/>
+                  <Font name="Source Code Pro" size="18" style="2"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="-- Qu&#x1ea3;n l&#xfd; h&#xf3;a &#x111;&#x1a1;n"/>
               </Properties>
@@ -308,7 +308,7 @@
             <Component class="javax.swing.JLabel" name="lblThongKeDoanhThu">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Times New Roman" size="20" style="2"/>
+                  <Font name="Source Code Pro" size="18" style="2"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="-- Th&#x1ed1;ng k&#xea; doanh thu"/>
               </Properties>
@@ -326,9 +326,10 @@
             <Component class="javax.swing.JLabel" name="lblTrangChu">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Times New Roman" size="18" style="1"/>
+                  <Font name="Monospaced" size="20" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="              TRANG CH&#x1ee6;"/>
+                <Property name="text" type="java.lang.String" value="     TRANG CH&#x1ee6;"/>
+                <Property name="horizontalTextPosition" type="int" value="0"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblTrangChuMouseClicked"/>

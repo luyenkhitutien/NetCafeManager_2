@@ -274,7 +274,7 @@ public class QuanLySanPhamJPanel extends javax.swing.JPanel  {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Source Code Pro", 1, 24)); // NOI18N
         jLabel1.setText("Quản lý sản phẩm");
 
         btnTaoSanPham.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
@@ -341,7 +341,7 @@ public class QuanLySanPhamJPanel extends javax.swing.JPanel  {
         });
         jScrollPane1.setViewportView(tblSanPham);
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Source Code Pro", 2, 18)); // NOI18N
         jLabel2.setText("Danh sách sản phẩm: ");
 
         txtTimKiem.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -386,7 +386,7 @@ public class QuanLySanPhamJPanel extends javax.swing.JPanel  {
                             .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

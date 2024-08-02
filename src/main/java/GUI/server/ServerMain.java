@@ -143,10 +143,10 @@ public class ServerMain extends javax.swing.JFrame {
 
         pnlControler.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 2, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Monospaced", 2, 14)); // NOI18N
         jLabel1.setText("Xin chào:");
 
-        lblUserName.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        lblUserName.setFont(new java.awt.Font("Source Code Pro", 1, 16)); // NOI18N
         lblUserName.setText("Admin");
 
         btnDangXuat.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -168,23 +168,23 @@ public class ServerMain extends javax.swing.JFrame {
             .addGap(0, 56, Short.MAX_VALUE)
         );
 
-        lblQuanLy.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        lblQuanLy.setText("               QUẢN LÝ");
+        lblQuanLy.setFont(new java.awt.Font("Monospaced", 1, 20)); // NOI18N
+        lblQuanLy.setText("      QUẢN LÝ");
         lblQuanLy.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblQuanLyMouseClicked(evt);
             }
         });
 
-        lblQuanLyTaiKhoan.setFont(new java.awt.Font("Times New Roman", 2, 20)); // NOI18N
-        lblQuanLyTaiKhoan.setText("--  Quản lý tài khoản");
+        lblQuanLyTaiKhoan.setFont(new java.awt.Font("Source Code Pro", 2, 18)); // NOI18N
+        lblQuanLyTaiKhoan.setText("-- Quản lý tài khoản");
         lblQuanLyTaiKhoan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblQuanLyTaiKhoanMouseClicked(evt);
             }
         });
 
-        lblQuanLySanPham.setFont(new java.awt.Font("Times New Roman", 2, 20)); // NOI18N
+        lblQuanLySanPham.setFont(new java.awt.Font("Source Code Pro", 2, 18)); // NOI18N
         lblQuanLySanPham.setText("-- Quản lý sản phẩm");
         lblQuanLySanPham.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -192,7 +192,7 @@ public class ServerMain extends javax.swing.JFrame {
             }
         });
 
-        lblThongKeLuongNhanVien.setFont(new java.awt.Font("Times New Roman", 2, 20)); // NOI18N
+        lblThongKeLuongNhanVien.setFont(new java.awt.Font("Source Code Pro", 2, 18)); // NOI18N
         lblThongKeLuongNhanVien.setText("-- Thống kê lương nhân viên");
         lblThongKeLuongNhanVien.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -200,7 +200,7 @@ public class ServerMain extends javax.swing.JFrame {
             }
         });
 
-        lblQuanLyMay.setFont(new java.awt.Font("Times New Roman", 2, 20)); // NOI18N
+        lblQuanLyMay.setFont(new java.awt.Font("Source Code Pro", 2, 18)); // NOI18N
         lblQuanLyMay.setText("-- Quản lý máy");
         lblQuanLyMay.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -208,15 +208,15 @@ public class ServerMain extends javax.swing.JFrame {
             }
         });
 
-        lblThongKe.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        lblThongKe.setText("              THỐNG KÊ");
+        lblThongKe.setFont(new java.awt.Font("Monospaced", 1, 20)); // NOI18N
+        lblThongKe.setText("      THỐNG KÊ");
         lblThongKe.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblThongKeMouseClicked(evt);
             }
         });
 
-        lblQuanLyHoaDon.setFont(new java.awt.Font("Times New Roman", 2, 20)); // NOI18N
+        lblQuanLyHoaDon.setFont(new java.awt.Font("Source Code Pro", 2, 18)); // NOI18N
         lblQuanLyHoaDon.setText("-- Quản lý hóa đơn");
         lblQuanLyHoaDon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -224,7 +224,7 @@ public class ServerMain extends javax.swing.JFrame {
             }
         });
 
-        lblThongKeDoanhThu.setFont(new java.awt.Font("Times New Roman", 2, 20)); // NOI18N
+        lblThongKeDoanhThu.setFont(new java.awt.Font("Source Code Pro", 2, 18)); // NOI18N
         lblThongKeDoanhThu.setText("-- Thống kê doanh thu");
         lblThongKeDoanhThu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -234,8 +234,9 @@ public class ServerMain extends javax.swing.JFrame {
 
         lblAnhGr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/GR5.png"))); // NOI18N
 
-        lblTrangChu.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        lblTrangChu.setText("              TRANG CHỦ");
+        lblTrangChu.setFont(new java.awt.Font("Monospaced", 1, 20)); // NOI18N
+        lblTrangChu.setText("     TRANG CHỦ");
+        lblTrangChu.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblTrangChu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblTrangChuMouseClicked(evt);

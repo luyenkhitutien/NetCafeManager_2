@@ -230,7 +230,7 @@ public class QuanLyMayJPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblQuanLyMay = new javax.swing.JTable();
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Source Code Pro", 1, 24)); // NOI18N
         jLabel1.setText("Quản lý máy");
 
         javax.swing.GroupLayout pnlTitleLayout = new javax.swing.GroupLayout(pnlTitle);
@@ -239,7 +239,7 @@ public class QuanLyMayJPanel extends javax.swing.JPanel {
             pnlTitleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTitleLayout.createSequentialGroup()
                 .addGap(36, 36, 36)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlTitleLayout.setVerticalGroup(
@@ -252,16 +252,16 @@ public class QuanLyMayJPanel extends javax.swing.JPanel {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Source Code Pro", 2, 18)); // NOI18N
         jLabel2.setText("ID máy:");
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Source Code Pro", 2, 18)); // NOI18N
         jLabel3.setText("Tên máy");
 
-        jLabel4.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Source Code Pro", 2, 18)); // NOI18N
         jLabel4.setText("Giá:");
 
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 2, 18)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Source Code Pro", 2, 18)); // NOI18N
         jLabel5.setText("Loại máy");
 
         btnSua.setFont(new java.awt.Font("Monospaced", 1, 16)); // NOI18N
@@ -319,12 +319,12 @@ public class QuanLyMayJPanel extends javax.swing.JPanel {
         );
 
         txtIDmay.setEditable(false);
-        txtIDmay.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtIDmay.setFont(new java.awt.Font("Source Code Pro", 0, 18)); // NOI18N
 
-        txtTenMay.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtTenMay.setFont(new java.awt.Font("Source Code Pro", 0, 18)); // NOI18N
 
         txtGia.setEditable(false);
-        txtGia.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtGia.setFont(new java.awt.Font("Source Code Pro", 0, 18)); // NOI18N
         txtGia.setText("5000");
         txtGia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -332,7 +332,7 @@ public class QuanLyMayJPanel extends javax.swing.JPanel {
             }
         });
 
-        cboLoaiMay.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        cboLoaiMay.setFont(new java.awt.Font("Source Code Pro", 0, 18)); // NOI18N
         cboLoaiMay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Thường", "VIP" }));
         cboLoaiMay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -397,12 +397,13 @@ public class QuanLyMayJPanel extends javax.swing.JPanel {
                 .addGap(36, 36, 36)
                 .addComponent(pnlControl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(108, 108, 108)
-                .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, Short.MAX_VALUE)
+                .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 44, Short.MAX_VALUE)
                 .addGap(73, 73, 73))
         );
 
         pnlTable.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        tblQuanLyMay.setFont(new java.awt.Font("Source Code Pro", 0, 16)); // NOI18N
         tblQuanLyMay.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
