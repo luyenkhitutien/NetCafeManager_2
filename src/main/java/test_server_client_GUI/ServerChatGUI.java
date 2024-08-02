@@ -3,6 +3,7 @@ package test_server_client_GUI;
 import io.IOServer;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.TrayIcon;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import utils.Xnoti;
 
 public class ServerChatGUI extends JFrame {
 
@@ -143,8 +145,21 @@ public class ServerChatGUI extends JFrame {
         }
     }
 
-    public void appendMessage(String message) {
-        SwingUtilities.invokeLater(() -> chatArea.append(message + "\n"));
+    public void appendMessage(int clientId, String message) {
+        SwingUtilities.invokeLater(() -> {
+            chatArea.append("Client " + clientId + ": " + message + "\n");
+
+            // Lấy thông tin computerID từ server
+            IOServer.ClientHandler clientHandler = server.getClientHandler(clientId);
+        if (clientHandler != null) {
+                int computerID = clientHandler.getComputerID();
+                if (!isVisible()) {
+                    // Hiển thị thông báo tray với thông tin computerID
+                    Xnoti.showTrayMessage("New Message from Client" + clientId, "Message: " + message + "\nComputer ID: " + computerID, TrayIcon.MessageType.INFO);
+                }
+            }
+        });
+        
     }
     
 //    private void formWindowClosed(WindowEvent evt) {
