@@ -428,7 +428,7 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
         jLabel9.setText("Tạo lúc:");
 
         txtTaoLuc.setEditable(false);
-        txtTaoLuc.setFont(new java.awt.Font("Source Code Pro", 0, 18)); // NOI18N
+        txtTaoLuc.setFont(new java.awt.Font("Source Code Pro", 0, 14)); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Source Code Pro", 1, 16)); // NOI18N
         jLabel2.setText("ID hội viên:");
@@ -459,7 +459,7 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtIDHoiVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTenHoiVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))

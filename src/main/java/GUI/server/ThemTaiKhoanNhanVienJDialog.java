@@ -376,22 +376,22 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
         jLabel2.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
         jLabel2.setText("ID tài khoản:");
         jPanel2.add(jLabel2);
-        jLabel2.setBounds(20, 90, 160, 24);
+        jLabel2.setBounds(20, 90, 160, 23);
 
         jLabel3.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
         jLabel3.setText("Tên tài khoản:");
         jPanel2.add(jLabel3);
-        jLabel3.setBounds(20, 150, 170, 24);
+        jLabel3.setBounds(20, 150, 170, 23);
 
         jLabel4.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
         jLabel4.setText("Mật khẩu:");
         jPanel2.add(jLabel4);
-        jLabel4.setBounds(20, 230, 120, 24);
+        jLabel4.setBounds(20, 230, 120, 23);
 
         jLabel5.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
         jLabel5.setText("Vai trò:");
         jPanel2.add(jLabel5);
-        jLabel5.setBounds(20, 300, 100, 24);
+        jLabel5.setBounds(20, 300, 100, 23);
 
         txtIDTaiKhoan.setEditable(false);
         txtIDTaiKhoan.setFont(new java.awt.Font("Source Code Pro", 0, 18)); // NOI18N
@@ -423,27 +423,27 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
         jLabel6.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
         jLabel6.setText("ID nhân viên:");
         jPanel2.add(jLabel6);
-        jLabel6.setBounds(520, 90, 150, 24);
+        jLabel6.setBounds(520, 90, 150, 23);
 
         jLabel7.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
         jLabel7.setText("Tên nhân viên:");
         jPanel2.add(jLabel7);
-        jLabel7.setBounds(520, 150, 170, 24);
+        jLabel7.setBounds(520, 150, 170, 23);
 
         jLabel8.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
         jLabel8.setText("Lương (vnd/giờ):");
         jPanel2.add(jLabel8);
-        jLabel8.setBounds(520, 230, 200, 24);
+        jLabel8.setBounds(520, 230, 200, 23);
 
         jLabel9.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
         jLabel9.setText("Số điện thoại:");
         jPanel2.add(jLabel9);
-        jLabel9.setBounds(520, 370, 170, 24);
+        jLabel9.setBounds(520, 370, 170, 23);
 
         jLabel10.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
         jLabel10.setText("Địa chỉ:");
         jPanel2.add(jLabel10);
-        jLabel10.setBounds(520, 430, 100, 24);
+        jLabel10.setBounds(520, 430, 100, 23);
 
         txtDiaChi.setColumns(20);
         txtDiaChi.setFont(new java.awt.Font("Source Code Pro", 0, 18)); // NOI18N
@@ -456,7 +456,7 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
         jLabel11.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
         jLabel11.setText("Thông tin khác:");
         jPanel2.add(jLabel11);
-        jLabel11.setBounds(20, 440, 180, 24);
+        jLabel11.setBounds(20, 440, 180, 23);
 
         txtThongTinKhac.setColumns(20);
         txtThongTinKhac.setFont(new java.awt.Font("Source Code Pro", 0, 18)); // NOI18N
@@ -571,10 +571,10 @@ public class ThemTaiKhoanNhanVienJDialog extends javax.swing.JDialog {
         jLabel13.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
         jLabel13.setText("Tạo lúc:");
         jPanel2.add(jLabel13);
-        jLabel13.setBounds(20, 370, 100, 24);
+        jLabel13.setBounds(20, 370, 100, 23);
 
         txtTaoLuc.setEditable(false);
-        txtTaoLuc.setFont(new java.awt.Font("Source Code Pro", 0, 18)); // NOI18N
+        txtTaoLuc.setFont(new java.awt.Font("Source Code Pro", 0, 14)); // NOI18N
         txtTaoLuc.setPreferredSize(new java.awt.Dimension(250, 40));
         jPanel2.add(txtTaoLuc);
         txtTaoLuc.setBounds(200, 360, 250, 40);
