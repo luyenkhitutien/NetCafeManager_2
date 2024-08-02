@@ -23,17 +23,18 @@ public class NapTienJDialog extends javax.swing.JDialog {
     private MemberDAO memDao;
     private Member member;
 
-    public NapTienJDialog(java.awt.Frame parent, boolean modal, Integer idMember) {
+    public NapTienJDialog(java.awt.Frame parent, boolean modal, Integer idAccount) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-        NapTienJDialog.id = idMember;
+        NapTienJDialog.id = idAccount;
     }
 
-    private void napTien(Integer idMember) {
+    private void napTien() {
         try {
+
             memDao = new MemberDAO();
-            member = memDao.selectByAccountID(idMember);
+            member = memDao.selectByAccountID(id);
 
             BigDecimal soDuConLai = member.getBalance();
             BigDecimal soTienNap = new BigDecimal(txtNapTien.getText());
@@ -51,7 +52,7 @@ public class NapTienJDialog extends javax.swing.JDialog {
         }
     }
     
-    public void rechargeForClient() {
+    private void rechargeForClient() {
         //Gửi lệnh xử lý xuống cho client
         int con_clientID = MainTest.mainForm.home.selectedComputerId;
         if (con_clientID == 0) {
@@ -136,7 +137,7 @@ public class NapTienJDialog extends javax.swing.JDialog {
 
     private void txtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOKActionPerformed
         // TODO add your handling code here:
-        napTien(NapTienJDialog.id);
+        napTien();
         rechargeForClient();
         this.setVisible(false);
     }//GEN-LAST:event_txtOKActionPerformed

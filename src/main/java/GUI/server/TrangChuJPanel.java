@@ -4,8 +4,7 @@
  */
 package GUI.server;
 
-import entity.Member;
-import io.IOServer;
+import entity.Account;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -13,7 +12,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.print.attribute.standard.RequestingUserName;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import javax.swing.JLabel;
 import main_server.MainTest;
 import static main_server.MainTest.chatGUI;
@@ -150,10 +150,13 @@ public class TrangChuJPanel extends javax.swing.JPanel {
     }
     
     private void napTienFormTrue(){
+        
         int con_clientID = MainTest.mainForm.home.selectedComputerId;
-        Member member = MainTest.server.getMemberByClientID(con_clientID);
-        if(member != null){
-            NapTienJDialog napTienJDialog = new NapTienJDialog(MainTest.mainForm, true, member.getId());
+        Account acc = MainTest.server.getAccountByClientID(con_clientID);
+        
+        if(acc != null){
+            JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            NapTienJDialog napTienJDialog = new NapTienJDialog(frame, true, acc.getId());
             napTienJDialog.setVisible(true);
         } else{
             Xnoti.msg(this, "Không thực hiện nạp tiền cho khách vãng lai", "Cảnh báo!!");

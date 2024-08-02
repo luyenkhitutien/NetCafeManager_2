@@ -72,12 +72,12 @@ public class IOServer {
         }).start();
     }
 
-    public Member getMemberByClientID(int clientID) {
+    public Account getAccountByClientID(int clientID) {
         ClientHandler clientHandler = loggedInClientsMap.get(clientID);
         if (clientHandler != null) {
-            return clientHandler.getMember();
+            return clientHandler.getAccount();
         }
-        return null; // Hoặc xử lý nếu không tìm thấy ClientHandler tương ứng
+        return null;
     }
 
     public void shutdownServer() {
@@ -196,8 +196,8 @@ public class IOServer {
             return computerID;
         }
         
-        public Member getMember(){
-            return member;
+        public Account getAccount(){
+            return account;
         }
 
         private void sendMessage(String message) throws IOException {
