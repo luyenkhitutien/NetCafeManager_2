@@ -168,8 +168,8 @@ public class ServerMain extends javax.swing.JFrame {
             .addGap(0, 56, Short.MAX_VALUE)
         );
 
-        lblQuanLy.setFont(new java.awt.Font("Monospaced", 1, 22)); // NOI18N
-        lblQuanLy.setText("      QUẢN LÝ");
+        lblQuanLy.setFont(new java.awt.Font("Monospaced", 1, 24)); // NOI18N
+        lblQuanLy.setText("       QUẢN LÝ");
         lblQuanLy.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblQuanLyMouseClicked(evt);
@@ -208,7 +208,7 @@ public class ServerMain extends javax.swing.JFrame {
             }
         });
 
-        lblThongKe.setFont(new java.awt.Font("Monospaced", 1, 22)); // NOI18N
+        lblThongKe.setFont(new java.awt.Font("Monospaced", 1, 24)); // NOI18N
         lblThongKe.setText("      THỐNG KÊ");
         lblThongKe.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -234,8 +234,8 @@ public class ServerMain extends javax.swing.JFrame {
 
         lblAnhGr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/GR5.png"))); // NOI18N
 
-        lblTrangChu.setFont(new java.awt.Font("Monospaced", 1, 22)); // NOI18N
-        lblTrangChu.setText("       TRANG CHỦ");
+        lblTrangChu.setFont(new java.awt.Font("Monospaced", 1, 24)); // NOI18N
+        lblTrangChu.setText("      TRANG CHỦ");
         lblTrangChu.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblTrangChu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -294,15 +294,15 @@ public class ServerMain extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblQuanLy, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(35, 35, 35)
                 .addComponent(lblQuanLyTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblQuanLySanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblQuanLyHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblQuanLyMay, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(117, 117, 117)
+                .addGap(94, 94, 94)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)

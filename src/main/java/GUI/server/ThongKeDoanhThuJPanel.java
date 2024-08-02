@@ -212,7 +212,7 @@ public class ThongKeDoanhThuJPanel extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
         jLabel3.setText("Đến ngày:");
 
-        txtTuNgay.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtTuNgay.setFont(new java.awt.Font("Source Code Pro", 0, 16)); // NOI18N
         txtTuNgay.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtTuNgayKeyPressed(evt);
@@ -222,7 +222,7 @@ public class ThongKeDoanhThuJPanel extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
         jLabel4.setText("Từ máy:");
 
-        txtDenNgay.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtDenNgay.setFont(new java.awt.Font("Source Code Pro", 0, 16)); // NOI18N
         txtDenNgay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDenNgayActionPerformed(evt);
@@ -240,13 +240,13 @@ public class ThongKeDoanhThuJPanel extends javax.swing.JPanel {
         jLabel6.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
         jLabel6.setText("Từ khách hàng:");
 
-        cboTuMay.setFont(new java.awt.Font("Source Code Pro", 0, 18)); // NOI18N
+        cboTuMay.setFont(new java.awt.Font("Source Code Pro", 0, 16)); // NOI18N
         cboTuMay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        cboSapXep.setFont(new java.awt.Font("Source Code Pro", 0, 18)); // NOI18N
+        cboSapXep.setFont(new java.awt.Font("Source Code Pro", 0, 16)); // NOI18N
         cboSapXep.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        cboTuKhachHang.setFont(new java.awt.Font("Source Code Pro", 0, 18)); // NOI18N
+        cboTuKhachHang.setFont(new java.awt.Font("Source Code Pro", 0, 16)); // NOI18N
         cboTuKhachHang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/moi3.png"))); // NOI18N
@@ -393,7 +393,7 @@ public class ThongKeDoanhThuJPanel extends javax.swing.JPanel {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
