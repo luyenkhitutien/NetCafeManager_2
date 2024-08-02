@@ -85,7 +85,7 @@ public class NapTienJDialog extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Source Code Pro", 1, 20)); // NOI18N
         jLabel1.setText("Nhập số tiền:");
 
-        txtNapTien.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        txtNapTien.setFont(new java.awt.Font("Source Code Pro", 0, 18)); // NOI18N
 
         txtOK.setFont(new java.awt.Font("Dubai", 1, 11)); // NOI18N
         txtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/OK.png"))); // NOI18N
