@@ -161,7 +161,7 @@ public class MainClient {
                 BigDecimal newBalance = listBalanceClient.get(0);
                 BigDecimal priceClient = listBalanceClient.get(1);
                 clientForm.setBalanceClient(newBalance, priceClient);
-                Xnoti.showTrayMessage("Thông Báo!", response, TrayIcon.MessageType.INFO);
+                Xnoti.msg(clientForm, response + " .Số dư mới đã cập nhật", "Thông báo");
             }
         }.execute();
     }
