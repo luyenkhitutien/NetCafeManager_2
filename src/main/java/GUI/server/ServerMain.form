@@ -141,15 +141,15 @@
                       <Component id="jSeparator1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="lblQuanLy" min="-2" pref="39" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                       <Component id="lblQuanLyTaiKhoan" min="-2" pref="32" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="lblQuanLySanPham" min="-2" pref="31" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="lblQuanLyHoaDon" min="-2" pref="33" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="lblQuanLyMay" min="-2" pref="34" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="117" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
                       <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="lblThongKe" min="-2" pref="39" max="-2" attributes="0"/>
@@ -217,9 +217,9 @@
             <Component class="javax.swing.JLabel" name="lblQuanLy">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Monospaced" size="22" style="1"/>
+                  <Font name="Monospaced" size="24" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="      QU&#x1ea2;N L&#xdd;"/>
+                <Property name="text" type="java.lang.String" value="       QU&#x1ea2;N L&#xdd;"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblQuanLyMouseClicked"/>
@@ -279,7 +279,7 @@
             <Component class="javax.swing.JLabel" name="lblThongKe">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Monospaced" size="22" style="1"/>
+                  <Font name="Monospaced" size="24" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="      TH&#x1ed0;NG K&#xca;"/>
               </Properties>
@@ -326,9 +326,9 @@
             <Component class="javax.swing.JLabel" name="lblTrangChu">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Monospaced" size="22" style="1"/>
+                  <Font name="Monospaced" size="24" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="       TRANG CH&#x1ee6;"/>
+                <Property name="text" type="java.lang.String" value="      TRANG CH&#x1ee6;"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
               </Properties>
               <Events>

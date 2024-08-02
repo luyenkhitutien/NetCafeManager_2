@@ -313,7 +313,7 @@ public class QuanLySanPhamJPanel extends javax.swing.JPanel  {
                 .addContainerGap())
         );
 
-        tblSanPham.setFont(new java.awt.Font("Source Code Pro", 1, 16)); // NOI18N
+        tblSanPham.setFont(new java.awt.Font("Source Code Pro", 0, 16)); // NOI18N
         tblSanPham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
