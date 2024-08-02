@@ -4,6 +4,8 @@
  */
 package GUI.server;
 
+import entity.Member;
+import io.IOServer;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -11,6 +13,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.print.attribute.standard.RequestingUserName;
 import javax.swing.JLabel;
 import main_server.MainTest;
 import static main_server.MainTest.chatGUI;
@@ -145,6 +148,18 @@ public class TrangChuJPanel extends javax.swing.JPanel {
             pupTrangChu.show(clickedLabel, evt.getX(), evt.getY());
         }
     }
+    
+    private void napTienFormTrue(){
+        int con_clientID = MainTest.mainForm.home.selectedComputerId;
+        Member member = MainTest.server.getMemberByClientID(con_clientID);
+        if(member != null){
+            NapTienJDialog napTienJDialog = new NapTienJDialog(MainTest.mainForm, true, member.getId());
+            napTienJDialog.setVisible(true);
+        } else{
+            Xnoti.msg(this, "Không thực hiện nạp tiền cho khách vãng lai", "Cảnh báo!!");
+            return;
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -200,6 +215,11 @@ public class TrangChuJPanel extends javax.swing.JPanel {
         pupTrangChu.add(mnitTatMay);
 
         mnitNapTien.setText("Nạp Tiền");
+        mnitNapTien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnitNapTienActionPerformed(evt);
+            }
+        });
         pupTrangChu.add(mnitNapTien);
 
         mnitTinNhan.setText("Nhắn tin");
@@ -472,6 +492,11 @@ public class TrangChuJPanel extends javax.swing.JPanel {
 
         message();
     }//GEN-LAST:event_mnitTinNhanActionPerformed
+
+    private void mnitNapTienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnitNapTienActionPerformed
+        // TODO add your handling code here:
+        napTienFormTrue();
+    }//GEN-LAST:event_mnitNapTienActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

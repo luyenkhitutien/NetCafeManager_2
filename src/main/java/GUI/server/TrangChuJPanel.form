@@ -28,6 +28,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="N&#x1ea1;p Ti&#x1ec1;n"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnitNapTienActionPerformed"/>
+          </Events>
         </MenuItem>
         <MenuItem class="javax.swing.JMenuItem" name="mnitTinNhan">
           <Properties>

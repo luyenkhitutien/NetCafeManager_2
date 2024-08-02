@@ -72,6 +72,14 @@ public class IOServer {
         }).start();
     }
 
+    public Member getMemberByClientID(int clientID) {
+        ClientHandler clientHandler = loggedInClientsMap.get(clientID);
+        if (clientHandler != null) {
+            return clientHandler.getMember();
+        }
+        return null; // Hoặc xử lý nếu không tìm thấy ClientHandler tương ứng
+    }
+
     public void shutdownServer() {
         try {
             try (serverSocket) {
@@ -186,6 +194,10 @@ public class IOServer {
 
         public int getComputerID() {
             return computerID;
+        }
+        
+        public Member getMember(){
+            return member;
         }
 
         private void sendMessage(String message) throws IOException {
