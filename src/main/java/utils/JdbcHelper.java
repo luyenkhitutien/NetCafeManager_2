@@ -22,7 +22,7 @@ import java.sql.Statement;
 public class JdbcHelper {
     private static final String DB_NAME = "NetCafeManagerDB";
     private static final String USERNAME = "sa";
-    private static final String PASSWORD = "0610";
+    private static final String PASSWORD = "123";
     private static final String LOCALHOST = getIpLocalHost();
     private static final String URL = "jdbc:sqlserver://" + LOCALHOST + ":1433;databaseName=" + DB_NAME + ";encrypt=false";
     
