@@ -15,9 +15,9 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.JLabel;
-import main_server.MainTest;
-import static main_server.MainTest.chatGUI;
-import static main_server.MainTest.server;
+import com.mycompany.netcafemanager.MainTest;
+import static com.mycompany.netcafemanager.MainTest.chatGUI;
+import static com.mycompany.netcafemanager.MainTest.server;
 import test_server_client_GUI.ServerChatGUI;
 import utils.Xnoti;
 

@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
-import main_server.MainTest;
+import com.mycompany.netcafemanager.MainTest;
 import test_server_client_GUI.ServerChatGUI;
 import utils.Auth;
 import utils.XDate;

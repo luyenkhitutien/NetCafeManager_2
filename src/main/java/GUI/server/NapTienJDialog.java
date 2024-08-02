@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import main_server.MainTest;
+import com.mycompany.netcafemanager.MainTest;
 import utils.Xnoti;
 
 /**

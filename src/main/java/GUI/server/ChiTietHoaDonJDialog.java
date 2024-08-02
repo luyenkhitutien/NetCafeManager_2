@@ -26,7 +26,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import main_server.MainTest;
+import com.mycompany.netcafemanager.MainTest;
 import utils.XInitTable;
 import utils.Xnoti;
 

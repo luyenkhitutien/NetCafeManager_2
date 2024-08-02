@@ -11,7 +11,7 @@ import entity.Employee;
 import java.awt.Dimension;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import main_server.MainTest;
+import com.mycompany.netcafemanager.MainTest;
 import utils.Auth;
 import utils.CustomPanel;
 import utils.Xnoti;
