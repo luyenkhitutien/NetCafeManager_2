@@ -142,9 +142,7 @@ public class ThongKeLuongNhanVienJPanel extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         txtTuNgay = new javax.swing.JTextField();
         txtDenNgay = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        cboSapXep = new javax.swing.JComboBox<>();
         cboCuaNhanVien = new javax.swing.JComboBox<>();
         btnMoi = new javax.swing.JButton();
         btnTimKiem = new javax.swing.JButton();
@@ -202,14 +200,8 @@ public class ThongKeLuongNhanVienJPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
-        jLabel5.setText("Sắp xếp theo:");
-
         jLabel6.setFont(new java.awt.Font("Source Code Pro", 1, 18)); // NOI18N
         jLabel6.setText("Của nhân viên:");
-
-        cboSapXep.setFont(new java.awt.Font("Source Code Pro", 1, 16)); // NOI18N
-        cboSapXep.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         cboCuaNhanVien.setFont(new java.awt.Font("Source Code Pro", 1, 16)); // NOI18N
         cboCuaNhanVien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -238,44 +230,37 @@ public class ThongKeLuongNhanVienJPanel extends javax.swing.JPanel {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(164, 164, 164)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(429, 429, 429)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel6)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addGap(28, 28, 28))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtDenNgay, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
-                    .addComponent(txtTuNgay))
-                .addGap(236, 236, 236)
+                        .addGap(26, 26, 26)
+                        .addComponent(txtTuNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(27, 27, 27)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6))
-                .addGap(52, 52, 52)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(btnMoi)
-                        .addGap(69, 69, 69)
-                        .addComponent(btnTimKiem))
-                    .addComponent(cboSapXep, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cboCuaNhanVien, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(112, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addComponent(btnMoi)
+                            .addGap(69, 69, 69)
+                            .addComponent(btnTimKiem))
+                        .addComponent(cboCuaNhanVien, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtDenNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtTuNgay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(cboSapXep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
                     .addComponent(txtDenNgay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtTuNgay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(31, 31, 31)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(cboCuaNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -389,7 +374,8 @@ public class ThongKeLuongNhanVienJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         try {
            if(txtDenNgay.getText().trim().equalsIgnoreCase("") || txtTuNgay.getText().trim().equalsIgnoreCase("")){
-                Xnoti.msg(this, "Vui lòng điền đầy đủ thời gian bắt đầu và thời gian kết thúc!", "Thông báo trống!");
+//                Xnoti.msg(this, "Vui lòng điền đầy đủ thời gian bắt đầu và thời gian kết thúc!", "Thông báo trống!");
+                fillToTable();
             }else if(isValidateSearch()){
                 Date startAt = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(txtTuNgay.getText()+" 00:00:00.0");
                 Date endAt = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(txtDenNgay.getText()+" 23:59:59.9");
@@ -456,11 +442,9 @@ public class ThongKeLuongNhanVienJPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnMoi;
     private javax.swing.JButton btnTimKiem;
     private javax.swing.JComboBox<String> cboCuaNhanVien;
-    private javax.swing.JComboBox<String> cboSapXep;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
@@ -476,7 +460,8 @@ public class ThongKeLuongNhanVienJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtTuNgay;
     // End of variables declaration//GEN-END:variables
     boolean isValidateSearch(){
-        if(!txtTuNgay.getText().matches("^(\\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$")) {
+        if(txtTuNgay.getText().trim().equals("") || txtDenNgay.getText().trim().equals("")){
+            if(!txtTuNgay.getText().matches("^(\\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$")) {
             Xnoti.msg(this, "Sai Định Dạng Thời Gian'Bắt Đầu'!\nNăm-Tháng-Ngày", "NETCAFE");
             return false;
         }
@@ -484,6 +469,8 @@ public class ThongKeLuongNhanVienJPanel extends javax.swing.JPanel {
             Xnoti.msg(this, "Sai Định Dạng Thời Gian'Bắt Đầu'!\nNăm-Tháng-Ngày", "NETCAFE");
             return false;
         }
+        }
+        
         return true;
     }
 }

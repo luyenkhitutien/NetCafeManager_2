@@ -315,21 +315,27 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
     void search() {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date startAt = new Date(sdf.parse(txtTuNgay.getText()).getTime());
-            System.out.println("dateBegin => :" + startAt);
-            Date endAt = new Date(sdf.parse(txtDenNgay.getText()).getTime() + 24 * 60 * 60 * 1000 - 1); // set end of the day
-            System.out.println("dateEnd => :" + endAt);
             String computerName = (String) cboChonMay.getSelectedItem();
             System.out.println("Lay duoc computer name => :" + computerName);
             String userName = (String) cboTenTaiKhoan.getSelectedItem();
             System.out.println("Lay duoc userName => :" + userName);
             Integer idEmployee = null;
+            
+            
+            if(txtDenNgay.getText().trim().equalsIgnoreCase("") || txtTuNgay.getText().trim().equalsIgnoreCase("")){
+                
+                getStatisticsSearchInvoice(null, null, computerName, userName, idEmployee);
+            }else{
+                 Date startAt = new Date(sdf.parse(txtTuNgay.getText()).getTime());
+            System.out.println("dateBegin => :" + startAt);
+            Date endAt = new Date(sdf.parse(txtDenNgay.getText()).getTime() + 24 * 60 * 60 * 1000 - 1); // set end of the day
+            System.out.println("dateEnd => :" + endAt);
             if (cboNhanVien.getSelectedItem() != null) {
                 idEmployee = Integer.parseInt(cboNhanVien.getSelectedItem().toString());
                 System.out.println("Lay duoc idEmployee => :" + idEmployee);
             }
-
             getStatisticsSearchInvoice(startAt, endAt, computerName, userName, idEmployee);
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -894,15 +900,16 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtTuNgay;
     // End of variables declaration//GEN-END:variables
     boolean isValuedateSearch() {
-        if (txtTuNgay.getText().isEmpty()) {
-            Xnoti.msg(this, "Thời Gian 'Bắt Đầu' Không Được Để Trống\nNăm-Tháng-Ngày", "NETCAFR");
-            return false;
-        }
-        if (txtDenNgay.getText().isEmpty()) {
-            Xnoti.msg(this, "Thời Gian 'Kết Thúc' Không Được Để Trống\nNăm-Tháng-Ngày", "NETCAFE");
-            return false;
-        }
-        if (!txtTuNgay.getText().matches("^(\\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$")) {
+//        if (txtTuNgay.getText().isEmpty()) {
+//            Xnoti.msg(this, "Thời Gian 'Bắt Đầu' Không Được Để Trống\nNăm-Tháng-Ngày", "NETCAFR");
+//            return false;
+//        }
+//        if (txtDenNgay.getText().isEmpty()) {
+//            Xnoti.msg(this, "Thời Gian 'Kết Thúc' Không Được Để Trống\nNăm-Tháng-Ngày", "NETCAFE");
+//            return false;
+//        }
+        if(!txtDenNgay.getText().trim().equals("") || !txtTuNgay.getText().trim().equals("")){
+            if (!txtTuNgay.getText().matches("^(\\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$")) {
             Xnoti.msg(this, "Sai Định Dạng Thời Gian'Bắt Đầu'!\nNăm-Tháng-Ngày", "NETCAFE");
             return false;
         }
@@ -910,6 +917,8 @@ public class QuanLyHoaDonJPanel extends javax.swing.JPanel {
             Xnoti.msg(this, "\"Sai Định Dạng Thời Gian 'Kết Thúc'!\\nNăm-Tháng-Ngày\"", "NETCAFE");
             return false;
         }
+        }
+        
         return true;
     }
 }
