@@ -20,6 +20,7 @@ import utils.Xnoti;
 public class NapTienJDialog extends javax.swing.JDialog {
     
     public static Integer id;
+    int con_clientID = 0;
     private MemberDAO memDao;
     private Member member;
 
@@ -54,7 +55,7 @@ public class NapTienJDialog extends javax.swing.JDialog {
     
     private void rechargeForClient() {
         //Gửi lệnh xử lý xuống cho client
-        int con_clientID = MainTest.mainForm.home.selectedComputerId;
+        con_clientID = MainTest.mainForm.home.selectedComputerId;
         if (con_clientID == 0) {
             return;
         }
@@ -65,6 +66,12 @@ public class NapTienJDialog extends javax.swing.JDialog {
             Xnoti.msg(this, "Connection failed", "Error");
         }
         Xnoti.msg(this, "Successfully displays the real-time balance", "Thông báo");
+    }
+    
+    private void resetForm(){
+        txtNapTien.setText("");
+        id = null;
+        con_clientID = 0;
     }
 
     /**
@@ -82,6 +89,11 @@ public class NapTienJDialog extends javax.swing.JDialog {
         txtOK = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                formComponentHidden(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Source Code Pro", 1, 20)); // NOI18N
         jLabel1.setText("Nhập số tiền:");
@@ -141,6 +153,11 @@ public class NapTienJDialog extends javax.swing.JDialog {
         rechargeForClient();
         this.setVisible(false);
     }//GEN-LAST:event_txtOKActionPerformed
+
+    private void formComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentHidden
+        // TODO add your handling code here:
+        resetForm();
+    }//GEN-LAST:event_formComponentHidden
 
     /**
      * @param args the command line arguments
