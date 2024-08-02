@@ -159,9 +159,6 @@ public class Cilent extends javax.swing.JFrame {
 
                 if (!MainClient.isGuest) {
                     BigDecimal currentBalance = getTxtSoDu().subtract(pricePerMinute);
-                    if(hoursUsed <= 0 && minutesUsed <= 5){
-                        Xnoti.msg(MainClient.clientForm, "Còn 5 phút", "Thông báo");
-                    }
                     
                     if (currentBalance.compareTo(BigDecimal.ZERO) <= 0) {
                         Xnoti.msg(MainClient.clientForm, "Số dư đã hết", "Thông báo");
