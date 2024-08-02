@@ -48,6 +48,10 @@ public class IOServer {
     public void setChatGUI(ServerChatGUI chatGUI) {
         this.chatGUI = chatGUI;
     }
+    public ClientHandler getClientHandler(int clientId) {
+        return loggedInClientsMap.get(clientId);
+    }
+
 
     public void start() {
         new Thread(() -> {
@@ -288,7 +292,7 @@ public class IOServer {
             String fullMessage = "Message from client " + clientID + ": " + message;
             System.out.println(fullMessage);
             if (server.chatGUI != null) {
-                server.chatGUI.appendMessage(fullMessage);
+                server.chatGUI.appendMessage(clientID, message);
             }
         }
 
