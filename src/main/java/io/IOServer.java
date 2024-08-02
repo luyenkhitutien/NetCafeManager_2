@@ -128,7 +128,12 @@ public class IOServer {
 
     public synchronized void sendMessageToAllClients(String message) throws IOException {
         for (ClientHandler clientHandler : loggedInClientsMap.values()) {
-            clientHandler.sendMessage(message);
+            if(clientHandler != null){
+                clientHandler.sendMessage(message);
+            }else{
+                return;
+            }
+            
         }
     }
 
