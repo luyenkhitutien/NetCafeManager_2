@@ -137,7 +137,7 @@ public class Cilent extends javax.swing.JFrame {
     }
 
     private void startTimer() {
-        timer = new Timer(60000, new ActionListener() { // 60000 milliseconds = 1 phút
+        timer = new Timer(6000, new ActionListener() { // 60000 milliseconds = 1 phút
             @Override
             public void actionPerformed(ActionEvent e) {
                 minutesUsed++;
