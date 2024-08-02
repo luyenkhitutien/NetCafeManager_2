@@ -10,11 +10,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
-import main_client.MainClient;
 import static main_client.MainClient.COMPUTER_ID;
 
 public class IOClient {
-
+    
     private Socket socket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
@@ -25,10 +24,9 @@ public class IOClient {
     private List<BigDecimal> listBalanceClient;
     private TinNhanJDialog tinNhan;
 
-    public IOClient(TinNhanJDialog tinNhan) {
-        this.tinNhan = tinNhan;
+    public IOClient(String HOST, int PORT) {
         try {
-            this.socket = new Socket(MainClient.HOST, MainClient.PORT);
+            this.socket = new Socket(HOST, PORT);
             out = new ObjectOutputStream(socket.getOutputStream());
             out.flush(); // Ensure the stream header is written immediately
             in = new ObjectInputStream(socket.getInputStream());
@@ -36,6 +34,10 @@ public class IOClient {
         } catch (IOException ex) {
             Logger.getLogger(IOClient.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void setTinNhanJDialog(TinNhanJDialog tinNhan){
+        this.tinNhan = tinNhan;
     }
 
     public synchronized void openComputer() {

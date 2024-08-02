@@ -83,7 +83,8 @@ public class MainClient {
             };
 
             // Khởi tạo client và bắt đầu lắng nghe với callback
-            client = new IOClient(tinNhanForm);
+            client = new IOClient(HOST, PORT);
+            client.setTinNhanJDialog(tinNhanForm);
             client.startListening(callback);
         });
     }
