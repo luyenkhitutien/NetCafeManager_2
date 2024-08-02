@@ -68,9 +68,8 @@ public class MainClient {
                 connectingDialog.closeDialog();
                 try {
                     if (get()) {
-                        hello.setVisible(false);// Ẩn form HelloWorld
                         startClient();
-                        dangNhapJDialog.setVisible(true); // Hiện form dangNhapJDialog
+                        
                     } else {
                         JOptionPane.showMessageDialog(hello, "Không thể kết nối đến máy chủ. Vui lòng kiểm tra lại IP.", "Lỗi kết nối", JOptionPane.ERROR_MESSAGE);
                     }
@@ -130,14 +129,33 @@ public class MainClient {
                 return;
             }
 
+            if (response.startsWith("Server response: Computer ID valid")) {
+                // Computer ID hợp lệ
+                SwingUtilities.invokeLater(() -> {
+                    client.setTinNhanJDialog(tinNhanForm);
+                    hello.setVisible(false);
+                    dangNhapJDialog.setVisible(true);
+                });
+                return;
+            }
+
+            if (response.startsWith("Server response: Computer ID invalid")) {
+                // Computer ID không hợp lệ
+                JOptionPane.showMessageDialog(hello, "Computer ID không hợp lệ hoặc đã được sử dụng. Vui lòng nhập lại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             handleServerMessage(response);
             handleLoginResponse(response);
         };
 
         // Khởi tạo client và bắt đầu lắng nghe với callback
         client = new IOClient(HOST, PORT);
-        client.setTinNhanJDialog(tinNhanForm);
         client.startListening(callback);
+        
+        // Gửi computerID đến máy chủ để kiểm tra
+        client.sendComputerID(COMPUTER_ID);
+        
     }
 
     // Phương thức để xử lý phản hồi danh sách sản phẩm

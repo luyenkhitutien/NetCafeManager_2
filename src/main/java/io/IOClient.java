@@ -41,7 +41,7 @@ public class IOClient {
     }
 
     public synchronized void openComputer() {
-        String request = "WAITING_OPEN;" + COMPUTER_ID;
+        String request = "WAITING_OPEN";
         try {
             out.writeObject(request);
             out.flush();
@@ -140,10 +140,15 @@ public class IOClient {
         }
     }
 
-    public synchronized void sendMessageToServer(String message) throws IOException {
+    public synchronized void sendMessageToServer(String message){
         String request = "SEND_MESSAGE;" + message;
-        out.writeObject(request);
-        out.flush();
+        try {
+            
+            out.writeObject(request);
+            out.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(IOClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public synchronized void importListProduct() {
@@ -165,6 +170,16 @@ public class IOClient {
             Logger.getLogger(IOClient.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+    
+    public void sendComputerID(int computerID) {
+        String request = "CHECK_COMPUTER_ID;" + computerID;
+        try {
+            out.writeObject(request);
+            out.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(IOClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @SuppressWarnings("unchecked")

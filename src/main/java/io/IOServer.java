@@ -218,8 +218,13 @@ public class IOServer {
                     String command = parts[0];
 
                     switch (command) {
+                        case "CHECK_COMPUTER_ID" -> {
+                            int computerCheckingID = Integer.parseInt(parts[1]);
+                            String response = CheckComputerID(computerCheckingID);
+                            sendResponse("RESPONSE_TEXT", response);
+                        }
+                        
                         case "WAITING_OPEN" -> {
-                            computerID = Integer.parseInt(parts[1]);
                             String response = waitingOpen();
                             sendResponse("RESPONSE_TEXT", response);
                         }
@@ -284,6 +289,17 @@ public class IOServer {
             }
         }
 
+        private String CheckComputerID(int computerID) {
+            if (loggedInClientsMap.containsKey(computerID)) {
+                return "Computer ID invalid";
+            } else {
+                this.computerID = computerID;
+                clientID = computerID;
+                IOServer.loggedInClientsMap.put(clientID, this);
+                return "Computer ID valid";
+            }
+        }
+
         private synchronized void receiveMessage(int clientID, String message) throws SQLException {
             String fullMessage = "Message from client " + clientID + ": " + message;
             System.out.println(fullMessage);
@@ -294,8 +310,7 @@ public class IOServer {
 
         private synchronized String waitingOpen() throws Exception {
             computer = computerDAO.selectByID(computerID);
-            clientID = computerID;
-            IOServer.loggedInClientsMap.put(clientID, this);
+            
             if (computer == null) {
                 throw new Exception("Invalid computer ID: " + computerID);
             }

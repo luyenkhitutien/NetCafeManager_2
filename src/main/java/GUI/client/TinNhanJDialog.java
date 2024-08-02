@@ -5,9 +5,7 @@
 package GUI.client;
 
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import main_client.MainClient;
@@ -147,13 +145,9 @@ public class TinNhanJDialog extends javax.swing.JDialog {
     private void btnGuiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuiActionPerformed
         if (validateForm()) {
             SwingUtilities.invokeLater(() -> {
-                try {
-                    MainClient.client.sendMessageToServer(txtGui.getText());
-                    txtTinNhan.append("Bạn: " + txtGui.getText() + "\n");
-                    txtGui.setText(null);
-                } catch (IOException ex) {
-                    Logger.getLogger(TinNhanJDialog.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                MainClient.client.sendMessageToServer(txtGui.getText());
+                txtTinNhan.append("Bạn: " + txtGui.getText() + "\n");
+                txtGui.setText(null);
             });
         }
 
