@@ -2,6 +2,7 @@ package main_client;
 
 import GUI.client.Cilent;
 import GUI.client.DangNhapJDialog;
+import GUI.client.HelloWord;
 import GUI.client.TinNhanJDialog;
 import audio.AudioPlayer;
 import entity.Product;
@@ -15,12 +16,13 @@ import utils.Xnoti;
 
 public class MainClient {
 
-    public static final String HOST = "localhost";
+    public static String HOST;
     public static final int PORT = 1235;
     public static IOClient client;
-    public static final int COMPUTER_ID = 3;
+    public static int COMPUTER_ID;
     public static List<Product> listProducts;
     public static List<BigDecimal> listBalanceClient;
+    public static HelloWord hello;
     public static Cilent clientForm;
     public static DangNhapJDialog dangNhapJDialog;
     public static TinNhanJDialog tinNhanForm;
@@ -32,10 +34,12 @@ public class MainClient {
         com.formdev.flatlaf.intellijthemes.FlatSolarizedLightIJTheme.setup();
 
         java.awt.EventQueue.invokeLater(() -> {
+
+            hello = new HelloWord();
+            dangNhapJDialog = new DangNhapJDialog(clientForm, false);
+            hello.setVisible(true);
             clientForm = new Cilent();
             tinNhanForm = new TinNhanJDialog(clientForm, true);
-            dangNhapJDialog = new DangNhapJDialog(clientForm, false);
-            dangNhapJDialog.setVisible(true);
 
             // Thêm phát âm thanh khi ứng dụng khởi động
             audioPlayer = new AudioPlayer();
@@ -68,8 +72,8 @@ public class MainClient {
                     isIncorrect = true;
                     return;
                 }
-                
-                if(response.startsWith("Server response: Recharges money for the client")){
+
+                if (response.startsWith("Server response: Recharges money for the client")) {
                     handleRechargeResponse(response);
                     return;
                 }
@@ -144,9 +148,9 @@ public class MainClient {
             }
         });
     }
-    
+
     //Phương thức để xử lý phản hồi nạp tiền
-    private static void handleRechargeResponse(String response){
+    private static void handleRechargeResponse(String response) {
         new SwingWorker<Void, Void>() {
             @Override
             protected Void doInBackground() throws Exception {

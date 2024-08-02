@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import main_server.MainTest;
+import static main_server.MainTest.chatGUI;
 import utils.Auth;
 import utils.Xnoti;
 
@@ -73,6 +74,7 @@ public class ServerMain extends javax.swing.JFrame {
         addHoverEffect(lblQuanLySanPham, pnlControler);
         addHoverEffect(lblQuanLyTaiKhoan, pnlControler);
         addHoverEffect(lblThongKeDoanhThu, pnlControler);
+        addHoverEffect(lblTinNhan, pnlControler);
     }
 
     private void addHoverEffect(JLabel label, JPanel panel) {
@@ -135,6 +137,7 @@ public class ServerMain extends javax.swing.JFrame {
         lblThongKeDoanhThu = new javax.swing.JLabel();
         lblAnhGr = new javax.swing.JLabel();
         lblTrangChu = new javax.swing.JLabel();
+        lblTinNhan = new javax.swing.JLabel();
         pnlNoiDungChinh = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -243,6 +246,14 @@ public class ServerMain extends javax.swing.JFrame {
             }
         });
 
+        lblTinNhan.setFont(new java.awt.Font("Source Code Pro", 3, 18)); // NOI18N
+        lblTinNhan.setText("-- Tin Nhắn");
+        lblTinNhan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblTinNhanMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlControlerLayout = new javax.swing.GroupLayout(pnlControler);
         pnlControler.setLayout(pnlControlerLayout);
         pnlControlerLayout.setHorizontalGroup(
@@ -255,6 +266,13 @@ public class ServerMain extends javax.swing.JFrame {
                     .addComponent(lblQuanLySanPham, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblQuanLyTaiKhoan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblQuanLyMay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jSeparator2)
+                    .addComponent(lblThongKe, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblThongKeDoanhThu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblThongKeLuongNhanVien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnlControlerLayout.createSequentialGroup()
+                        .addComponent(lblQuanLyHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(pnlControlerLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(pnlControlerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -269,14 +287,8 @@ public class ServerMain extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlControlerLayout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jSeparator2)
-                    .addComponent(lblThongKe, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblThongKeDoanhThu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblThongKeLuongNhanVien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(pnlControlerLayout.createSequentialGroup()
-                        .addComponent(lblQuanLyHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(lblUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblTinNhan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         pnlControlerLayout.setVerticalGroup(
@@ -302,7 +314,9 @@ public class ServerMain extends javax.swing.JFrame {
                 .addComponent(lblQuanLyHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblQuanLyMay, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(94, 94, 94)
+                .addGap(18, 18, 18)
+                .addComponent(lblTinNhan, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -429,6 +443,11 @@ public class ServerMain extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_lblThongKeLuongNhanVienMouseClicked
 
+    private void lblTinNhanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTinNhanMouseClicked
+        // TODO add your handling code here:
+                MainTest.chatGUI.setVisible(true);
+    }//GEN-LAST:event_lblTinNhanMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -488,6 +507,7 @@ public class ServerMain extends javax.swing.JFrame {
     private javax.swing.JLabel lblThongKe;
     private javax.swing.JLabel lblThongKeDoanhThu;
     private javax.swing.JLabel lblThongKeLuongNhanVien;
+    private javax.swing.JLabel lblTinNhan;
     private javax.swing.JLabel lblTrangChu;
     private javax.swing.JLabel lblUserName;
     private javax.swing.JPanel pnlBaner;

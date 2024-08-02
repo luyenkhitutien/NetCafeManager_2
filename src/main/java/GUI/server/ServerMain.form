@@ -91,6 +91,14 @@
                           <Component id="lblQuanLySanPham" alignment="1" max="32767" attributes="0"/>
                           <Component id="lblQuanLyTaiKhoan" alignment="1" max="32767" attributes="0"/>
                           <Component id="lblQuanLyMay" max="32767" attributes="0"/>
+                          <Component id="jSeparator2" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblThongKe" alignment="1" max="32767" attributes="0"/>
+                          <Component id="lblThongKeDoanhThu" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblThongKeLuongNhanVien" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="lblQuanLyHoaDon" min="-2" pref="208" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -110,15 +118,8 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="lblUserName" min="-2" pref="155" max="-2" attributes="0"/>
                                   </Group>
+                                  <Component id="lblTinNhan" alignment="0" max="32767" attributes="0"/>
                               </Group>
-                          </Group>
-                          <Component id="jSeparator2" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblThongKe" alignment="1" max="32767" attributes="0"/>
-                          <Component id="lblThongKeDoanhThu" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblThongKeLuongNhanVien" alignment="0" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="lblQuanLyHoaDon" min="-2" pref="208" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -149,7 +150,9 @@
                       <Component id="lblQuanLyHoaDon" min="-2" pref="33" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="lblQuanLyMay" min="-2" pref="34" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="lblTinNhan" min="-2" pref="34" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                       <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="lblThongKe" min="-2" pref="39" max="-2" attributes="0"/>
@@ -333,6 +336,17 @@
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblTrangChuMouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblTinNhan">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Source Code Pro" size="18" style="3"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="-- Tin Nh&#x1eaf;n"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblTinNhanMouseClicked"/>
               </Events>
             </Component>
           </SubComponents>

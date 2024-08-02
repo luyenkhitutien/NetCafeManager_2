@@ -112,8 +112,7 @@ public class TrangChuJPanel extends javax.swing.JPanel {
 
     private void message() {
         // Tạo form chat
-        MainTest.chatGUI = new ServerChatGUI(server);
-        MainTest.server.setChatGUI(chatGUI);
+        MainTest.chatGUI.setVisible(true);
         MainTest.chatGUI.clientIdField.setText(String.valueOf(selectedComputerId));
     }
 
