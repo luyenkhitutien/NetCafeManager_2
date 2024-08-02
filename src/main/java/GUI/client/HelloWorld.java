@@ -18,6 +18,7 @@ public class HelloWorld extends javax.swing.JFrame {
      */
     public HelloWorld() {
         initComponents();
+        setLocationRelativeTo(null);
     }
     
     private boolean validateForm() {
