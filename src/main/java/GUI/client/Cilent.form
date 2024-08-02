@@ -74,16 +74,16 @@
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel2" min="-2" pref="163" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="txtThoiGianSuDung" max="32767" attributes="0"/>
-                                  <Component id="txtSoDu" max="32767" attributes="0"/>
+                                  <Component id="txtThoiGianSuDung" alignment="1" pref="140" max="32767" attributes="0"/>
+                                  <Component id="txtSoDu" alignment="1" max="32767" attributes="0"/>
                                   <Component id="txtTienDaSuDung" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="txtTongThoiGian" alignment="1" min="-2" pref="120" max="-2" attributes="0"/>
+                                  <Component id="txtTongThoiGian" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" attributes="0">
