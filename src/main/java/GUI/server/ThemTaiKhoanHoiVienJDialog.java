@@ -374,7 +374,7 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
                             .addComponent(jLabel3)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7))
-                        .addGap(0, 49, Short.MAX_VALUE)
+                        .addGap(0, 21, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(15, 15, 15)
@@ -420,6 +420,7 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
 
         txtTenHoiVien.setFont(new java.awt.Font("Source Code Pro", 0, 18)); // NOI18N
 
+        txtIDHoiVien.setEditable(false);
         txtIDHoiVien.setFont(new java.awt.Font("Source Code Pro", 0, 18)); // NOI18N
         txtIDHoiVien.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
@@ -443,7 +444,7 @@ public class ThemTaiKhoanHoiVienJDialog extends javax.swing.JDialog {
                     .addComponent(jLabel8)
                     .addComponent(jLabel5)
                     .addComponent(jLabel9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtTenHoiVien, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtSoDu, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)

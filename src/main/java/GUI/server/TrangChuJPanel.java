@@ -163,6 +163,12 @@ public class TrangChuJPanel extends javax.swing.JPanel {
             return;
         }
     }
+    
+    private void resetForm(){
+        selectedComputerId = 0;
+        // Thêm những biến cần reset nếu cần thiết
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -232,6 +238,12 @@ public class TrangChuJPanel extends javax.swing.JPanel {
             }
         });
         pupTrangChu.add(mnitTinNhan);
+
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                formComponentHidden(evt);
+            }
+        });
 
         lblmay1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/1.png"))); // NOI18N
         HomePanel.add(lblmay1);
@@ -500,6 +512,11 @@ public class TrangChuJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         napTienFormTrue();
     }//GEN-LAST:event_mnitNapTienActionPerformed
+
+    private void formComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentHidden
+        // TODO add your handling code here:
+        resetForm();
+    }//GEN-LAST:event_formComponentHidden
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
