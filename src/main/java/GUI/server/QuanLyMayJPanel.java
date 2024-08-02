@@ -266,7 +266,7 @@ public class QuanLyMayJPanel extends javax.swing.JPanel {
 
         pnlControl.setPreferredSize(new java.awt.Dimension(475, 300));
 
-        btnSua.setFont(new java.awt.Font("Monospaced", 1, 16)); // NOI18N
+        btnSua.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
         btnSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/update.png"))); // NOI18N
         btnSua.setText("Sửa");
         btnSua.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -276,7 +276,7 @@ public class QuanLyMayJPanel extends javax.swing.JPanel {
             }
         });
 
-        btnThem.setFont(new java.awt.Font("Monospaced", 1, 16)); // NOI18N
+        btnThem.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
         btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save.png"))); // NOI18N
         btnThem.setText("Thêm");
         btnThem.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -286,7 +286,7 @@ public class QuanLyMayJPanel extends javax.swing.JPanel {
             }
         });
 
-        btnMoi.setFont(new java.awt.Font("Monospaced", 1, 16)); // NOI18N
+        btnMoi.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
         btnMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/refresh.png"))); // NOI18N
         btnMoi.setText("Mới");
         btnMoi.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -296,7 +296,7 @@ public class QuanLyMayJPanel extends javax.swing.JPanel {
             }
         });
 
-        btnXoa.setFont(new java.awt.Font("Monospaced", 1, 16)); // NOI18N
+        btnXoa.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
         btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
         btnXoa.setText("Xóa");
         btnXoa.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -311,30 +311,28 @@ public class QuanLyMayJPanel extends javax.swing.JPanel {
         pnlControlLayout.setHorizontalGroup(
             pnlControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlControlLayout.createSequentialGroup()
-                .addGroup(pnlControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlControlLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlControlLayout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                        .addComponent(btnMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(14, 14, 14))
+                .addGap(32, 32, 32)
+                .addGroup(pnlControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnThem, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+                    .addComponent(btnSua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
+                .addGroup(pnlControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnMoi, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+                    .addComponent(btnXoa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(19, 19, 19))
         );
         pnlControlLayout.setVerticalGroup(
             pnlControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlControlLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(pnlControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnMoi)
-                    .addComponent(btnSua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnThem))
-                .addGap(71, 71, 71)
-                .addComponent(btnXoa)
-                .addGap(118, 118, 118))
+                    .addComponent(btnThem)
+                    .addComponent(btnMoi))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addGroup(pnlControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSua)
+                    .addComponent(btnXoa))
+                .addGap(145, 145, 145))
         );
 
         txtIDmay.setEditable(false);
