@@ -217,7 +217,7 @@
             <Component class="javax.swing.JLabel" name="lblQuanLy">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Monospaced" size="20" style="1"/>
+                  <Font name="Monospaced" size="22" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="      QU&#x1ea2;N L&#xdd;"/>
               </Properties>
@@ -235,7 +235,7 @@
             <Component class="javax.swing.JLabel" name="lblQuanLyTaiKhoan">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Source Code Pro" size="18" style="2"/>
+                  <Font name="Source Code Pro" size="18" style="3"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="-- Qu&#x1ea3;n l&#xfd; t&#xe0;i kho&#x1ea3;n"/>
               </Properties>
@@ -246,7 +246,7 @@
             <Component class="javax.swing.JLabel" name="lblQuanLySanPham">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Source Code Pro" size="18" style="2"/>
+                  <Font name="Source Code Pro" size="18" style="3"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="-- Qu&#x1ea3;n l&#xfd; s&#x1ea3;n ph&#x1ea9;m"/>
               </Properties>
@@ -257,7 +257,7 @@
             <Component class="javax.swing.JLabel" name="lblThongKeLuongNhanVien">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Source Code Pro" size="18" style="2"/>
+                  <Font name="Source Code Pro" size="18" style="3"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="-- Th&#x1ed1;ng k&#xea; l&#x1b0;&#x1a1;ng nh&#xe2;n vi&#xea;n"/>
               </Properties>
@@ -268,7 +268,7 @@
             <Component class="javax.swing.JLabel" name="lblQuanLyMay">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Source Code Pro" size="18" style="2"/>
+                  <Font name="Source Code Pro" size="18" style="3"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="-- Qu&#x1ea3;n l&#xfd; m&#xe1;y"/>
               </Properties>
@@ -279,7 +279,7 @@
             <Component class="javax.swing.JLabel" name="lblThongKe">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Monospaced" size="20" style="1"/>
+                  <Font name="Monospaced" size="22" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="      TH&#x1ed0;NG K&#xca;"/>
               </Properties>
@@ -297,7 +297,7 @@
             <Component class="javax.swing.JLabel" name="lblQuanLyHoaDon">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Source Code Pro" size="18" style="2"/>
+                  <Font name="Source Code Pro" size="18" style="3"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="-- Qu&#x1ea3;n l&#xfd; h&#xf3;a &#x111;&#x1a1;n"/>
               </Properties>
@@ -308,7 +308,7 @@
             <Component class="javax.swing.JLabel" name="lblThongKeDoanhThu">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Source Code Pro" size="18" style="2"/>
+                  <Font name="Source Code Pro" size="18" style="3"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="-- Th&#x1ed1;ng k&#xea; doanh thu"/>
               </Properties>
@@ -326,9 +326,9 @@
             <Component class="javax.swing.JLabel" name="lblTrangChu">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Monospaced" size="20" style="1"/>
+                  <Font name="Monospaced" size="22" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="     TRANG CH&#x1ee6;"/>
+                <Property name="text" type="java.lang.String" value="       TRANG CH&#x1ee6;"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
               </Properties>
               <Events>

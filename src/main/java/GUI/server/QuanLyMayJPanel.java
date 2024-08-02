@@ -396,9 +396,9 @@ public class QuanLyMayJPanel extends javax.swing.JPanel {
                     .addComponent(cboLoaiMay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36)
                 .addComponent(pnlControl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(108, 108, 108)
+                .addGap(71, 71, 71)
                 .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 44, Short.MAX_VALUE)
-                .addGap(73, 73, 73))
+                .addGap(110, 110, 110))
         );
 
         pnlTable.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));

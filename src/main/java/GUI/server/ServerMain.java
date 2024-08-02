@@ -168,7 +168,7 @@ public class ServerMain extends javax.swing.JFrame {
             .addGap(0, 56, Short.MAX_VALUE)
         );
 
-        lblQuanLy.setFont(new java.awt.Font("Monospaced", 1, 20)); // NOI18N
+        lblQuanLy.setFont(new java.awt.Font("Monospaced", 1, 22)); // NOI18N
         lblQuanLy.setText("      QUẢN LÝ");
         lblQuanLy.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -176,7 +176,7 @@ public class ServerMain extends javax.swing.JFrame {
             }
         });
 
-        lblQuanLyTaiKhoan.setFont(new java.awt.Font("Source Code Pro", 2, 18)); // NOI18N
+        lblQuanLyTaiKhoan.setFont(new java.awt.Font("Source Code Pro", 3, 18)); // NOI18N
         lblQuanLyTaiKhoan.setText("-- Quản lý tài khoản");
         lblQuanLyTaiKhoan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -184,7 +184,7 @@ public class ServerMain extends javax.swing.JFrame {
             }
         });
 
-        lblQuanLySanPham.setFont(new java.awt.Font("Source Code Pro", 2, 18)); // NOI18N
+        lblQuanLySanPham.setFont(new java.awt.Font("Source Code Pro", 3, 18)); // NOI18N
         lblQuanLySanPham.setText("-- Quản lý sản phẩm");
         lblQuanLySanPham.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -192,7 +192,7 @@ public class ServerMain extends javax.swing.JFrame {
             }
         });
 
-        lblThongKeLuongNhanVien.setFont(new java.awt.Font("Source Code Pro", 2, 18)); // NOI18N
+        lblThongKeLuongNhanVien.setFont(new java.awt.Font("Source Code Pro", 3, 18)); // NOI18N
         lblThongKeLuongNhanVien.setText("-- Thống kê lương nhân viên");
         lblThongKeLuongNhanVien.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -200,7 +200,7 @@ public class ServerMain extends javax.swing.JFrame {
             }
         });
 
-        lblQuanLyMay.setFont(new java.awt.Font("Source Code Pro", 2, 18)); // NOI18N
+        lblQuanLyMay.setFont(new java.awt.Font("Source Code Pro", 3, 18)); // NOI18N
         lblQuanLyMay.setText("-- Quản lý máy");
         lblQuanLyMay.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -208,7 +208,7 @@ public class ServerMain extends javax.swing.JFrame {
             }
         });
 
-        lblThongKe.setFont(new java.awt.Font("Monospaced", 1, 20)); // NOI18N
+        lblThongKe.setFont(new java.awt.Font("Monospaced", 1, 22)); // NOI18N
         lblThongKe.setText("      THỐNG KÊ");
         lblThongKe.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -216,7 +216,7 @@ public class ServerMain extends javax.swing.JFrame {
             }
         });
 
-        lblQuanLyHoaDon.setFont(new java.awt.Font("Source Code Pro", 2, 18)); // NOI18N
+        lblQuanLyHoaDon.setFont(new java.awt.Font("Source Code Pro", 3, 18)); // NOI18N
         lblQuanLyHoaDon.setText("-- Quản lý hóa đơn");
         lblQuanLyHoaDon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -224,7 +224,7 @@ public class ServerMain extends javax.swing.JFrame {
             }
         });
 
-        lblThongKeDoanhThu.setFont(new java.awt.Font("Source Code Pro", 2, 18)); // NOI18N
+        lblThongKeDoanhThu.setFont(new java.awt.Font("Source Code Pro", 3, 18)); // NOI18N
         lblThongKeDoanhThu.setText("-- Thống kê doanh thu");
         lblThongKeDoanhThu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -234,8 +234,8 @@ public class ServerMain extends javax.swing.JFrame {
 
         lblAnhGr.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/GR5.png"))); // NOI18N
 
-        lblTrangChu.setFont(new java.awt.Font("Monospaced", 1, 20)); // NOI18N
-        lblTrangChu.setText("     TRANG CHỦ");
+        lblTrangChu.setFont(new java.awt.Font("Monospaced", 1, 22)); // NOI18N
+        lblTrangChu.setText("       TRANG CHỦ");
         lblTrangChu.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblTrangChu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
