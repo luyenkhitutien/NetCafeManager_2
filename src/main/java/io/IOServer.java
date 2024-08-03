@@ -298,8 +298,7 @@ public class IOServer {
                 return "Computer ID invalid";
             } else {
                 this.computerID = computerID;
-                clientID = computerID;
-                IOServer.loggedInClientsMap.put(clientID, this);
+                
                 return "Computer ID valid";
             }
         }
@@ -321,6 +320,9 @@ public class IOServer {
             computer.setStatus("Đang chờ");
             computerDAO.update(computer);
             MainTest.mainForm.home.updateLabelColor(computer.getId(), Color.YELLOW);
+            
+            clientID = computerID;
+            IOServer.loggedInClientsMap.put(clientID, this);
 
             return "Computer " + computerID + " waiting open..........";
         }

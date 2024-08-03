@@ -139,7 +139,9 @@ public class HelloWorld extends javax.swing.JFrame {
 
     private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
         // TODO add your handling code here:
-        xacNhan();
+        if(validateForm()){
+            xacNhan();
+        }  
     }//GEN-LAST:event_btnXacNhanActionPerformed
 
     /**

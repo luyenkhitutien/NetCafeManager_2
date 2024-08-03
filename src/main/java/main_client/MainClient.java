@@ -131,9 +131,9 @@ public class MainClient {
 
             if (response.startsWith("Server response: Computer ID valid")) {
                 // Computer ID hợp lệ
-                client.setTinNhanJDialog(tinNhanForm);
                 hello.setVisible(false);
                 dangNhapJDialog.setVisible(true);
+                client.setTinNhanJDialog(tinNhanForm);
                 return;
             }
 
