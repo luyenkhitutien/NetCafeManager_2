@@ -276,7 +276,6 @@ public class IOServer {
                         }
                         case "SHUTDOWN" -> {
                             removeClient();
-                            reset();
                             shutdown();
                         }
                         default -> {
