@@ -206,6 +206,7 @@ public class IOClient {
                                 callback.onResponseReceived("Server response: " + response);
                             }
                             case "SHUTDOWN" -> {
+                                this.logout();
                                 this.shutdown();
                                 callback.onResponseReceived("Server response: SHUTDOWN");
                                 break; // Thoát khỏi vòng lặp

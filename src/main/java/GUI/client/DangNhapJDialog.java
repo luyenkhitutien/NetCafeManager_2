@@ -103,7 +103,6 @@ public class DangNhapJDialog extends javax.swing.JDialog {
 
         MainClient.client.openComputer();
         MainClient.client.importListProduct();
-
     }
 
     private void resetForm() {
