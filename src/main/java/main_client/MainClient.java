@@ -133,7 +133,6 @@ public class MainClient {
                 // Computer ID hợp lệ
                 hello.setVisible(false);
                 dangNhapJDialog.setVisible(true);
-                client.setTinNhanJDialog(tinNhanForm);
                 return;
             }
 
@@ -153,6 +152,7 @@ public class MainClient {
         
         // Gửi computerID đến máy chủ để kiểm tra
         client.sendComputerID(COMPUTER_ID);
+        client.setTinNhanJDialog(tinNhanForm);
         
     }
 
@@ -210,11 +210,9 @@ public class MainClient {
 
     // Phương thức để xử lý phản hồi đăng nhập
     private static void handleLoginResponse(String response) {
-        SwingUtilities.invokeLater(() -> {
             if (dangNhapJDialog.isVisible()) {
                 dangNhapJDialog.notify(response);
             }
-        });
     }
 
     // Phương thức để xử lý phản hồi nạp tiền
