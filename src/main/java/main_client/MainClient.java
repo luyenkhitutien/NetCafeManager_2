@@ -60,7 +60,7 @@ public class MainClient {
         new SwingWorker<Boolean, Void>() {
             @Override
             protected Boolean doInBackground() throws Exception {
-                return IOClient.testConnection(host, PORT);
+                return testConnection();
             }
 
             @Override
@@ -78,6 +78,17 @@ public class MainClient {
                 }
             }
         }.execute();
+    }
+
+    private static boolean testConnection() {
+        try {
+            // Thử kết nối đến máy chủ
+            Socket socket = new Socket(HOST, PORT);
+            socket.close();
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
     }
 
     private static void startClient() {
@@ -122,6 +133,7 @@ public class MainClient {
                 // Computer ID hợp lệ
                 hello.setVisible(false);
                 dangNhapJDialog.setVisible(true);
+                client.setTinNhanJDialog(tinNhanForm);
                 return;
             }
 
@@ -141,7 +153,6 @@ public class MainClient {
         
         // Gửi computerID đến máy chủ để kiểm tra
         client.sendComputerID(COMPUTER_ID);
-        client.setTinNhanJDialog(tinNhanForm);
         
     }
 
@@ -199,9 +210,11 @@ public class MainClient {
 
     // Phương thức để xử lý phản hồi đăng nhập
     private static void handleLoginResponse(String response) {
+        SwingUtilities.invokeLater(() -> {
             if (dangNhapJDialog.isVisible()) {
                 dangNhapJDialog.notify(response);
             }
+        });
     }
 
     // Phương thức để xử lý phản hồi nạp tiền
