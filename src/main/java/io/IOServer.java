@@ -508,6 +508,7 @@ public class IOServer {
         private synchronized void reset() throws Exception {
             session = null;
             invoice = null;
+            member = null;
         }
 
         private synchronized void removeClient() {
