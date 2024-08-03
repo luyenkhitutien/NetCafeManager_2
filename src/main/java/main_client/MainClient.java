@@ -60,7 +60,7 @@ public class MainClient {
         new SwingWorker<Boolean, Void>() {
             @Override
             protected Boolean doInBackground() throws Exception {
-                return testConnection();
+                return IOClient.testConnection(host, PORT);
             }
 
             @Override
@@ -78,17 +78,6 @@ public class MainClient {
                 }
             }
         }.execute();
-    }
-
-    private static boolean testConnection() {
-        try {
-            // Thử kết nối đến máy chủ
-            Socket socket = new Socket(HOST, PORT);
-            socket.close();
-            return true;
-        } catch (IOException e) {
-            return false;
-        }
     }
 
     private static void startClient() {

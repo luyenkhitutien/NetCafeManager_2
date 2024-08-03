@@ -48,10 +48,10 @@ public class IOServer {
     public void setChatGUI(ServerChatGUI chatGUI) {
         this.chatGUI = chatGUI;
     }
+
     public ClientHandler getClientHandler(int clientId) {
         return loggedInClientsMap.get(clientId);
     }
-
 
     public void start() {
         new Thread(() -> {
@@ -132,12 +132,12 @@ public class IOServer {
 
     public synchronized void sendMessageToAllClients(String message) throws IOException {
         for (ClientHandler clientHandler : loggedInClientsMap.values()) {
-            if(clientHandler != null){
+            if (clientHandler != null) {
                 clientHandler.sendMessage(message);
-            }else{
+            } else {
                 return;
             }
-            
+
         }
     }
 
@@ -204,8 +204,8 @@ public class IOServer {
         public int getComputerID() {
             return computerID;
         }
-        
-        public Account getAccount(){
+
+        public Account getAccount() {
             return account;
         }
 
@@ -217,17 +217,25 @@ public class IOServer {
         public void run() {
             while (running) {
                 try {
+
+                    if (isConnectionCheck()) {
+                        // Đây là kết nối kiểm tra, đóng socket và thoát
+                        socket.close();
+                        return;
+                    }
+
                     String request = (String) in.readObject();
                     String[] parts = request.split(";");
                     String command = parts[0];
 
                     switch (command) {
+
                         case "CHECK_COMPUTER_ID" -> {
                             int computerCheckingID = Integer.parseInt(parts[1]);
                             String response = CheckComputerID(computerCheckingID);
                             sendResponse("RESPONSE_TEXT", response);
                         }
-                        
+
                         case "WAITING_OPEN" -> {
                             String response = waitingOpen();
                             sendResponse("RESPONSE_TEXT", response);
@@ -293,12 +301,21 @@ public class IOServer {
             }
         }
 
+        private boolean isConnectionCheck() throws IOException {
+            try (InputStream input = socket.getInputStream(); OutputStream output = socket.getOutputStream()) {
+
+                byte[] buffer = new byte[1024];
+                int read = input.read(buffer);
+                return read == -1 || new String(buffer, 0, read).equals("CHECK_CONNECTION");
+            }
+        }
+
         private synchronized String CheckComputerID(int computerID) {
             if (loggedInClientsMap.containsKey(computerID)) {
                 return "Computer ID invalid";
             } else {
                 this.computerID = computerID;
-                
+
                 return "Computer ID valid";
             }
         }
@@ -313,14 +330,14 @@ public class IOServer {
 
         private synchronized String waitingOpen() throws Exception {
             computer = computerDAO.selectByID(computerID);
-            
+
             if (computer == null) {
                 throw new Exception("Invalid computer ID: " + computerID);
             }
             computer.setStatus("Đang chờ");
             computerDAO.update(computer);
             MainTest.mainForm.home.updateLabelColor(computer.getId(), Color.YELLOW);
-            
+
             clientID = computerID;
             IOServer.loggedInClientsMap.put(clientID, this);
 
@@ -368,7 +385,7 @@ public class IOServer {
                 MainTest.mainForm.home.updateLabelColor(computer.getId(), Color.GREEN);
 
                 member = memberDAO.selectByAccountID(account.getId());
-                
+
                 invoice = new Invoice(member.getId(), server.getEmployeeId(), BigDecimal.ZERO, XDate.now(), "Chưa hoàn thành");
                 invoiceDAO.insert(invoice);
 

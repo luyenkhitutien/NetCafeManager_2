@@ -4,13 +4,15 @@ import GUI.client.TinNhanJDialog;
 import entity.Product;
 import java.io.*;
 import java.math.BigDecimal;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
-import static main_client.MainClient.COMPUTER_ID;
+import static main_client.MainClient.HOST;
+import static main_client.MainClient.PORT;
 
 public class IOClient {
     
@@ -272,4 +274,17 @@ public class IOClient {
 
         void onResponseReceived(String response);
     }
+    
+    public static boolean testConnection(String host, int port) {
+    try (Socket socket = new Socket()) {
+        socket.connect(new InetSocketAddress(host, port), 2000); // Thời gian chờ 2 giây
+        OutputStream output = socket.getOutputStream();
+        output.write("CHECK_CONNECTION".getBytes());
+        output.flush();
+        socket.close();
+        return true;
+    } catch (IOException e) {
+        return false;
+    } 
+}
 }
