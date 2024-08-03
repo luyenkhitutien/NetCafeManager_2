@@ -293,7 +293,7 @@ public class IOServer {
             }
         }
 
-        private String CheckComputerID(int computerID) {
+        private synchronized String CheckComputerID(int computerID) {
             if (loggedInClientsMap.containsKey(computerID)) {
                 return "Computer ID invalid";
             } else {

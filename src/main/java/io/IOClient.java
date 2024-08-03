@@ -172,7 +172,7 @@ public class IOClient {
 
     }
     
-    public void sendComputerID(int computerID) {
+    public synchronized void sendComputerID(int computerID) {
         String request = "CHECK_COMPUTER_ID;" + computerID;
         try {
             out.writeObject(request);
