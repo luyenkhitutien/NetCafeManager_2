@@ -509,6 +509,7 @@ public class IOServer {
             session = null;
             invoice = null;
             member = null;
+            account = null;
         }
 
         private synchronized void removeClient() {
