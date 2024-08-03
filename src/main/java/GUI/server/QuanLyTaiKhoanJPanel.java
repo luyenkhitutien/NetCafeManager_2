@@ -15,6 +15,8 @@ import javax.swing.SwingUtilities;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -103,6 +105,25 @@ public class QuanLyTaiKhoanJPanel extends javax.swing.JPanel {
     void fillToTable() {
         tablemodel.setRowCount(0);
         try {
+            Collections.sort(listAcount, new Comparator<Account>(){
+                @Override
+                public int compare(Account acc1, Account acc2) {
+                    //admin luôn luôn đứng trước
+                    if (acc1.getRole().equalsIgnoreCase("admin")) {
+                        return -1;
+                    }
+                    if(acc2.getRole().equalsIgnoreCase("admin")){
+                        return 1;
+                    }
+                    if (acc1.getRole().equalsIgnoreCase("Nhân Viên") && acc2.getRole().equalsIgnoreCase("Hội Viên")) {
+                        return -1; // acc1 nên xuất hiện trước acc2
+                    }else if(acc1.getRole().equalsIgnoreCase("Hội Viên") && acc2.getRole().equalsIgnoreCase("Nhân Viên")){
+                        return 1;  // acc1 nên xuất hiện sau acc2
+                    }else{
+                        return acc1.getRole().compareTo(acc2.getRole());
+                    }
+                }
+            });
             for (Account account : listAcount) {
                 Object[] rows = new Object[]{
                     STT++,
@@ -113,7 +134,7 @@ public class QuanLyTaiKhoanJPanel extends javax.swing.JPanel {
                     account.getCreatedAt()
                 };
                 tablemodel.addRow(rows);
-            }
+            }           
         } catch (Exception e) {
             e.printStackTrace();
         }
