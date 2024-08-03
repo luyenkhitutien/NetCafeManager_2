@@ -100,22 +100,10 @@ public class DangNhapJDialog extends javax.swing.JDialog {
     }
 
     private void startWorkerIfVisible() {
-        if (isVisible()) {
-            SwingWorker<Void, Void> worker = new SwingWorker<>() {
-                @Override
-                protected Void doInBackground() {
-                    MainClient.client.openComputer();
-                    MainClient.client.importListProduct();
-                    return null;
-                }
 
-                @Override
-                protected void done() {
-                    // Cập nhật form hoặc thực hiện bất kỳ hành động cuối cùng nào nếu cần thiết
-                }
-            };
-            worker.execute();
-        }
+        MainClient.client.openComputer();
+        MainClient.client.importListProduct();
+
     }
 
     private void resetForm() {

@@ -39,9 +39,12 @@ public class MainClient {
         com.formdev.flatlaf.intellijthemes.FlatSolarizedLightIJTheme.setup();
 
         java.awt.EventQueue.invokeLater(() -> {
+            clientForm = new Cilent();
+            tinNhanForm = new TinNhanJDialog(clientForm, true);
+            dangNhapJDialog = new DangNhapJDialog(clientForm, false);
             hello = new HelloWorld();
             hello.setVisible(true);
-            
+
             // Thêm phát âm thanh khi ứng dụng khởi động
             audioPlayer = new AudioPlayer();
             audioPlayer.play("/Audio_Tale-of-Immortal.wav", true); // Phát lặp lại
@@ -92,9 +95,7 @@ public class MainClient {
     }
 
     private static void startClient() {
-        clientForm = new Cilent();
-        tinNhanForm = new TinNhanJDialog(clientForm, true);
-        dangNhapJDialog = new DangNhapJDialog(clientForm, false);
+        
 
         // Khởi tạo đối tượng callback
         IOClient.ResponseCallback callback = response -> {
@@ -153,6 +154,7 @@ public class MainClient {
         
         // Gửi computerID đến máy chủ để kiểm tra
         client.sendComputerID(COMPUTER_ID);
+        
         
     }
 
