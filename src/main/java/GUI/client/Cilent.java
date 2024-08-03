@@ -195,6 +195,7 @@ public class Cilent extends javax.swing.JFrame {
         minutesUsed = 0;
         amountUsed = BigDecimal.ZERO;
         amountUsedFromOrder = BigDecimal.ZERO;
+        balance = BigDecimal.ZERO;
 
         // Reset cảnh báo năm phút còn lại
         fiveMinuteWarningShown = false;
