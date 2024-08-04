@@ -32,6 +32,7 @@ public class MainClient {
     public static TinNhanJDialog tinNhanForm;
     public static volatile boolean isIncorrect = true;
     public static volatile boolean isGuest = false;
+    public static final Object lock = new Object();
     private static AudioPlayer audioPlayer;
     private static ConnectingDialog connectingDialog;
 
@@ -165,7 +166,11 @@ public class MainClient {
 
     // Phương thức để xử lý phản hồi số dư
     private static void handleBalanceResponse() {
-        listBalanceClient = client.getListBalanceClient();
+        synchronized (lock) {
+            listBalanceClient = client.getListBalanceClient();
+            lock.notifyAll();
+        }
+        
         System.out.println(MainClient.listBalanceClient);
     }
 

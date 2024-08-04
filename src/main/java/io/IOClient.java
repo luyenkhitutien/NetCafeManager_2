@@ -11,8 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
-import static main_client.MainClient.HOST;
-import static main_client.MainClient.PORT;
+
 
 public class IOClient {
     
