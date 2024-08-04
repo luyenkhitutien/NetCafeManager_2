@@ -465,7 +465,7 @@ public class QuanLyTaiKhoanJPanel extends javax.swing.JPanel {
         System.out.println(rl); // => sys role
         current = tblQuanLyTaiKhoan.getSelectedRow();
         try {
-            loadDataToArray();
+          
             Account acc = listAcount.get(current); // sys row clicked
             try {
                 System.out.println(acc.getId()); // sys id

@@ -55,9 +55,7 @@ public class DangNhapJDialog extends javax.swing.JDialog {
         }
         return account.getId();
     }
-    public Integer getAdmin() {
-        return account.getId();
-    }
+    
 
     private Boolean ValiDateForm() {
 
