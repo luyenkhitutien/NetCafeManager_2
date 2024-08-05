@@ -6,11 +6,13 @@ package utils;
 
 import java.awt.Image;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 /**
@@ -24,29 +26,40 @@ public class Ximage {
     }
 
     public static String save(File src) {
-        URL url = Ximage.class.getResource("/images/");
+        // Sử dụng đường dẫn tương đối từ thư mục gốc của dự án
+        String resourcesPath = "src/main/resources/images";
+        File dst = new File(resourcesPath, src.getName());
         
-        File dst = new File(url.getPath(), src.getName());
+        // Tạo thư mục nếu không tồn tại
         if (!dst.getParentFile().exists()) {
-            dst.getParentFile().mkdirs(); // tạo thư mục nếu k tồn tại
+            dst.getParentFile().mkdirs();
         }
+
         try {
             Path from = Paths.get(src.getAbsolutePath());
             Path to = Paths.get(dst.getAbsolutePath());
-            
             Files.copy(from, to, StandardCopyOption.REPLACE_EXISTING);
             return dst.getName();
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("Không thể lưu hình!");
+            e.printStackTrace();
             return null;
         }
     }
 
     public static ImageIcon read(String fileName) {
-        URL url = Ximage.class.getResource("/images/" + fileName);
-        ImageIcon originalIcon = new ImageIcon(url);
-        Image img = originalIcon.getImage();
-        Image resizeImage = img.getScaledInstance(350, 148, Image.SCALE_SMOOTH);
-        return new ImageIcon(resizeImage);
+        try {
+            URL url = Ximage.class.getClassLoader().getResource("images/" + fileName);
+            if (url != null) {
+                Image img = ImageIO.read(url);
+                Image resizedImage = img.getScaledInstance(350, 148, Image.SCALE_SMOOTH);
+                return new ImageIcon(resizedImage);
+            } else {
+                throw new IllegalArgumentException("Resource not found: images/" + fileName);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
