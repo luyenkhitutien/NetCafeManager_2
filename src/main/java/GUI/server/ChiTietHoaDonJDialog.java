@@ -285,7 +285,7 @@ public class ChiTietHoaDonJDialog extends javax.swing.JDialog {
 
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File fileToSave = fileChooser.getSelectedFile();
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileToSave+".txt"))) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileToSave+".pdf"))) {
                 writer.write(sb.toString());
                 JOptionPane.showMessageDialog(this, "In thành công hóa đơn.");
             } catch (IOException e) {

@@ -59,14 +59,13 @@ public class DangNhapJDialog extends javax.swing.JDialog {
 
                     if (!MainClient.isIncorrect) {
                         MainClient.client.importBalance();
-                    }
-                    
-                    //Wait for the balance response
-                    synchronized (MainClient.lock) {
-                        while(MainClient.listBalanceClient == null || MainClient.listBalanceClient.isEmpty()){
-                            MainClient.lock.wait();
+                        //Wait for the balance response
+                        synchronized (MainClient.lock) {
+                            while (MainClient.listBalanceClient == null || MainClient.listBalanceClient.isEmpty()) {
+                                MainClient.lock.wait();
+                            }
+
                         }
-                        
                     }
 
                 } catch (IOException ex) {

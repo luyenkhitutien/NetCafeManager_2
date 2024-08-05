@@ -23,7 +23,8 @@ public class Ximage {
         return new ImageIcon(url).getImage();
     }
     public static boolean save (File src){
-            File dst = new File("src\\main\\resources\\image",src.getName());
+            
+            File dst = new File("src\\main\\resources\\images",src.getName());
             if(!dst.getParentFile().exists()){
                 dst.getParentFile().mkdirs(); // tạo thư mục nếu k tồn tại
             }try {
@@ -37,8 +38,8 @@ public class Ximage {
         }
     }
     public static ImageIcon read(String fileName){
-        File path = new File("src\\main\\resources\\image",fileName);
-        ImageIcon originalIcon = new ImageIcon(path.getAbsolutePath());
+        URL url = Ximage.class.getResource("/images/"+fileName);
+        ImageIcon originalIcon = new ImageIcon(url);
         Image img = originalIcon.getImage();
         Image resizeImage = img.getScaledInstance(350, 148, Image.SCALE_SMOOTH);
         return new ImageIcon(resizeImage);
