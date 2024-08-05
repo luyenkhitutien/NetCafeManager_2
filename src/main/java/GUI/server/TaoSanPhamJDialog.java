@@ -31,7 +31,7 @@ import utils.Xnoti;
  */
 public class TaoSanPhamJDialog extends javax.swing.JDialog {
 
-    JFileChooser filechooser = new JFileChooser("D:\\");
+    JFileChooser filechooser = new JFileChooser("");
     DefaultComboBoxModel model = new DefaultComboBoxModel();
     ProductDAO pro = new ProductDAO();
     private UpdateListener listener;
@@ -101,8 +101,8 @@ public class TaoSanPhamJDialog extends javax.swing.JDialog {
     public void setImage() {
         if (filechooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             File file = filechooser.getSelectedFile();
-            Ximage.save(file);
-            ImageIcon icon = Ximage.read(file.getName());
+            String fileName =  Ximage.save(file);
+            ImageIcon icon = Ximage.read(fileName);
             lblPicture.setIcon(icon);
             lblPicture.setToolTipText(file.getName());
         }

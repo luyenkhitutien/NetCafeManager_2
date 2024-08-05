@@ -22,23 +22,28 @@ public class Ximage {
         URL url = Ximage.class.getResource("/image/fptimage.png");
         return new ImageIcon(url).getImage();
     }
-    public static boolean save (File src){
-            
-            File dst = new File("src\\main\\resources\\images",src.getName());
-            if(!dst.getParentFile().exists()){
-                dst.getParentFile().mkdirs(); // tạo thư mục nếu k tồn tại
-            }try {
+
+    public static String save(File src) {
+        URL url = Ximage.class.getResource("/images/");
+        
+        File dst = new File(url.getPath(), src.getName());
+        if (!dst.getParentFile().exists()) {
+            dst.getParentFile().mkdirs(); // tạo thư mục nếu k tồn tại
+        }
+        try {
             Path from = Paths.get(src.getAbsolutePath());
             Path to = Paths.get(dst.getAbsolutePath());
-            Files.copy(from,to,StandardCopyOption.REPLACE_EXISTING);
-            return true;
+            
+            Files.copy(from, to, StandardCopyOption.REPLACE_EXISTING);
+            return dst.getName();
         } catch (Exception e) {
-           System.out.println("Không thể lưu hình!"); 
-           return false;
+            System.out.println("Không thể lưu hình!");
+            return null;
         }
     }
-    public static ImageIcon read(String fileName){
-        URL url = Ximage.class.getResource("/images/"+fileName);
+
+    public static ImageIcon read(String fileName) {
+        URL url = Ximage.class.getResource("/images/" + fileName);
         ImageIcon originalIcon = new ImageIcon(url);
         Image img = originalIcon.getImage();
         Image resizeImage = img.getScaledInstance(350, 148, Image.SCALE_SMOOTH);
